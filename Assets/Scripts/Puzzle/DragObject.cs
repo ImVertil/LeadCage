@@ -2,14 +2,24 @@ using UnityEngine;
 
 public class DragObject : MonoBehaviour
 {
+    private Vector3 _initialPos;
     private Vector3 _offset;
     private float _screenPointZ;
     private GameObject _snapTo;
+
+    void Start()
+    {
+        _initialPos = transform.position;    
+    }
 
     private void OnMouseDown()
     {
         _screenPointZ = Camera.main.WorldToScreenPoint(transform.position).z;
         _offset = transform.position - GetMouseWorldPosition();
+        if(_snapTo is not null)
+        {
+            _snapTo.GetComponent<CableSlot>().isCableConnected = false;
+        }
     }
 
     private void OnMouseDrag()
@@ -19,21 +29,24 @@ public class DragObject : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if(_snapTo is not null)
+        if (_snapTo is not null && !_snapTo.GetComponent<CableSlot>().isCableConnected)
         {
             transform.position = new Vector3(_snapTo.transform.position.x, _snapTo.transform.position.y, transform.position.z);
+            _snapTo.GetComponent<CableSlot>().isCableConnected = true;
+        }
+        else
+        {
+            transform.position = _initialPos;
         }
     }
 
     private void OnTriggerEnter(Collider collider)
     {
-        Debug.Log("enter");
         _snapTo = collider.gameObject;
     }
 
     private void OnTriggerExit(Collider collider)
     {
-        Debug.Log("exit");
         _snapTo = null;
     }
 

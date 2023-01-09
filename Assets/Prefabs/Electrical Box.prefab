@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 1511005338595121198}
   - component: {fileID: 8513859189179509100}
   - component: {fileID: 8513859189179509099}
+  - component: {fileID: 945925901}
   m_Layer: 0
   m_Name: Slot2
   m_TagString: Untagged
@@ -145,6 +146,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0012, y: 0.0012, z: 0.00050000014}
   m_Center: {x: 0, y: -4.656613e-10, z: 1.4551915e-11}
+--- !u!114 &945925901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71641748976226727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5118a373bbf961449d547d2873c65fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCableConnected: 0
 --- !u!1 &120195952201657532
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,6 +912,7 @@ GameObject:
   - component: {fileID: 8751918241453153069}
   - component: {fileID: 8700725328805949265}
   - component: {fileID: 8700725328805949264}
+  - component: {fileID: 870034249}
   m_Layer: 0
   m_Name: Slot4
   m_TagString: Untagged
@@ -999,6 +1014,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0012, y: 0.0012, z: 0.00050000014}
   m_Center: {x: 0, y: -4.656613e-10, z: 1.4551915e-11}
+--- !u!114 &870034249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037771365384804226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5118a373bbf961449d547d2873c65fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCableConnected: 0
 --- !u!1 &1070767017479190594
 GameObject:
   m_ObjectHideFlags: 0
@@ -1407,6 +1435,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7362787269304959402}
+  - component: {fileID: 423855593}
   m_Layer: 0
   m_Name: Slots
   m_TagString: Untagged
@@ -1434,6 +1463,30 @@ Transform:
   m_Father: {fileID: 8165995229344814975}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &423855593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4450443256129043743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeef7c3fe32ae474a8a6b220c813416d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _voltages:
+  - 2.5
+  - 5
+  - 10
+  - 15
+  - 30
+  _slots:
+  - {fileID: 4927188137112223380}
+  - {fileID: 71641748976226727}
+  - {fileID: 6077390840088221570}
+  - {fileID: 1037771365384804226}
+  - {fileID: 9037170580504876270}
 --- !u!1 &4927188137112223380
 GameObject:
   m_ObjectHideFlags: 0
@@ -1447,6 +1500,7 @@ GameObject:
   - component: {fileID: 1525123382259811915}
   - component: {fileID: 7202271455588957831}
   - component: {fileID: 7202271455588957832}
+  - component: {fileID: 1999415796}
   m_Layer: 0
   m_Name: Slot1
   m_TagString: Untagged
@@ -1548,6 +1602,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0012, y: 0.0012, z: 0.00050000014}
   m_Center: {x: 0, y: -4.656613e-10, z: 1.4551915e-11}
+--- !u!114 &1999415796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4927188137112223380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5118a373bbf961449d547d2873c65fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCableConnected: 0
 --- !u!1 &5458175149793343670
 GameObject:
   m_ObjectHideFlags: 0
@@ -1644,6 +1711,7 @@ GameObject:
   - component: {fileID: 1935638782220463215}
   - component: {fileID: 9203870078608651428}
   - component: {fileID: 9203870078608651427}
+  - component: {fileID: 1795695126}
   m_Layer: 0
   m_Name: Slot3
   m_TagString: Untagged
@@ -1745,6 +1813,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0012, y: 0.0012, z: 0.00050000014}
   m_Center: {x: 0, y: -4.656613e-10, z: 1.4551915e-11}
+--- !u!114 &1795695126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6077390840088221570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5118a373bbf961449d547d2873c65fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCableConnected: 0
 --- !u!1 &7282415081844880798
 GameObject:
   m_ObjectHideFlags: 0
@@ -2271,6 +2352,7 @@ GameObject:
   - component: {fileID: 6263638174149859553}
   - component: {fileID: 8670761336295795588}
   - component: {fileID: 8670761336295795587}
+  - component: {fileID: 85545856}
   m_Layer: 0
   m_Name: Slot5
   m_TagString: Untagged
@@ -2372,3 +2454,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0012, y: 0.0012, z: 0.00050000014}
   m_Center: {x: 0, y: -4.656613e-10, z: 1.4551915e-11}
+--- !u!114 &85545856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9037170580504876270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5118a373bbf961449d547d2873c65fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCableConnected: 0
