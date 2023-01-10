@@ -19,6 +19,7 @@ public class DragObject : MonoBehaviour
         if(_snapTo is not null)
         {
             _snapTo.GetComponent<CableSlot>().isCableConnected = false;
+            GetComponentInParent<Cable>().DisconnectFromSlot();
         }
     }
 
@@ -33,6 +34,7 @@ public class DragObject : MonoBehaviour
         {
             transform.position = new Vector3(_snapTo.transform.position.x, _snapTo.transform.position.y, transform.position.z);
             _snapTo.GetComponent<CableSlot>().isCableConnected = true;
+            GetComponentInParent<Cable>().ConnectToSlot(_snapTo);
         }
         else
         {
