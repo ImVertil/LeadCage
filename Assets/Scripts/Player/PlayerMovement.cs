@@ -122,25 +122,51 @@ public class PlayerMovement : MonoBehaviour
     private float _movementSpeed;
     private void Move()
     {
+        bool _isOnSlope = IsOnSlope();
+        //Aplikujemy input wzgledem kierunku wzroku
         _direction = _orientation.forward * _verticalInput + _orientation.right * _horizontalInput;
+        
+        //Gdy jestesmy na powierzchni pochylej to dodajemy sile w kierunku prostopadlym do niej
+        if (_isOnSlope && !_jumpingFromSlope)
+        {
+            _rb.AddForce(_movementSpeed * 10f * GetSlopedDirection());
+
+            if (_rb.velocity.y > 0)
+            {
+                _rb.AddForce(Vector3.down*70f);
+            }
+        }
         //musimy znormalizowac wektor, bo inaczej poruszanie sie po skosie jest szybsze od poruszania sie prosto
         //force mode force bo chcemy ciagle dodawac sile ruchu
         if(_isOnGround)
             _rb.AddForce(10f * _movementSpeed * _direction.normalized, ForceMode.Force);
         else
-            _rb.AddForce(_airMoveSpeedMult * _movementSpeed * _direction.normalized, ForceMode.Force);
+            _rb.AddForce(_airMoveSpeedMult * _movementSpeed * _direction.normalized, ForceMode.Force); // w powietrzu zmieniamy predkosc poruszania
 
+        _rb.useGravity = !_isOnSlope;
     }
 
     private void LimitSpeed()
     {
-        Vector3 flatVelocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
-
-        if (flatVelocity.magnitude > _movementSpeed)
+        
+        if (IsOnSlope() && !_jumpingFromSlope)
         {
-            Vector3 limitedVelocity = flatVelocity.normalized * _movementSpeed;
-            _rb.velocity = new Vector3(limitedVelocity.x, _rb.velocity.y, limitedVelocity.z);
+            if (_rb.velocity.magnitude > _movementSpeed)
+            {
+                _rb.velocity = _rb.velocity.normalized * _movementSpeed;
+            }
         }
+        else
+        {
+            Vector3 flatVelocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
+            
+            if (flatVelocity.magnitude > _movementSpeed)
+            {
+                Vector3 limitedVelocity = flatVelocity.normalized * _movementSpeed;
+                _rb.velocity = new Vector3(limitedVelocity.x, _rb.velocity.y, limitedVelocity.z);
+            }
+        }
+        
     }
     
     //----------------------------------skakanie----------------------------------------------
@@ -148,8 +174,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _jumpCooldown;
     [SerializeField] private float _airMoveSpeedMult;
     private bool _canJump;
+    private bool _jumpingFromSlope;
     private void Jump()
     {
+        _jumpingFromSlope = true;
+        
         _rb.velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
 
         _rb.AddForce(transform.up * _jumpHeight, ForceMode.Impulse);
@@ -159,8 +188,10 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(_jumpCooldown);
         _canJump = true;
+        
         if (Input.GetButtonUp(Controls.JUMP))
         {
+            _jumpingFromSlope = false;
             StopCoroutine(DelayJump());
         }
     }
@@ -170,4 +201,24 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _crouchYScale;
     private float _startingYScale;
     
+    
+    //---------------------------------------rownia pochyla--------------------------------
+    [SerializeField] private float _maxSlopeAngle;
+    private RaycastHit _slopeRay;
+
+    //Na pochylych powierzchniach trzeba kalkulowac kat pochylenia i stworzyc nowy wektor rownolegly do powierzchni aby ruch dzialal prawidlowo
+    private bool IsOnSlope()
+    {
+        if(Physics.Raycast(transform.position, Vector3.down, out _slopeRay, GroundcheckRayHeight + 0.2f))
+        {
+            float angle = Vector3.Angle(Vector3.up, _slopeRay.normal);
+            return angle<_maxSlopeAngle&&(angle != 0);
+        }
+        return false;
+    }
+
+    private Vector3 GetSlopedDirection()
+    {
+        return Vector3.ProjectOnPlane(_direction, _slopeRay.normal).normalized;
+    }
 }
