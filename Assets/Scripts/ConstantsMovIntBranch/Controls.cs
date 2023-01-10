@@ -11,5 +11,7 @@ public static class Controls
     public const string JUMP = "Jump";
     public const string MOUSEX = "Mouse X";
     public const string MOUSEY = "Mouse Y";
-    
+    public const string SPRINT = "Sprint";
+    public const string CROUCH = "Crouch";
+
 }
