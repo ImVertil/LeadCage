@@ -1,6 +1,6 @@
 ﻿public interface IInteractable
 {
-    float MaxRange { get; }
+    //float MaxRange { get; }
 
     void OnStartLook();
     void OnInteract();

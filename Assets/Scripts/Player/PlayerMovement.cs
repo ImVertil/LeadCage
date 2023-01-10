@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -10,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     
     //fizyka
     public float groundDrag;
-    public LayerMask groundMask;
+    //public LayerMask groundMask; jezeli jest potrzebowane w przyszloci - wszystkie raycasty z tego korzystaly
     
     private bool _isOnGround;
     
@@ -22,7 +23,9 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody _rb;
     
-    private const float GroundcheckRayHeight=0.1f;
+    private const float GroundcheckRayHeight=0.2f;
+
+    
 
     private void Start()
     {
@@ -36,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //Rzucamy promien prosto w dol aby sprawdzic czy mamy cos pod nogami
-        _isOnGround = Physics.Raycast(transform.position, Vector3.down, GroundcheckRayHeight,groundMask);
+        _isOnGround = Physics.Raycast(transform.position, Vector3.down, GroundcheckRayHeight);
         
         HandleInput();
         
@@ -57,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        climbSteps();
     }
     
     //-----------------------------------input------------------------------------------
@@ -81,9 +85,9 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector3(transform.localScale.x, _crouchYScale, transform.localScale.z);
         }
 
-        if (Input.GetButtonUp(Controls.CROUCH))
+        if ((_state == PlayerMovementState.crouching) && !Input.GetButton(Controls.CROUCH))
         {
-            transform.localScale = new Vector3(transform.localScale.x, _startingYScale, transform.localScale.z);
+            crouchDetection();
         }
     }
     
@@ -110,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
             _state = PlayerMovementState.jog;
             _movementSpeed = _jogSpeed;
         }
-        if (_isOnGround && Input.GetButton(Controls.CROUCH))
+        if (_isOnGround && (Input.GetButton(Controls.CROUCH) || _forceCrouch))
         {
             _state = PlayerMovementState.crouching;
             _movementSpeed = _crouchingSpeed;
@@ -200,6 +204,20 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _crouchingSpeed;
     [SerializeField] private float _crouchYScale;
     private float _startingYScale;
+    private bool _forceCrouch = false;
+
+    private void crouchDetection()
+    {
+        if (!Physics.Raycast(transform.position, Vector3.up, _startingYScale*2 + 0.2f))
+        {
+            transform.localScale = new Vector3(transform.localScale.x, _startingYScale, transform.localScale.z);
+            _forceCrouch = false;
+        }
+        else
+        {
+            _forceCrouch = true;
+        }
+    }
     
     
     //---------------------------------------rownia pochyla--------------------------------
@@ -221,4 +239,38 @@ public class PlayerMovement : MonoBehaviour
     {
         return Vector3.ProjectOnPlane(_direction, _slopeRay.normal).normalized;
     }
+    
+    //-----------------------------------schody------------------------------------------
+    [SerializeField] private float _maxStepHeight = 0.3f;
+    [SerializeField] private float _stepJump = 0.1f;
+    private float _playerCapsuleRadius = 0.5f;
+    private void climbSteps()
+    {
+        RaycastHit stepBottomHit;
+        if (_direction.x == 0 && _direction.z == 0)
+        {
+            return;
+        }
+        //Debug.DrawRay(transform.position, _direction.normalized * 0.6f);
+        if (!Physics.Raycast(transform.position, _direction.normalized, out stepBottomHit, _playerCapsuleRadius + 0.1f) || IsOnSlope())
+        {
+            return;
+        }
+        
+        //Wykrywanie pochylej powierzchni aby nie wykonywac skakania (Jest od tego inny system)
+        if (Vector3.Angle(Vector3.forward, stepBottomHit.normal) < 90)
+        {
+            return;
+        }
+        
+        RaycastHit stepTopHit;
+        Vector3 topRaycastOrigin = new Vector3(transform.position.x, transform.position.y +_maxStepHeight, transform.position.z);
+        //Debug.DrawRay(topRaycastOrigin, _direction.normalized * 0.7f);
+        if (!Physics.Raycast(topRaycastOrigin, _direction.normalized, out stepTopHit, _playerCapsuleRadius + 0.25f))
+        {
+            _rb.position -= new Vector3(0f, -_stepJump, 0f);
+        }
+    }
+    
+
 }

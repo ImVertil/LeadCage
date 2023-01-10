@@ -1,25 +1,31 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class InteractGate : MonoBehaviour, IInteractable
 {
     public float MaxRange { get { return _maxRange; } }
 
-    private const float _maxRange = 10f;
-    public GameObject interactionText;
+    private const float _maxRange = 5f;
+    public GameObject interactionTextObject;
+    private TMP_Text interactionUIText;
     [SerializeField] private Animator anim;
+
+    private void Awake()
+    {
+        interactionUIText = interactionTextObject.GetComponent<TMP_Text>();
+    }
 
     public void OnStartLook()
     {
-        Debug.Log($"Looking at {gameObject.name}");
-        interactionText.SetActive(true);
+        interactionUIText.SetText("Open Door");
     }
 
     public void OnEndLook()
     {
-        Debug.Log($"No longer looking at that object");
-        interactionText.SetActive(false);
+        interactionUIText.SetText("");
     }
 
     public void OnInteract()
