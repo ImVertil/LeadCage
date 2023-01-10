@@ -13,5 +13,6 @@ public static class Controls
     public const string MOUSEY = "Mouse Y";
     public const string SPRINT = "Sprint";
     public const string CROUCH = "Crouch";
+    public const string INTERACT = "Interact";
 
 }
