@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Cable : MonoBehaviour
@@ -23,6 +21,7 @@ public class Cable : MonoBehaviour
 
     public float GetSlotVoltage()
     {
+        // If it's not connected, voltage is 0
         if (_currentSlot is null)
             return 0;
         else
