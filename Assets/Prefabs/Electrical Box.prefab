@@ -613,6 +613,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5320547489024825527}
   - component: {fileID: 8076597555024754640}
+  - component: {fileID: 780566128732867123}
   - component: {fileID: 4509215428094952049}
   m_Layer: 0
   m_Name: Cable5
@@ -652,6 +653,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startPos: {fileID: 5622926532406147508}
   _endPos: {fileID: 1173689424824534158}
+--- !u!114 &780566128732867123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959037443044653663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23cb950d5b2ce3d4392108fc3a1817ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentSlot: {fileID: 0}
 --- !u!120 &4509215428094952049
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -761,6 +775,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1770881045552095735}
   - component: {fileID: 4002734033481254305}
+  - component: {fileID: 3321697731111488989}
   - component: {fileID: 7858445243266538344}
   m_Layer: 0
   m_Name: Cable3
@@ -800,6 +815,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startPos: {fileID: 5290825873601589740}
   _endPos: {fileID: 3213279581989377533}
+--- !u!114 &3321697731111488989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992792655349455244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23cb950d5b2ce3d4392108fc3a1817ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentSlot: {fileID: 0}
 --- !u!120 &7858445243266538344
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1037,6 +1065,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1042219125897211037}
   - component: {fileID: 5146085331765207183}
+  - component: {fileID: 6989387629736595431}
   - component: {fileID: 728074400771343937}
   m_Layer: 0
   m_Name: Cable4
@@ -1076,6 +1105,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startPos: {fileID: 8070058140310450619}
   _endPos: {fileID: 3937157919674701385}
+--- !u!114 &6989387629736595431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070767017479190594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23cb950d5b2ce3d4392108fc3a1817ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentSlot: {fileID: 0}
 --- !u!120 &728074400771343937
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1836,6 +1878,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7667468046339260187}
   - component: {fileID: 2942353422921749505}
+  - component: {fileID: 4137010642749900183}
   - component: {fileID: 3272869483312005172}
   m_Layer: 0
   m_Name: Cable1
@@ -1875,6 +1918,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startPos: {fileID: 4593651400742177821}
   _endPos: {fileID: 5168811460662217476}
+--- !u!114 &4137010642749900183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282415081844880798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23cb950d5b2ce3d4392108fc3a1817ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentSlot: {fileID: 0}
 --- !u!120 &3272869483312005172
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1984,6 +2040,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6368146009715914109}
   - component: {fileID: 8623489068737155708}
+  - component: {fileID: 4319373898142984458}
   - component: {fileID: 3665412920058148045}
   m_Layer: 0
   m_Name: Cable2
@@ -2023,6 +2080,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startPos: {fileID: 6565339527396729304}
   _endPos: {fileID: 660718825236582336}
+--- !u!114 &4319373898142984458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7918053682762039456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23cb950d5b2ce3d4392108fc3a1817ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentSlot: {fileID: 0}
 --- !u!120 &3665412920058148045
 LineRenderer:
   m_ObjectHideFlags: 0
