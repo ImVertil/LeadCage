@@ -14,8 +14,12 @@ public class DragObject : MonoBehaviour
 
     private void OnMouseDown()
     {
+        // screenPointZ - the object's Z screen position. Needed when we convert mouse world pos to have sync with with the object we're dragging
         _screenPointZ = Camera.main.WorldToScreenPoint(transform.position).z;
+
+        // offset - difference between the middle of the object that we are dragging and our cursor position
         _offset = transform.position - GetMouseWorldPosition();
+
         if(_snapTo is not null)
         {
             _snapTo.GetComponent<CableSlot>().isCableConnected = false;
@@ -30,6 +34,7 @@ public class DragObject : MonoBehaviour
 
     private void OnMouseUp()
     {
+        // snap the cable to the slot if there's no other cable connected, otherwise snap back to initial position
         if (_snapTo is not null && !_snapTo.GetComponent<CableSlot>().isCableConnected)
         {
             transform.position = new Vector3(_snapTo.transform.position.x, _snapTo.transform.position.y, transform.position.z);
@@ -52,6 +57,7 @@ public class DragObject : MonoBehaviour
         _snapTo = null;
     }
 
+    // Converting the mouse position on screen to the world position
     private Vector3 GetMouseWorldPosition()
     {
         Vector3 mousePos = Input.mousePosition;

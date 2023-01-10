@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DrawLine : MonoBehaviour
@@ -12,7 +10,6 @@ public class DrawLine : MonoBehaviour
         _lr = GetComponent<LineRenderer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         _lr.SetPosition(0,_startPos.position);

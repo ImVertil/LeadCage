@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorController : MonoBehaviour
@@ -11,7 +9,6 @@ public class DoorController : MonoBehaviour
     private float _currentLockVoltage;
     private bool _isOpen;
 
-    // Start is called before the first frame update
     void Start()
     {
         _animator = GetComponent<Animator>();
@@ -20,7 +17,6 @@ public class DoorController : MonoBehaviour
         _currentLockVoltage = 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
         _currentDoorVoltage = _doorCable.GetComponent<Cable>().GetSlotVoltage();
