@@ -665,7 +665,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cb950d5b2ce3d4392108fc3a1817ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentSlot: {fileID: 0}
 --- !u!120 &4509215428094952049
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -827,7 +826,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cb950d5b2ce3d4392108fc3a1817ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentSlot: {fileID: 0}
 --- !u!120 &7858445243266538344
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1117,7 +1115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cb950d5b2ce3d4392108fc3a1817ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentSlot: {fileID: 0}
 --- !u!120 &728074400771343937
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1930,7 +1927,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cb950d5b2ce3d4392108fc3a1817ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentSlot: {fileID: 0}
 --- !u!120 &3272869483312005172
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -2092,7 +2088,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cb950d5b2ce3d4392108fc3a1817ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentSlot: {fileID: 0}
 --- !u!120 &3665412920058148045
 LineRenderer:
   m_ObjectHideFlags: 0
