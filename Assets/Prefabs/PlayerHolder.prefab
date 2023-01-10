@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &994125218525030555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1259052290049333486}
+  m_Layer: 0
+  m_Name: rayCasterStairTop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1259052290049333486
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994125218525030555}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5138864697470766992}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5138864696987708184
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +120,6 @@ GameObject:
   - component: {fileID: 5138864697108427991}
   - component: {fileID: 5138864697108427990}
   - component: {fileID: 5138864697108427986}
-  - component: {fileID: 5138864697108427985}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -177,19 +207,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mouseSensitivity: 400
   _playerBody: {fileID: 5138864697021069208}
---- !u!114 &5138864697108427985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5138864697108427989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8119e03f16ed46fdb17915f74b91938, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 10
 --- !u!1 &5138864697112517692
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,6 +369,7 @@ Transform:
   - {fileID: 5138864697167754209}
   - {fileID: 5138864697021069208}
   - {fileID: 5138864697112517693}
+  - {fileID: 1259052290049333486}
   m_Father: {fileID: 6705869356069438393}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -385,17 +403,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprintSpeed: 8
   _jogSpeed: 5
-  groundDrag: 0.5
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 256
+  groundDrag: 5
   _orientation: {fileID: 5138864697021069208}
-  _jumpHeight: 3
+  _jumpHeight: 5
   _jumpCooldown: 0.3
   _airMoveSpeedMult: 0.5
   _crouchingSpeed: 3
   _crouchYScale: 0.5
   _maxSlopeAngle: 50
+  _maxStepHeight: 0.4
+  _stepJump: 0.15
 --- !u!1 &5252702516964087736
 GameObject:
   m_ObjectHideFlags: 0
