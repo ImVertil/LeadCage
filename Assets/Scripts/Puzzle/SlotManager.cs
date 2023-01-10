@@ -5,26 +5,28 @@ public class SlotManager : MonoBehaviour
 {
     [SerializeField] private List<float> _voltages = new();
     [SerializeField] private List<GameObject> _slots = new();
-    //private List<float> _voltagesScrambled = new();
 
     void Start()
     {
+        //turned off so it's easier to test 8)
+        //ShuffleList(_voltages);
         for(int i=0; i<_slots.Count; i++) 
         {
             _slots[i].GetComponent<CableSlot>().Voltage = _voltages[i];
         }
     }
 
-    // TODO - shuffle
-    /*private List<T> ShuffleList<T>(List<T> list) 
+    // Fisher-Yates shuffle algorithm
+    private void ShuffleList<T>(List<T> list) 
     {
-        List<T> result = new List<T>(list.Count);
-        List<int> indexes = new List<int>(list.Count);
-        foreach(T value in list)
+        int n = list.Count;
+        while (n > 1)
         {
-            int randomIndex = Random.Range(1,list.Count);
-            result.Insert(randomIndex, value);
+            n--;
+            int rand = Random.Range(0, n + 1);
+            T value = list[rand];
+            list[rand] = list[n];
+            list[n] = value;
         }
-        return result;
-    }*/
+    }
 }

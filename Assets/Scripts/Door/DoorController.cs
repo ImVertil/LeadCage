@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
-    [SerializeField] private GameObject _doorCable;
-    [SerializeField] private GameObject _lockCable;
+    [SerializeField] private Cable _doorCable;
+    [SerializeField] private Cable _lockCable;
     private Animator _animator;
     private float _currentDoorVoltage;
     private float _currentLockVoltage;
     private bool _isOpen;
+    private bool _isLocked;
 
     void Start()
     {
@@ -19,39 +20,54 @@ public class DoorController : MonoBehaviour
 
     void Update()
     {
-        _currentDoorVoltage = _doorCable.GetComponent<Cable>().GetSlotVoltage();
-        _currentLockVoltage = _lockCable.GetComponent<Cable>().GetSlotVoltage();
+        _currentDoorVoltage = _doorCable.GetSlotVoltage();
+        _currentLockVoltage = _lockCable.GetSlotVoltage();
     }
 
     private void Open()
     {
-        switch(_currentDoorVoltage)
+        if(CheckVoltages())
         {
-            case 0:
-                Debug.Log("No power (0)");
-                break;
-            case 2.5f:
-                Debug.Log("Not enough power. (2.5)");
-                break;
-            case 5:
-                Debug.Log("Not enough power. (5)");
-                break;
-            case 10:
-                Debug.Log("Not enough power. (10)");
-                break;
-            case 15:
-                Debug.Log("Not enough power. (15)");
-                break;
-            case 30:
-                _animator.Play("DoorOpen", 0);
-                _isOpen = true;
-                break;
-
+            _animator.Play("DoorOpen", 0);
+            _isOpen = true;
         }
     }
 
     private void Close()
     {
+        if(CheckVoltages())
+        {
+            _animator.Play("DoorClose", 0);
+            _isOpen = false;
+        }  
+    }
+
+    public void ToggleState()
+    {
+        if(_isOpen)
+        {
+            Close();
+        }
+        else
+        {
+            Open();
+        }
+    }
+
+    // Handles sound cues depending on voltage (not yet implemented)
+    // Returns true if both lock voltage and door voltage is correct
+    private bool CheckVoltages()
+    {
+        switch (_currentLockVoltage)
+        {
+            case 5:
+                _isLocked = false;
+                break;
+            default:
+                _isLocked = true;
+                break;
+        }
+
         switch (_currentDoorVoltage)
         {
             case 0:
@@ -70,21 +86,17 @@ public class DoorController : MonoBehaviour
                 Debug.Log("Not enough power. (15)");
                 break;
             case 30:
-                _animator.Play("DoorClose", 0);
-                _isOpen = false;
-                break;
-        }        
-    }
-
-    public void ToggleState()
-    {
-        if(_isOpen)
-        {
-            Close();
+                if (_isLocked)
+                {
+                    Debug.Log("Enough power, but locked.");
+                    break;
+                }
+                else
+                {
+                    Debug.Log("Enough power, opening/closing.");
+                }
+                return true;
         }
-        else
-        {
-            Open();
-        }
+        return false;
     }
 }
