@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -82,7 +81,8 @@ public class PlayerMovement : MonoBehaviour
         //kucanie
         if (Input.GetButtonDown(Controls.CROUCH))
         {
-            transform.localScale = new Vector3(transform.localScale.x, _crouchYScale, transform.localScale.z);
+            LeanTween.scaleY(gameObject,_crouchYScale,_crouchTime);
+            //transform.localScale = new Vector3(transform.localScale.x, _crouchYScale, transform.localScale.z);
         }
 
         if ((_state == PlayerMovementState.crouching) && !Input.GetButton(Controls.CROUCH))
@@ -203,6 +203,7 @@ public class PlayerMovement : MonoBehaviour
     //--------------------------------------kucanie----------------------------------------
     [SerializeField] private float _crouchingSpeed;
     [SerializeField] private float _crouchYScale;
+    [SerializeField] private float _crouchTime;
     private float _startingYScale;
     private bool _forceCrouch = false;
 
@@ -210,14 +211,34 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!Physics.Raycast(transform.position, Vector3.up, _startingYScale*2 + 0.2f))
         {
-            transform.localScale = new Vector3(transform.localScale.x, _startingYScale, transform.localScale.z);
+            LeanTween.scaleY(gameObject, _startingYScale, _crouchTime);
+            //StartCoroutine(crouchScale(_startingYScale));//transform.localScale = new Vector3(transform.localScale.x, _startingYScale, transform.localScale.z);
             _forceCrouch = false;
         }
         else
         {
             _forceCrouch = true;
         }
+        
     }
+
+    /*private IEnumerator crouchScale(float endScale)
+    {
+        float time = 0f;
+        Vector3 transformScale = transform.localScale;
+        Vector3 finalTransformScale = new Vector3(transformScale.x, _crouchYScale, transformScale.z);
+        float currentScale = transformScale.y;
+
+        while (transformScale != finalTransformScale)
+        {
+            time += Time.deltaTime * _crouchLerpSpeed;
+            float scale = Mathf.Lerp(currentScale, endScale, time);
+            transformScale.y = scale;
+            transform.localScale = transformScale;
+            yield return null;
+        }
+        Debug.Log("Ass");
+    }*/
     
     
     //---------------------------------------rownia pochyla--------------------------------
@@ -246,27 +267,34 @@ public class PlayerMovement : MonoBehaviour
     private float _playerCapsuleRadius = 0.5f;
     private void climbSteps()
     {
+        rayCastForStepClimbing(_direction.normalized); // prosto w kierunku ruchu
+        rayCastForStepClimbing(Quaternion.Euler(0, -45, 0) * new Vector3(_direction.normalized.x,_direction.normalized.y,_direction.normalized.z)); // o 45 stopni w jedna strone
+        rayCastForStepClimbing(Quaternion.Euler(0, 45, 0) * new Vector3(_direction.normalized.x,_direction.normalized.y,_direction.normalized.z)); // w druga
+    }
+
+    private void rayCastForStepClimbing(Vector3 direction)
+    {
         RaycastHit stepBottomHit;
         if (_direction.x == 0 && _direction.z == 0)
         {
             return;
         }
-        //Debug.DrawRay(transform.position, _direction.normalized * 0.6f);
-        if (!Physics.Raycast(transform.position, _direction.normalized, out stepBottomHit, _playerCapsuleRadius + 0.1f) || IsOnSlope())
+        //
+        if (!Physics.Raycast(transform.position, direction, out stepBottomHit, _playerCapsuleRadius + 0.1f) || IsOnSlope() || !_isOnGround)
         {
             return;
         }
-        
+                
         //Wykrywanie pochylej powierzchni aby nie wykonywac skakania (Jest od tego inny system)
         if (Vector3.Angle(Vector3.forward, stepBottomHit.normal) < 90)
         {
             return;
         }
-        
+                
         RaycastHit stepTopHit;
         Vector3 topRaycastOrigin = new Vector3(transform.position.x, transform.position.y +_maxStepHeight, transform.position.z);
         //Debug.DrawRay(topRaycastOrigin, _direction.normalized * 0.7f);
-        if (!Physics.Raycast(topRaycastOrigin, _direction.normalized, out stepTopHit, _playerCapsuleRadius + 0.25f))
+        if (!Physics.Raycast(topRaycastOrigin, direction, out stepTopHit, _playerCapsuleRadius + 0.25f))
         {
             _rb.position -= new Vector3(0f, -_stepJump, 0f);
         }

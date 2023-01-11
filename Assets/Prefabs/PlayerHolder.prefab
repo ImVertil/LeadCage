@@ -378,6 +378,7 @@ MonoBehaviour:
   _airMoveSpeedMult: 0.5
   _crouchingSpeed: 3
   _crouchYScale: 0.5
+  _crouchTime: 0.25
   _maxSlopeAngle: 50
   _maxStepHeight: 0.4
   _stepJump: 0.15
