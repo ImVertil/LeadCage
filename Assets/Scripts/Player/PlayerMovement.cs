@@ -280,7 +280,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         //
-        if (!Physics.Raycast(transform.position, direction, out stepBottomHit, _playerCapsuleRadius + 0.1f) || IsOnSlope())
+        if (!Physics.Raycast(transform.position, direction, out stepBottomHit, _playerCapsuleRadius + 0.1f) || IsOnSlope() || !_isOnGround)
         {
             return;
         }
