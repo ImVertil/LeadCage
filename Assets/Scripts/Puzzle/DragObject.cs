@@ -9,7 +9,8 @@ public class DragObject : MonoBehaviour
 
     void Start()
     {
-        _initialPos = transform.position;    
+        _initialPos = transform.position;
+        _snapTo = null;
     }
 
     private void OnMouseDown()
@@ -37,7 +38,8 @@ public class DragObject : MonoBehaviour
         // snap the cable to the slot if there's no other cable connected, otherwise snap back to initial position
         if (_snapTo is not null && !_snapTo.GetComponent<CableSlot>().isCableConnected)
         {
-            transform.position = new Vector3(_snapTo.transform.position.x, _snapTo.transform.position.y, transform.position.z);
+            // need to fix the issue with x/z being displaced (?)
+            transform.position = new Vector3(transform.position.x, _snapTo.transform.position.y, _snapTo.transform.position.z);
             _snapTo.GetComponent<CableSlot>().isCableConnected = true;
             GetComponentInParent<Cable>().ConnectToSlot(_snapTo);
         }

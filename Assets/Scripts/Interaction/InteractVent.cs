@@ -1,17 +1,14 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class InteractGate : MonoBehaviour, IInteractable
+public class InteractVent : MonoBehaviour, IInteractable
 {
-    public float MaxRange { get { return _maxRange; } }
-
-    private const float _maxRange = 5f;
     public GameObject interactionTextObject;
     private TMP_Text interactionUIText;
-    [SerializeField] private DoorController _doorController;
+    public List<StoryValue> requiredTags;
 
     private void Awake()
     {
@@ -20,7 +17,7 @@ public class InteractGate : MonoBehaviour, IInteractable
 
     public void OnStartLook()
     {
-        interactionUIText.SetText("Press button");
+        interactionUIText.SetText("Remove vent");
     }
 
     public void OnEndLook()
@@ -30,13 +27,16 @@ public class InteractGate : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
-        if(GetComponent<DoorButton>().GetVoltage() == 2.5)
+        if (IsConditionSatisfied())
+            Destroy(this.gameObject); // to be changed :)
+    }
+
+    private bool IsConditionSatisfied()
+    {
+        if(Progression.Instance.HasAllValues(requiredTags))
         {
-            _doorController.ToggleState();
+            return true;
         }
-        else
-        {
-            Debug.Log("[BUTTON] Too low/high voltage");
-        }
+        return false;
     }
 }
