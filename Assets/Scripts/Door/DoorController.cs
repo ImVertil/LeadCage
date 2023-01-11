@@ -71,29 +71,29 @@ public class DoorController : MonoBehaviour
         switch (_currentDoorVoltage)
         {
             case 0:
-                Debug.Log("No power (0)");
+                Debug.Log("[DOOR] No power (0)");
                 break;
             case 2.5f:
-                Debug.Log("Not enough power. (2.5)");
+                Debug.Log("[DOOR] Not enough power. (2.5)");
                 break;
             case 5:
-                Debug.Log("Not enough power. (5)");
+                Debug.Log("[DOOR] Not enough power. (5)");
                 break;
             case 10:
-                Debug.Log("Not enough power. (10)");
+                Debug.Log("[DOOR] Not enough power. (10)");
                 break;
             case 15:
-                Debug.Log("Not enough power. (15)");
+                Debug.Log("[DOOR] Not enough power. (15)");
                 break;
             case 30:
                 if (_isLocked)
                 {
-                    Debug.Log("Enough power, but locked.");
+                    Debug.Log("[DOOR] Enough power, but locked.");
                     break;
                 }
                 else
                 {
-                    Debug.Log("Enough power, opening/closing.");
+                    Debug.Log("[DOOR] Enough power, opening/closing.");
                 }
                 return true;
         }
