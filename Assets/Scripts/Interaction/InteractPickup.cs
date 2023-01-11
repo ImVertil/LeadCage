@@ -6,6 +6,7 @@ public class InteractPickup : MonoBehaviour, IInteractable
     [SerializeField] private string _itemName;
     public GameObject interactionTextObject;
     private TMP_Text interactionUIText;
+    private Item _item;
 
     private void Awake()
     {
@@ -14,6 +15,7 @@ public class InteractPickup : MonoBehaviour, IInteractable
         {
             _itemName = "undefined";
         }
+        _item = GetComponent<ItemController>().Item;
     }
 
     public void OnStartLook()
@@ -30,5 +32,6 @@ public class InteractPickup : MonoBehaviour, IInteractable
     {
         Destroy(this.gameObject);
         Progression.Instance.AddStoryValue(StoryValue.HasScrewdriver);
+        Inventory.Instance.Add(_item);
     }
 }
