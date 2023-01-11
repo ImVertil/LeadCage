@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
         if (_isOnGround)
         {
             _rb.drag = groundDrag;
+            _isJumping = false;
         }
         else
         {
@@ -126,12 +127,12 @@ public class PlayerMovement : MonoBehaviour
     private float _movementSpeed;
     private void Move()
     {
-        bool _isOnSlope = IsOnSlope();
+        bool isOnSlope = IsOnSlope();
         //Aplikujemy input wzgledem kierunku wzroku
         _direction = _orientation.forward * _verticalInput + _orientation.right * _horizontalInput;
         
         //Gdy jestesmy na powierzchni pochylej to dodajemy sile w kierunku prostopadlym do niej
-        if (_isOnSlope && !_jumpingFromSlope)
+        if (isOnSlope && !_isJumping)
         {
             _rb.AddForce(_movementSpeed * 10f * GetSlopedDirection());
 
@@ -147,13 +148,13 @@ public class PlayerMovement : MonoBehaviour
         else
             _rb.AddForce(_airMoveSpeedMult * _movementSpeed * _direction.normalized, ForceMode.Force); // w powietrzu zmieniamy predkosc poruszania
 
-        _rb.useGravity = !_isOnSlope;
+        _rb.useGravity = !isOnSlope;
     }
 
     private void LimitSpeed()
     {
         
-        if (IsOnSlope() && !_jumpingFromSlope)
+        if (IsOnSlope() && !_isJumping)
         {
             if (_rb.velocity.magnitude > _movementSpeed)
             {
@@ -178,10 +179,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _jumpCooldown;
     [SerializeField] private float _airMoveSpeedMult;
     private bool _canJump;
-    private bool _jumpingFromSlope;
+    private bool _isJumping;
     private void Jump()
     {
-        _jumpingFromSlope = true;
+        _isJumping = true;
         
         _rb.velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
 
@@ -195,7 +196,7 @@ public class PlayerMovement : MonoBehaviour
         
         if (Input.GetButtonUp(Controls.JUMP))
         {
-            _jumpingFromSlope = false;
+            _isJumping = false;
             StopCoroutine(DelayJump());
         }
     }
@@ -280,7 +281,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         //
-        if (!Physics.Raycast(transform.position, direction, out stepBottomHit, _playerCapsuleRadius + 0.1f) || IsOnSlope() || !_isOnGround)
+        if (!Physics.Raycast(transform.position, direction, out stepBottomHit, _playerCapsuleRadius + 0.1f) || IsOnSlope() || _isJumping)
         {
             return;
         }
