@@ -9,11 +9,9 @@ public class CableSlot : MonoBehaviour
         set { _voltage = value; }
     }
     public bool isCableConnected;
-    public GameObject connectedCable;
 
     void Start()
     {
-        connectedCable = null;
         isCableConnected = false;
     }
 }
