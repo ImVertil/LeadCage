@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,5 +15,5 @@ public static class Controls
     public const string SPRINT = "Sprint";
     public const string CROUCH = "Crouch";
     public const string INTERACT = "Interact";
-
+    public const string INVENTORY = "Inventory";
 }
