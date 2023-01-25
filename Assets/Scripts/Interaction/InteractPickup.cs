@@ -24,7 +24,7 @@ public class InteractPickup : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
         Progression.Instance.AddStoryValue(StoryValue.HasScrewdriver);
         Inventory.Instance.AddItem(this);
     }
