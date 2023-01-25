@@ -44,7 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96688584b4a4a745bc76acfb3b7bf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InventoryBox: {fileID: 0}
-  InventoryItem: {fileID: 1697897151558497162, guid: 620351d758a74e547b09c8953486b027, type: 3}
-  InventoryItems: []
-  Items: []
+  _playerTransform: {fileID: 0}
+  _inventoryPanel: {fileID: 0}
