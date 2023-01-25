@@ -47,7 +47,7 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetButtonDown(Controls.INVENTORY))
         {
             ToggleInventory();
         }
@@ -115,7 +115,7 @@ public class Inventory : MonoBehaviour
         itemObject.SetActive(true);
         itemObject.transform.position = new Vector3(0, 0, 0);
 
-        // Remove entries from the dictionary
+        // Remove entry from the dictionary
         _items.Remove(itemObject);
 
         // Update items in inventory
