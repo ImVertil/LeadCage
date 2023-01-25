@@ -30,7 +30,5 @@ public class Recoil : MonoBehaviour
     void recoilFire(float recoilX, float recoilY, float recoilZ)
     {
         _targetRotation += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
-        Debug.Log(recoilX);
-        transform.rotation = Quaternion.Euler(0, 90, 0);
     }
 }
