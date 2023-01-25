@@ -618,7 +618,7 @@ MonoBehaviour:
   _jogSpeed: 5
   groundDrag: 5
   _orientation: {fileID: 5138864697021069208}
-  _jumpHeight: 20
+  _jumpHeight: 12
   _jumpCooldown: 0.3
   _airMoveSpeedMult: 0.5
   _crouchingSpeed: 3
@@ -723,7 +723,7 @@ MonoBehaviour:
   _range: 100
   _fireRate: 15
   _impactForce: 30
-  _recoilX: -2
-  _recoilY: 2
-  _recoilZ: 0.35
+  _recoilX: 0
+  _recoilY: 0
+  _recoilZ: 0
   bulletOrigin: {fileID: 3082106844518180012}
