@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -23,7 +22,6 @@ public class Inventory : MonoBehaviour
     #endregion
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private GameObject _inventoryPanel;
-    //private Dictionary<Item, GameObject> _items = new();
     private Dictionary<GameObject, Item> _items = new();
     private Dictionary<Image, TextMeshProUGUI> _slots = new();
     private bool _isShown;
@@ -35,7 +33,7 @@ public class Inventory : MonoBehaviour
         // gotta change that, for now it works :^)
         foreach(var t in _inventoryPanel.GetComponentsInChildren<Transform>().ToList())
         {
-            if (t.name != "Image" && t.name != "ItemName" && t.name != "Panel")
+            if (t.name.StartsWith("Slot"))
                 slotTransforms.Add(t);
         }
 
@@ -50,12 +48,24 @@ public class Inventory : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
+        {
             ToggleInventory();
+        }
     }
 
     public void ToggleInventory()
     {
         _inventoryPanel.SetActive(!_isShown);
+        if(_isShown)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
+        }
         _isShown = !_isShown;
     }
 
@@ -64,11 +74,9 @@ public class Inventory : MonoBehaviour
         for(int i=0; i<_slots.Count; i++)
         {
             var slotsEntry = _slots.ElementAt(i);
-            if (_items.Count >= i+1)
+            if (_items.Count > i)
             {
                 var itemsEntry = _items.ElementAt(i);
-                //slotsEntry.Key.sprite = itemsEntry.Key.icon;
-                //slotsEntry.Value.text = itemsEntry.Key.itemName;
                 slotsEntry.Key.sprite = itemsEntry.Value.icon;
                 slotsEntry.Value.text = itemsEntry.Value.itemName;
                 slotsEntry.Key.enabled = true;
@@ -77,7 +85,7 @@ public class Inventory : MonoBehaviour
             else
             {
                 slotsEntry.Key.sprite = null;
-                slotsEntry.Value.text = null;
+                slotsEntry.Value.text = "";
                 slotsEntry.Key.enabled = false;
                 slotsEntry.Value.enabled = false;
             }
@@ -86,23 +94,31 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(InteractPickup pickup)
     {
-        //_items.Add(pickup.item, pickup.gameObject); 
         _items.Add(pickup.gameObject, pickup.item); 
         pickup.gameObject.SetActive(false);
         UpdateItems();
     }
 
-    public void DropItem(Item item)
+    // This may not be very well optimized :|
+    public void DropItem(Image slot)
     {
-        // Get the GameObject assigned to the Item
-        //GameObject itemObject = _items[item];
-        GameObject itemObject = _items.FirstOrDefault(x => x.Value == item).Key;
-        itemObject.SetActive(true);
-        itemObject.transform.position = new Vector3(0,0,0);
+        // Get the index on which the item is located in slot dictionary
+        int index = 0;
+        for(int i=0; i<_slots.Count; i++)
+        {
+            if (_slots.ElementAt(i).Key == slot)
+            { index = i; break; }
+        }
 
-        // Remove the entry from dictionary
-        //_items.Remove(item);
-        _items.Remove(_items.FirstOrDefault(x => x.Value == item).Key);
+        // Get the Key/Value at index from items dictionary, set it to active and set its position
+        GameObject itemObject = _items.ElementAt(index).Key;
+        itemObject.SetActive(true);
+        itemObject.transform.position = new Vector3(0, 0, 0);
+
+        // Remove entries from the dictionary
+        _items.Remove(itemObject);
+
+        // Update items in inventory
         UpdateItems();
     }
 }
