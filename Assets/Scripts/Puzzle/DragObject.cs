@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class DragObject : MonoBehaviour
@@ -38,8 +39,21 @@ public class DragObject : MonoBehaviour
         // snap the cable to the slot if there's no other cable connected, otherwise snap back to initial position
         if (_snapTo is not null && !_snapTo.GetComponent<CableSlot>().isCableConnected)
         {
-            // need to fix the issue with x/z being displaced (?)
-            transform.position = new Vector3(transform.position.x, _snapTo.transform.position.y, _snapTo.transform.position.z);
+            // X and Z snap depends on the rotation of the electrical box
+            switch(transform.root.eulerAngles.y) // the Y rotation of the root component
+            {
+                case 0:
+                case 180:
+                case 360:
+                    transform.position = new Vector3(transform.position.x, _snapTo.transform.position.y, _snapTo.transform.position.z);
+                    break;
+
+                case 90:
+                case 270:
+                default:
+                    transform.position = new Vector3(_snapTo.transform.position.x, _snapTo.transform.position.y, transform.position.z);
+                    break;
+            }
             _snapTo.GetComponent<CableSlot>().isCableConnected = true;
             GetComponentInParent<Cable>().ConnectToSlot(_snapTo);
         }
