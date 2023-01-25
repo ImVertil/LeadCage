@@ -115,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
             _state = PlayerMovementState.jog;
             _movementSpeed = _jogSpeed;
         }
-        if (_isOnGround && (Input.GetButton(Controls.CROUCH) || _forceCrouch))
+        if ((Input.GetButton(Controls.CROUCH) || _forceCrouch))
         {
             _state = PlayerMovementState.crouching;
             _movementSpeed = _crouchingSpeed;
