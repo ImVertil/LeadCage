@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,7 +32,7 @@ public class Inventory : MonoBehaviour
         List<Transform> slotTransforms = new();
 
         // gotta change that, for now it works :^)
-        foreach(var t in _inventoryPanel.GetComponentsInChildren<Transform>().ToList())
+        foreach (var t in _inventoryPanel.GetComponentsInChildren<Transform>().ToList())
         {
             if (t.name.StartsWith("Slot"))
                 slotTransforms.Add(t);
@@ -56,7 +57,7 @@ public class Inventory : MonoBehaviour
     public void ToggleInventory()
     {
         _inventoryPanel.SetActive(!_isShown);
-        if(_isShown)
+        if (_isShown)
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
@@ -71,7 +72,7 @@ public class Inventory : MonoBehaviour
 
     public void UpdateItems()
     {
-        for(int i=0; i<_slots.Count; i++)
+        for (int i = 0; i < _slots.Count; i++)
         {
             var slotsEntry = _slots.ElementAt(i);
             if (_items.Count > i)
@@ -94,7 +95,7 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(InteractPickup pickup)
     {
-        _items.Add(pickup.gameObject, pickup.item); 
+        _items.Add(pickup.gameObject, pickup.item);
         pickup.gameObject.SetActive(false);
         UpdateItems();
     }
@@ -104,7 +105,7 @@ public class Inventory : MonoBehaviour
     {
         // Get the index on which the item is located in slot dictionary
         int index = 0;
-        for(int i=0; i<_slots.Count; i++)
+        for (int i = 0; i < _slots.Count; i++)
         {
             if (_slots.ElementAt(i).Key == slot)
             { index = i; break; }

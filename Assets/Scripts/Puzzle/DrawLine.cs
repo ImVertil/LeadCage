@@ -12,7 +12,7 @@ public class DrawLine : MonoBehaviour
 
     void Update()
     {
-        _lr.SetPosition(0,_startPos.position);
-        _lr.SetPosition(1,_endPos.position);
+        _lr.SetPosition(0,_startPos.localPosition);
+        _lr.SetPosition(1,_endPos.localPosition);
     }
 }
