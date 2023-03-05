@@ -87,6 +87,7 @@ public class Progression : MonoBehaviour
 public enum StoryValue
 {
     HasScrewdriver,
+    HasWrench,
     ReachedMagazineArea, 
     KilledX              
 }
