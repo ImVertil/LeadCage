@@ -2,8 +2,31 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour
+public sealed class InventorySlot : MonoBehaviour
 {
-    public Image _slotImageComponent;
-    public TextMeshProUGUI _slotTextComponent;
+    private Image _slotImageComponent;
+    private TextMeshProUGUI _slotTextComponent;
+
+    public Sprite icon
+    {
+        get { return _slotImageComponent.sprite; }
+        set { _slotImageComponent.sprite = value; }
+    }
+    public string text
+    {
+        get { return _slotTextComponent.text; }
+        set { _slotTextComponent.text = value; }
+    }
+
+    public void EnableSlot()
+    {
+        _slotImageComponent.enabled = true;
+        _slotTextComponent.enabled = true;
+    }
+
+    public void DisableSlot()
+    {
+        _slotImageComponent.enabled = false;
+        _slotTextComponent.enabled = false;
+    }
 }

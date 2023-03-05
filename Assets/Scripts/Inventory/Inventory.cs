@@ -62,19 +62,19 @@ public class Inventory : MonoBehaviour
     {
         foreach(var slot in _slots)
         {
-            if(slot.Value is not null)
+            if(slot.Value != null)
             {
-                slot.Key._slotImageComponent.sprite = slot.Value.icon;
-                slot.Key._slotTextComponent.text = slot.Value.itemName;
-                slot.Key._slotImageComponent.enabled = true;
-                slot.Key._slotTextComponent.enabled = true;
+                // Assings proper item name and icon to the slot's text and image component
+                slot.Key.icon = slot.Value.icon;
+                slot.Key.text = slot.Value.itemName;
+                slot.Key.EnableSlot();
             }
-            else
+            else // add image/text components to slots in canvas
             {
-                slot.Key._slotImageComponent.sprite = null;
-                slot.Key._slotTextComponent.text = "";
-                slot.Key._slotImageComponent.enabled = false;
-                slot.Key._slotTextComponent.enabled = false;
+                // Clears the inventory slot from item name and icon
+                slot.Key.icon = null;
+                slot.Key.text = "";
+                slot.Key.DisableSlot();
             }
         }
     }
@@ -85,7 +85,7 @@ public class Inventory : MonoBehaviour
         _items.Add(pickup.gameObject, pickup.item);
         pickup.gameObject.SetActive(false);
 
-        // Find first free inventory slot and assign it an item we just picked up
+        // Find first free inventory slot and assign it an item that we have just picked up
         InventorySlot key = _slots.FirstOrDefault(slot => slot.Value == null).Key;
         _slots[key] = pickup.item;
 
