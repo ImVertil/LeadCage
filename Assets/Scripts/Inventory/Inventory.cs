@@ -28,7 +28,8 @@ public class Inventory : MonoBehaviour
     {
         foreach (var slot in _inventoryPanel.GetComponentsInChildren<InventorySlot>().ToList())
         {
-            _slots.Add(slot, null);
+            slot.AssignComponents();
+            _slots.Add(slot, null);    
         }
 
         _isShown = false;
@@ -69,7 +70,7 @@ public class Inventory : MonoBehaviour
                 slot.Key.text = slot.Value.itemName;
                 slot.Key.EnableSlot();
             }
-            else // add image/text components to slots in canvas
+            else
             {
                 // Clears the inventory slot from item name and icon
                 slot.Key.icon = null;
@@ -97,7 +98,8 @@ public class Inventory : MonoBehaviour
         // Find the object associated with the item in the slot that we're dropping it from, set it to active and set its position in front of player
         GameObject itemObject = _items.FirstOrDefault(item => item.Value == _slots[slot]).Key;
         itemObject.SetActive(true);
-        itemObject.transform.position = new Vector3(0, 100, 0); // this will be the "in front of player" position later on
+        itemObject.transform.localPosition = new Vector3(0, 1, 0); // this will be the "in front of player" position later on
+        //itemObject.transform.position = new Vector3(0, 1, 0);
 
         // Remove the object/item pair from dictionary and set the slots item to null as there is nothing there after we dropped an item
         _items.Remove(itemObject);
