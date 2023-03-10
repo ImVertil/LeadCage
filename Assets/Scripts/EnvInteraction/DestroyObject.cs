@@ -4,31 +4,31 @@ using UnityEngine;
 
 public class DestroyObject : MonoBehaviour
 {
-    [SerializeField] private float objectDurability;
+    [SerializeField] private float _objectDurability;
     public GameObject broken;
     public GameObject originalObject;
-    private GameObject brokenObj;
+    private GameObject _brokenObj;
     
 
     void OnMouseDown()
     {
-        objectDurability = objectDurability - 1;
-        if (objectDurability <= 0)
+        _objectDurability = _objectDurability - 1;
+        if (_objectDurability <= 0)
         {
-            Break();
+            BreakObject();
         }
         
     }
 
-    void Break()
+    void BreakObject()
     {
         if (originalObject != null)
         {
             originalObject.SetActive(false);
             if (broken != null)
             {
-                brokenObj = Instantiate(broken, originalObject.transform.position, originalObject.transform.rotation) as GameObject;
-                foreach (Transform t in brokenObj.transform)
+                _brokenObj = Instantiate(broken, originalObject.transform.position, originalObject.transform.rotation);
+                foreach (Transform t in _brokenObj.transform)
                 {
                     var rb = t.GetComponent<Rigidbody>();
                     if (rb != null)
