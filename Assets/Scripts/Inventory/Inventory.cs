@@ -1,9 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
@@ -24,23 +21,15 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private GameObject _inventoryPanel;
     private Dictionary<GameObject, Item> _items = new();
-    private Dictionary<Image, TextMeshProUGUI> _slots = new();
+    private Dictionary<InventorySlot, Item> _slots = new();
     private bool _isShown;
 
     void Start()
     {
-        List<Transform> slotTransforms = new();
-
-        // gotta change that, for now it works :^)
-        foreach (var t in _inventoryPanel.GetComponentsInChildren<Transform>().ToList())
+        foreach (var slot in _inventoryPanel.GetComponentsInChildren<InventorySlot>().ToList())
         {
-            if (t.name.StartsWith("Slot"))
-                slotTransforms.Add(t);
-        }
-
-        foreach (Transform slotTransform in slotTransforms)
-        {
-            _slots.Add(slotTransform.gameObject.GetComponentsInChildren<Image>()[1], slotTransform.gameObject.GetComponentInChildren<TextMeshProUGUI>());
+            slot.AssignComponents();
+            _slots.Add(slot, null);    
         }
 
         _isShown = false;
@@ -72,54 +61,50 @@ public class Inventory : MonoBehaviour
 
     public void UpdateItems()
     {
-        for (int i = 0; i < _slots.Count; i++)
+        foreach(var slot in _slots)
         {
-            var slotsEntry = _slots.ElementAt(i);
-            if (_items.Count > i)
+            if(slot.Value != null)
             {
-                var itemsEntry = _items.ElementAt(i);
-                slotsEntry.Key.sprite = itemsEntry.Value.icon;
-                slotsEntry.Value.text = itemsEntry.Value.itemName;
-                slotsEntry.Key.enabled = true;
-                slotsEntry.Value.enabled = true;
+                // Assings proper item name and icon to the slot's text and image component
+                slot.Key.icon = slot.Value.icon;
+                slot.Key.text = slot.Value.itemName;
+                slot.Key.EnableSlot();
             }
             else
             {
-                slotsEntry.Key.sprite = null;
-                slotsEntry.Value.text = "";
-                slotsEntry.Key.enabled = false;
-                slotsEntry.Value.enabled = false;
+                // Clears the inventory slot from item name and icon
+                slot.Key.icon = null;
+                slot.Key.text = "";
+                slot.Key.DisableSlot();
             }
         }
     }
 
     public void AddItem(InteractPickup pickup)
     {
+        // Add an entry with GameObject and Item ref, disable the game object
         _items.Add(pickup.gameObject, pickup.item);
         pickup.gameObject.SetActive(false);
+
+        // Find first free inventory slot and assign it an item that we have just picked up
+        InventorySlot key = _slots.FirstOrDefault(slot => slot.Value == null).Key;
+        _slots[key] = pickup.item;
+
         UpdateItems();
     }
 
-    // This may not be very well optimized :|
-    public void DropItem(Image slot)
+    public void DropItem(InventorySlot slot)
     {
-        // Get the index on which the item is located in slot dictionary
-        int index = 0;
-        for (int i = 0; i < _slots.Count; i++)
-        {
-            if (_slots.ElementAt(i).Key == slot)
-            { index = i; break; }
-        }
-
-        // Get the Key/Value at index from items dictionary, set it to active and set its position
-        GameObject itemObject = _items.ElementAt(index).Key;
+        // Find the object associated with the item in the slot that we're dropping it from, set it to active and set its position in front of player
+        GameObject itemObject = _items.FirstOrDefault(item => item.Value == _slots[slot]).Key;
         itemObject.SetActive(true);
-        itemObject.transform.position = new Vector3(0, 0, 0);
+        itemObject.transform.localPosition = new Vector3(0, 1, 0); // this will be the "in front of player" position later on
+        //itemObject.transform.position = new Vector3(0, 1, 0);
 
-        // Remove entry from the dictionary
+        // Remove the object/item pair from dictionary and set the slots item to null as there is nothing there after we dropped an item
         _items.Remove(itemObject);
+        _slots[slot] = null;
 
-        // Update items in inventory
         UpdateItems();
     }
 }
