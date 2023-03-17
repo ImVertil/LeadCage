@@ -25,7 +25,6 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private int _simultaneousSoundsAmount;
     public SoundClip[] sounds;
     private ObjectPool<GameObject> _pool;
-    private Vector3 _test;
 
     private void Initialize()
     {
@@ -34,9 +33,9 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(Sound sound, Vector3 position) // rename to PlaySFX when remaking the other PlaySound
     {
-        _test = position;
         GameObject soundObject = _pool.Get();
         AudioSource audioSource = soundObject.GetComponent<AudioSource>();
+        soundObject.transform.position = position;
         audioSource.clip = GetAudioClip(sound);
         audioSource.Play();
         StartCoroutine(WaitAndRelease(soundObject, audioSource.clip.length));
@@ -73,7 +72,6 @@ public class SoundManager : MonoBehaviour
 
     private void OnGetSoundObject(GameObject obj)
     {
-        obj.transform.position = _test;
         obj.SetActive(true);
     }
 

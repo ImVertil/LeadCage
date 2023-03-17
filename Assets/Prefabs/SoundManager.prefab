@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1505691141cf0794e8478e212825fe91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _simultaneousSoundsAmount: 25
+  _simultaneousSoundsAmount: 20
   sounds:
   - name: 0
     type: 1

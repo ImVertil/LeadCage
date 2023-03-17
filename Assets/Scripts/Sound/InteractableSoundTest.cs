@@ -16,7 +16,7 @@ public class InteractableSoundTest : MonoBehaviour, IInteractable
     public void OnInteract()
     {
         Debug.Log("Test");
-        SoundManager.Instance.PlaySound(Sound.Test1, this.gameObject.transform.position);
+        SoundManager.Instance.PlaySound(Sound.Countdown);
         Debug.Log("Test2");
     }
 }
