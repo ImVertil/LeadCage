@@ -15,7 +15,7 @@ public class InteractableSoundScript2 : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
-        SoundManager.Instance.PlaySound(Sound.Test2, new Vector3(-30,60,0));
+        SoundManager.Instance.PlaySound(Sound.Countdown, new Vector3(-30,60,0));
     }
 }
 
