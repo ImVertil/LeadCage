@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -25,13 +24,19 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private int _simultaneousSoundsAmount;
     public SoundClip[] sounds;
     private ObjectPool<GameObject> _pool;
+    private GameObject _oneShotSoundObject;
 
     private void Initialize()
     {
         _pool = new ObjectPool<GameObject>(CreateSoundObject, OnGetSoundObject, OnReturnSoundObject, OnDestroySoundObject, true, _simultaneousSoundsAmount, _simultaneousSoundsAmount + 10);
+        if(_oneShotSoundObject == null)
+        {
+            Instantiate(_oneShotSoundObject = new GameObject());
+            _oneShotSoundObject.AddComponent<AudioSource>();
+        }
     }
 
-    public void PlaySound(Sound sound, Vector3 position) // rename to PlaySFX when remaking the other PlaySound
+    public void PlaySound(Sound sound, Vector3 position)
     {
         GameObject soundObject = _pool.Get();
         AudioSource audioSource = soundObject.GetComponent<AudioSource>();
@@ -41,13 +46,11 @@ public class SoundManager : MonoBehaviour
         StartCoroutine(WaitAndRelease(soundObject, audioSource.clip.length));
     }
 
-    public void PlaySound(Sound sound) // this will be remade into PlayBGM later on 
+    public void PlaySound(Sound sound)
     {
-        GameObject soundObject = _pool.Get();
-        AudioSource audioSource = soundObject.GetComponent<AudioSource>();
+        AudioSource audioSource = _oneShotSoundObject.GetComponent<AudioSource>();
         AudioClip clip = GetAudioClip(sound);
         audioSource.PlayOneShot(clip);
-        StartCoroutine(WaitAndRelease(soundObject, clip.length));
     }
 
     public AudioClip GetAudioClip(Sound sound)

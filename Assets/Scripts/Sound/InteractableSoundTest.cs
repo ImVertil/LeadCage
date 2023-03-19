@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class InteractableSoundTest : MonoBehaviour, IInteractable
@@ -20,4 +19,3 @@ public class InteractableSoundTest : MonoBehaviour, IInteractable
         Debug.Log("Test2");
     }
 }
-

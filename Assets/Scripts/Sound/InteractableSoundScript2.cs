@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class InteractableSoundScript2 : MonoBehaviour, IInteractable
@@ -18,4 +17,3 @@ public class InteractableSoundScript2 : MonoBehaviour, IInteractable
         SoundManager.Instance.PlaySound(Sound.Countdown, new Vector3(-30,60,0));
     }
 }
-
