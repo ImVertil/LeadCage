@@ -31,7 +31,7 @@ public class SoundManager : MonoBehaviour
         _pool = new ObjectPool<GameObject>(CreateSoundObject, OnGetSoundObject, OnReturnSoundObject, OnDestroySoundObject, true, _simultaneousSoundsAmount, _simultaneousSoundsAmount + 10);
         if(_oneShotSoundObject == null)
         {
-            Instantiate(_oneShotSoundObject = new GameObject());
+            Instantiate(_oneShotSoundObject = new GameObject("Sound (One Shot)"));
             _oneShotSoundObject.AddComponent<AudioSource>();
         }
     }
