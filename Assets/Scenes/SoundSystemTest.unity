@@ -250,7 +250,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &229040647
 BoxCollider:
@@ -2132,7 +2132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4143209972886641886, guid: 5cb71cf518f9d7f48b8f8c752296340d, type: 3}
       propertyPath: sounds.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4143209972886641886, guid: 5cb71cf518f9d7f48b8f8c752296340d, type: 3}
       propertyPath: sounds.Array.data[2].name
@@ -2143,9 +2143,21 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4143209972886641886, guid: 5cb71cf518f9d7f48b8f8c752296340d, type: 3}
+      propertyPath: sounds.Array.data[3].name
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4143209972886641886, guid: 5cb71cf518f9d7f48b8f8c752296340d, type: 3}
+      propertyPath: sounds.Array.data[3].type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4143209972886641886, guid: 5cb71cf518f9d7f48b8f8c752296340d, type: 3}
       propertyPath: sounds.Array.data[2].audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 9c0f0feeb2397ac41aea6023a05a6e3c, type: 3}
+    - target: {fileID: 4143209972886641886, guid: 5cb71cf518f9d7f48b8f8c752296340d, type: 3}
+      propertyPath: sounds.Array.data[3].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3d48ec2f366681348987bb8f41a990e2, type: 3}
     - target: {fileID: 4143209972886641887, guid: 5cb71cf518f9d7f48b8f8c752296340d, type: 3}
       propertyPath: m_Name
       value: SoundManager
