@@ -36,11 +36,12 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlaySound(Sound sound, Vector3 position)
+    public void PlaySound(Sound sound, Transform transform)
     {
         GameObject soundObject = _pool.Get();
         AudioSource audioSource = soundObject.GetComponent<AudioSource>();
-        soundObject.transform.position = position;
+        soundObject.transform.position = Vector3.zero;
+        soundObject.transform.SetParent(transform, false);
         audioSource.clip = GetAudioClip(sound);
         audioSource.Play();
         StartCoroutine(WaitAndRelease(soundObject, audioSource.clip.length));
@@ -70,6 +71,7 @@ public class SoundManager : MonoBehaviour
         GameObject obj = new GameObject("Sound");
         AudioSource audioSource = obj.AddComponent<AudioSource>();
         audioSource.spatialBlend = 1;
+        audioSource.dopplerLevel = 0.1f;
         return obj;
     }
 
@@ -80,7 +82,11 @@ public class SoundManager : MonoBehaviour
 
     private void OnReturnSoundObject(GameObject obj)
     {
-        obj.SetActive(false);
+        if (obj.transform.parent != null)
+        {
+            obj.transform.SetParent(null);
+        }
+        obj.SetActive(false);  
     }
 
     private void OnDestroySoundObject(GameObject obj)
