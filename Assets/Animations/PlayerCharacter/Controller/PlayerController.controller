@@ -139,14 +139,14 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: -9098803823909532060, guid: 98f277b0c8055e143b2fcf058d3c27dc, type: 3}
     m_Threshold: 0
-    m_Position: {x: 1, y: 0}
+    m_Position: {x: -4, y: 0}
     m_TimeScale: 1.2
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: -203655887218126122, guid: a147982aeb7298f7f8fe93285a4e6516, type: 3}
-    m_Threshold: 0.25
+    m_Threshold: 0.2
     m_Position: {x: -7.5, y: 0}
     m_TimeScale: 1.5
     m_CycleOffset: 0
@@ -154,7 +154,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: -203655887218126122, guid: 13566988a47141eb094da13fa557fb52, type: 3}
-    m_Threshold: 0.5
+    m_Threshold: 0.4
     m_Position: {x: -15, y: 0}
     m_TimeScale: 1.2
     m_CycleOffset: 0
@@ -162,17 +162,25 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 3062299877480904481, guid: 325a26d62b61fa94cb3c97c435efebc5, type: 3}
-    m_Threshold: 0.75
-    m_Position: {x: -3.5, y: 3}
+    m_Threshold: 0.6
+    m_Position: {x: -4.5, y: 3}
     m_TimeScale: 1.2
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: -2817517482862745934, guid: 3c033631149b9c541bcf155cd94cccba, type: 3}
-    m_Threshold: 1
-    m_Position: {x: -6, y: 7}
+    m_Threshold: 0.8
+    m_Position: {x: -7, y: 7}
     m_TimeScale: 0.9
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Blend
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -203655887218126122, guid: 9e7193a97770b6ba4bf123e7387dc57c, type: 3}
+    m_Threshold: 1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 20
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
@@ -327,6 +335,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
+  - m_Name: Jump
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   - m_Name: Falling
     m_Type: 4
     m_DefaultFloat: 0
@@ -335,12 +349,6 @@ AnimatorController:
     m_Controller: {fileID: 0}
   - m_Name: Grounded
     m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
-  - m_Name: Jump
-    m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -488,12 +496,12 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.3492794
   m_TransitionOffset: 0
   m_ExitTime: 0.8522976
   m_HasExitTime: 0
   m_HasFixedDuration: 1
-  m_InterruptionSource: 0
+  m_InterruptionSource: 2
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
 --- !u!206 &5654075020144499493
@@ -600,9 +608,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.12868857
-  m_TransitionOffset: 0.24627157
-  m_ExitTime: 0.72538203
+  m_TransitionDuration: 0.13230523
+  m_TransitionOffset: 0.0019313849
+  m_ExitTime: 0.0011496356
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
