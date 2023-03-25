@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float WalkSpeed = 4f;
     [SerializeField] private float RunSpeed = 6f;
     [SerializeField] private float CrouchSpeed = 2f;
+    [SerializeField] private float CrouchScale = 0.7f;
     [SerializeField] private float AnimBlendSpeed = 8.9f;
 
     [SerializeField] private float UpperCameraLimit = -40f;
@@ -46,9 +47,15 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float JumpStrength = 260f;
     [SerializeField] private float DistanceToGround = 0.8f;
+    [SerializeField] private float DistanceToGroundFallOffset = 0.2f;
+    [SerializeField] private float DistanceToCrouchCeiling = 0.7f;
+
+    [SerializeField] private float StepReachForce = 25f;
 
     [SerializeField] private Transform CameraRoot;
     [SerializeField] private Transform Camera;
+
+    [SerializeField] private LayerMask GroundMask;
 
     private void Start()
     {
@@ -73,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown(Controls.JUMP))
+        if (Input.GetButtonDown(Controls.JUMP) && !_crouching)
         {
             JumpHandling();
         }
@@ -84,7 +91,10 @@ public class PlayerController : MonoBehaviour
         Move();
         CheckGround();
         CrouchHandling();
+        FloatCollider();
     }
+    
+    
 
     private void LateUpdate()
     {
@@ -106,10 +116,19 @@ public class PlayerController : MonoBehaviour
         {
             _crouching = true;
             targetSpeed = CrouchSpeed;
-            _capsule.height = 0.7f * _startHeight;
-            _capsule.center = 0.7f * _startCenter;
+            if (!_grounded) //TODO, jezeli tego nie ma to crouch jumping sprawia ze mozemy wejsc w rozne niepozadane miejsca przez floating collider
+            {
+                _capsule.height = CrouchScale * 1.78f; 
+                _capsule.center = new Vector3(0, CrouchScale*0.89f, 0);
+            }
+            else
+            {
+                _capsule.height = CrouchScale * _startHeight;
+                _capsule.center = CrouchScale * _startCenter;
+            }
+
         }
-        else if (!Physics.Raycast(_rb.worldCenterOfMass, Vector3.up, DistanceToGround))
+        else if (!Physics.Raycast(_rb.worldCenterOfMass, Vector3.up, DistanceToCrouchCeiling))
         {
             _crouching = false;
             _capsule.height = Mathf.SmoothDamp(_capsule.height, _startHeight, ref _uncrouchHeightVelocity, 0.1f);
@@ -168,11 +187,12 @@ public class PlayerController : MonoBehaviour
     {
         if (!_hasAnimator) return;
 
-        RaycastHit hitInfo;
-        if (Physics.Raycast(_rb.worldCenterOfMass, Vector3.down, out hitInfo, DistanceToGround + 0.1f))
+       
+        if (Physics.Raycast(_rb.worldCenterOfMass, Vector3.down, out RaycastHit hitInfo, DistanceToGround + DistanceToGroundFallOffset, GroundMask ,QueryTriggerInteraction.Ignore))
         {
             _grounded = true;
             SendGroundInfoToAnimator();
+            //FloatCollider(hitInfo);
             return;
         }
 
@@ -191,5 +211,29 @@ public class PlayerController : MonoBehaviour
     private void CrouchHandling()
     {
         _animator.SetBool(_crouchingHash, _crouching);
+    }
+
+    private void FloatCollider()
+    {
+        Vector3 capsuleCenterInWorldSpace = _capsule.bounds.center;
+
+        Ray downFromCapsuleCenter = new Ray(capsuleCenterInWorldSpace, Vector3.down);
+
+        if (Physics.Raycast(downFromCapsuleCenter, out RaycastHit hit, DistanceToGround, GroundMask, QueryTriggerInteraction.Ignore))
+        {
+
+            float distanceToFloatingPoint = _capsule.center.y - hit.distance;
+
+            if (distanceToFloatingPoint == 0f)
+            {
+                return;
+            }
+
+            float amountToLift = distanceToFloatingPoint * StepReachForce - _rb.velocity.y;
+            Vector3 liftForce = new Vector3(0f, amountToLift, 0f);
+
+            _rb.AddForce(liftForce, ForceMode.VelocityChange);
+        }
+
     }
 }
