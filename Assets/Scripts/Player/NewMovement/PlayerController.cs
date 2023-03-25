@@ -30,6 +30,10 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 _currentVelocity;
 
+    //private Vector2 _blendVelocity = Vector2.zero;
+    private Vector3 _uncrouchCenterVelocity = Vector3.zero;
+    private float _uncrouchHeightVelocity = 0;
+
     [SerializeField] private float WalkSpeed = 4f;
     [SerializeField] private float RunSpeed = 6f;
     [SerializeField] private float CrouchSpeed = 2f;
@@ -102,14 +106,14 @@ public class PlayerController : MonoBehaviour
         {
             _crouching = true;
             targetSpeed = CrouchSpeed;
-            _capsule.height = 0.5f * _startHeight;
-            _capsule.center = 0.5f * _startCenter;
+            _capsule.height = 0.7f * _startHeight;
+            _capsule.center = 0.7f * _startCenter;
         }
         else if (!Physics.Raycast(_rb.worldCenterOfMass, Vector3.up, DistanceToGround))
         {
             _crouching = false;
-            _capsule.height = _startHeight;
-            _capsule.center = _startCenter;
+            _capsule.height = Mathf.SmoothDamp(_capsule.height, _startHeight, ref _uncrouchHeightVelocity, 0.1f);
+            _capsule.center = Vector3.SmoothDamp(_capsule.center, _startCenter, ref _uncrouchCenterVelocity, 0.1f);
         }
 
 
@@ -117,7 +121,8 @@ public class PlayerController : MonoBehaviour
         
         _currentVelocity.x = Mathf.Lerp(_currentVelocity.x, targetSpeed * _inputVector.normalized.x, AnimBlendSpeed * Time.fixedDeltaTime);
         _currentVelocity.y = Mathf.Lerp(_currentVelocity.y, targetSpeed * _inputVector.normalized.y, AnimBlendSpeed * Time.fixedDeltaTime);
-
+        //_currentVelocity = Vector2.SmoothDamp(_currentVelocity, new Vector2(targetSpeed, targetSpeed) *_inputVector.normalized, ref _blendVelocity, 1/AnimBlendSpeed);
+        
         var xVelDifference = _currentVelocity.x - _rb.velocity.x;
         var yVelDifference = _currentVelocity.y - _rb.velocity.z;
         
