@@ -11,11 +11,14 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private Animator _animator;
     private CapsuleCollider _capsule;
+    
     private bool _hasAnimator;
     private bool _grounded;
     private bool _crouching;
+    
     private float _startHeight;
     private Vector3 _startCenter;
+    private float _startRadius;
 
     private int _xVelHash;
     private int _yVelHash;
@@ -29,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private float _xRotation;
 
     private Vector2 _currentVelocity;
+    private float _onSlopeSpeedModifier = 1f;
 
     //private Vector2 _blendVelocity = Vector2.zero;
     private Vector3 _uncrouchCenterVelocity = Vector3.zero;
@@ -38,7 +42,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float RunSpeed = 6f;
     [SerializeField] private float CrouchSpeed = 2f;
     [SerializeField] private float CrouchScale = 0.7f;
+    [SerializeField] private float CrouchRadius = 0.5f;
     [SerializeField] private float AnimBlendSpeed = 8.9f;
+
+    [SerializeField] private AnimationCurve SlopeSpeedAngles;
 
     [SerializeField] private float UpperCameraLimit = -40f;
     [SerializeField] private float BottomCameraLimit = 70f;
@@ -68,6 +75,7 @@ public class PlayerController : MonoBehaviour
 
         _startHeight = _capsule.height;
         _startCenter = _capsule.center;
+        _startRadius = _capsule.radius;
 
         _xVelHash = Animator.StringToHash("X_Velocity");
         _yVelHash = Animator.StringToHash("Y_Velocity");
@@ -80,7 +88,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown(Controls.JUMP) && !_crouching)
+        if (Input.GetButtonDown(Controls.JUMP) && !_crouching && CanMove)
         {
             JumpHandling();
         }
@@ -116,6 +124,7 @@ public class PlayerController : MonoBehaviour
         {
             _crouching = true;
             targetSpeed = CrouchSpeed;
+            _capsule.radius = CrouchRadius;
             if (!_grounded) //TODO, jezeli tego nie ma to crouch jumping sprawia ze mozemy wejsc w rozne niepozadane miejsca przez floating collider
             {
                 _capsule.height = CrouchScale * 1.78f; 
@@ -128,16 +137,19 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-        else if (!Physics.Raycast(_rb.worldCenterOfMass, Vector3.up, DistanceToCrouchCeiling))
+        else if (!Physics.Raycast(_rb.worldCenterOfMass, Vector3.up, DistanceToCrouchCeiling) )
         {
             _crouching = false;
+            _capsule.radius = _startRadius;
             _capsule.height = Mathf.SmoothDamp(_capsule.height, _startHeight, ref _uncrouchHeightVelocity, 0.1f);
             _capsule.center = Vector3.SmoothDamp(_capsule.center, _startCenter, ref _uncrouchCenterVelocity, 0.1f);
         }
 
 
-        if (_inputVector.x == 0 && _inputVector.y == 0) targetSpeed = 0; 
-        
+        if (_inputVector.x == 0 && _inputVector.y == 0) targetSpeed = 0;
+
+        targetSpeed = targetSpeed * _onSlopeSpeedModifier;
+
         _currentVelocity.x = Mathf.Lerp(_currentVelocity.x, targetSpeed * _inputVector.normalized.x, AnimBlendSpeed * Time.fixedDeltaTime);
         _currentVelocity.y = Mathf.Lerp(_currentVelocity.y, targetSpeed * _inputVector.normalized.y, AnimBlendSpeed * Time.fixedDeltaTime);
         //_currentVelocity = Vector2.SmoothDamp(_currentVelocity, new Vector2(targetSpeed, targetSpeed) *_inputVector.normalized, ref _blendVelocity, 1/AnimBlendSpeed);
@@ -221,8 +233,17 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(downFromCapsuleCenter, out RaycastHit hit, DistanceToGround, GroundMask, QueryTriggerInteraction.Ignore))
         {
+            float groundAngle = Vector3.Angle(hit.normal, -downFromCapsuleCenter.direction);
+
+            SetSlopeSpeedModifierOnSlope(groundAngle);
+
+            if (_onSlopeSpeedModifier == 0f)
+            {
+                return;
+            }
 
             float distanceToFloatingPoint = _capsule.center.y - hit.distance;
+            
 
             if (distanceToFloatingPoint == 0f)
             {
@@ -235,5 +256,10 @@ public class PlayerController : MonoBehaviour
             _rb.AddForce(liftForce, ForceMode.VelocityChange);
         }
 
+    }
+
+    private void SetSlopeSpeedModifierOnSlope(float angle)
+    {
+        _onSlopeSpeedModifier = SlopeSpeedAngles.Evaluate(angle);
     }
 }
