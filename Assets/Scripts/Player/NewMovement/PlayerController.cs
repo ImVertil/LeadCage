@@ -10,8 +10,12 @@ public class PlayerController : MonoBehaviour
     
     private Rigidbody _rb;
     private Animator _animator;
+    private CapsuleCollider _capsule;
     private bool _hasAnimator;
     private bool _grounded;
+    private bool _crouching;
+    private float _startHeight;
+    private Vector3 _startCenter;
 
     private int _xVelHash;
     private int _yVelHash;
@@ -19,14 +23,16 @@ public class PlayerController : MonoBehaviour
     private int _jumpHash;
     private int _groundedHash;
     private int _fallingHash;
+    private int _crouchingHash;
     
     private Vector2 _inputVector;
     private float _xRotation;
 
     private Vector2 _currentVelocity;
 
-    [SerializeField] private float WalkSpeed = 2f;
+    [SerializeField] private float WalkSpeed = 4f;
     [SerializeField] private float RunSpeed = 6f;
+    [SerializeField] private float CrouchSpeed = 2f;
     [SerializeField] private float AnimBlendSpeed = 8.9f;
 
     [SerializeField] private float UpperCameraLimit = -40f;
@@ -47,6 +53,10 @@ public class PlayerController : MonoBehaviour
         
         _hasAnimator = TryGetComponent<Animator>(out _animator);
         _rb = GetComponent<Rigidbody>();
+        _capsule = GetComponent<CapsuleCollider>();
+
+        _startHeight = _capsule.height;
+        _startCenter = _capsule.center;
 
         _xVelHash = Animator.StringToHash("X_Velocity");
         _yVelHash = Animator.StringToHash("Y_Velocity");
@@ -54,6 +64,7 @@ public class PlayerController : MonoBehaviour
         _jumpHash = Animator.StringToHash("Jump");
         _groundedHash = Animator.StringToHash("Grounded");
         _fallingHash = Animator.StringToHash("Falling");
+        _crouchingHash = Animator.StringToHash("Crouching");
     }
 
     private void Update()
@@ -68,6 +79,7 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         CheckGround();
+        CrouchHandling();
     }
 
     private void LateUpdate()
@@ -86,8 +98,23 @@ public class PlayerController : MonoBehaviour
 
         float targetSpeed = Input.GetButton(Controls.SPRINT) ? RunSpeed : WalkSpeed;
 
-        
+        if (Input.GetButton(Controls.CROUCH))
+        {
+            _crouching = true;
+            targetSpeed = CrouchSpeed;
+            _capsule.height = 0.5f * _startHeight;
+            _capsule.center = 0.5f * _startCenter;
+        }
+        else if (!Physics.Raycast(_rb.worldCenterOfMass, Vector3.up, DistanceToGround))
+        {
+            _crouching = false;
+            _capsule.height = _startHeight;
+            _capsule.center = _startCenter;
+        }
+
+
         if (_inputVector.x == 0 && _inputVector.y == 0) targetSpeed = 0; 
+        
         _currentVelocity.x = Mathf.Lerp(_currentVelocity.x, targetSpeed * _inputVector.normalized.x, AnimBlendSpeed * Time.fixedDeltaTime);
         _currentVelocity.y = Mathf.Lerp(_currentVelocity.y, targetSpeed * _inputVector.normalized.y, AnimBlendSpeed * Time.fixedDeltaTime);
 
@@ -154,5 +181,10 @@ public class PlayerController : MonoBehaviour
     {
         _animator.SetBool(_fallingHash, !_grounded);
         _animator.SetBool(_groundedHash, _grounded);
+    }
+
+    private void CrouchHandling()
+    {
+        _animator.SetBool(_crouchingHash, _crouching);
     }
 }
