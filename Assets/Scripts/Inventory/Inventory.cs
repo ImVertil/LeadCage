@@ -50,14 +50,14 @@ public class Inventory : MonoBehaviour
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-            PlayerController.CanMove = true;
+            //PlayerController.CanMove = true;
             PlayerController.CanMoveCamera = true;
         }
         else
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
-            PlayerController.CanMove = false;
+            //PlayerController.CanMove = false;
             PlayerController.CanMoveCamera = false;
         }
         _isShown = !_isShown;
