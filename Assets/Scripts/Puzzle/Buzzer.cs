@@ -53,7 +53,7 @@ public class Buzzer : MonoBehaviour
         {
             _buzzers[cable] = true;
             gameObject.GetComponent<MeshRenderer>().material = _materialOn;
-            // Add sound
+            SoundManager.Instance.PlaySound(Sound.Puzzle1_Buzzer, transform, true);
         }
     }
 
@@ -65,7 +65,7 @@ public class Buzzer : MonoBehaviour
             if(!_buzzers.ContainsValue(true))
             {
                 gameObject.GetComponent<MeshRenderer>().material = _materialOff;
-                // Add sound
+                SoundManager.Instance.StopSound(Sound.Puzzle1_Buzzer, transform);
             }
         }
     }

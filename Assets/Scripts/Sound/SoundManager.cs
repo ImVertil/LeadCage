@@ -22,6 +22,7 @@ public class SoundManager : MonoBehaviour
     #endregion
 
     [SerializeField] private int _simultaneousSoundsAmount;
+    [SerializeField] private int _volume = 65;
     public SoundClip[] sounds;
     private ObjectPool<GameObject> _pool;
     private GameObject _oneShotSoundObject;
@@ -93,6 +94,7 @@ public class SoundManager : MonoBehaviour
         AudioSource audioSource = obj.AddComponent<AudioSource>();
         audioSource.spatialBlend = 1;
         audioSource.dopplerLevel = 0.1f;
+        audioSource.volume = _volume / 100.0f;
         return obj;
     }
 
