@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public bool CanMove = true; 
-    public bool CanMoveCamera = true;
+    public static bool CanMove = true; 
+    public static bool CanMoveCamera = true;
     
     private Rigidbody _rb;
     private Animator _animator;
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float UpperCameraLimit = -40f;
     [SerializeField] private float BottomCameraLimit = 70f;
 
-    [SerializeField] private float MouseSensitivity = 21.9f;
+    [SerializeField] public float MouseSensitivity = 21.9f; 
 
     [SerializeField] private float JumpStrength = 260f;
     [SerializeField] private float DistanceToGround = 0.8f;
