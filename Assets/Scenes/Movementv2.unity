@@ -10571,27 +10571,27 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.1532608
     - serializedVersion: 3
-      time: 15
-      value: 0.8
-      inSlope: -0.013333333
-      outSlope: -0.016463121
+      time: 19.842407
+      value: 0.9007996
+      inSlope: -0.004999415
+      outSlope: -0.014893893
       tangentMode: 69
       weightedMode: 0
       inWeight: 0.20406373
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 45.072838
-      value: 0.30490723
-      inSlope: -0.016463121
-      outSlope: -0.030714441
+      time: 50.159813
+      value: 0.44925538
+      inSlope: -0.014893893
+      outSlope: -4.701381
       tangentMode: 69
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 55
+      time: 50.25537
       value: 0
-      inSlope: -0.030714441
+      inSlope: -4.701381
       outSlope: 0
       tangentMode: 69
       weightedMode: 0
@@ -10616,6 +10616,7 @@ MonoBehaviour:
   DistanceToGround: 1.2
   DistanceToGroundFallOffset: 0.2
   DistanceToCrouchCeiling: 1
+  DistanceIKFoot: 0.085
   StepReachForce: 12.5
   CameraRoot: {fileID: 523794420976429918}
   Camera: {fileID: 19162698}
