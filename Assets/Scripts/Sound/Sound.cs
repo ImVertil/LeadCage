@@ -1,4 +1,4 @@
 public enum Sound
 {
-    Test1, Test2, Countdown
+    Test1, Test2, Countdown, Puzzle1_Buzzer
 }
