@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -56,6 +57,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float DistanceToGround = 0.8f;
     [SerializeField] private float DistanceToGroundFallOffset = 0.2f;
     [SerializeField] private float DistanceToCrouchCeiling = 0.7f;
+    [SerializeField] private float DistanceIKFoot = 0.05f;
 
     [SerializeField] private float StepReachForce = 25f;
 
@@ -262,4 +264,38 @@ public class PlayerController : MonoBehaviour
     {
         _onSlopeSpeedModifier = SlopeSpeedAngles.Evaluate(angle);
     }
+
+    private void OnAnimatorIK(int layerIndex)
+    {
+        if (!_hasAnimator) return;
+        
+        AdjustFoot(AvatarIKGoal.LeftFoot);
+        AdjustFoot(AvatarIKGoal.RightFoot);
+    }
+
+    private void AdjustFoot(AvatarIKGoal foot)
+    {
+        _animator.SetIKPositionWeight(foot, 1f);
+        _animator.SetIKRotationWeight(foot, 1f);
+
+        RaycastHit hit;
+     
+        
+        float reach = 1f;
+
+        if (_onSlopeSpeedModifier < 1 && _onSlopeSpeedModifier > 0) reach = 1.5f;
+        
+        Ray ray = new Ray(_animator.GetIKPosition(foot) + Vector3.up, Vector3.down);
+        if (Physics.Raycast(ray, out hit, DistanceIKFoot + reach, GroundMask, QueryTriggerInteraction.Ignore))
+        {
+            //if (hit.distance > 1.001f + DistanceIKFoot) return;
+            
+            Vector3 footPosition = hit.point;
+            footPosition.y += DistanceIKFoot;
+            _animator.SetIKPosition(foot, footPosition);
+            Vector3 fwd = Vector3.ProjectOnPlane(transform.forward, hit.normal);
+            _animator.SetIKRotation(foot, Quaternion.LookRotation(fwd, hit.normal));
+        }
+    }
+    
 }
