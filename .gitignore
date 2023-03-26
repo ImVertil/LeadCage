@@ -73,3 +73,6 @@ crashlytics-build.properties
 
 # LeanTween Examples
 /Assets/LeanTween/Examples/
+
+# Vscode stuff
+.vscode/
