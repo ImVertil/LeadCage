@@ -25,6 +25,11 @@ public class RifleController : MonoBehaviour
         {
             _animator.SetBool(_riflePulledOutHash, !_riflePulledOut);
             _riflePulledOut = !_riflePulledOut;
+            if(_riflePulledOut)
+                _animator.SetLayerWeight(1,1);
+            else
+                _animator.SetLayerWeight(1, 0);
+            
         }
     }
 }
