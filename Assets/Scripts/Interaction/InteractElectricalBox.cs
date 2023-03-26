@@ -33,6 +33,8 @@ public class InteractElectricalBox : MonoBehaviour, IInteractable
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             _isInteracting = false;
+            PlayerController.CanMove = true;
+            PlayerController.CanMoveCamera = true;
         }
         else
         {
@@ -41,6 +43,8 @@ public class InteractElectricalBox : MonoBehaviour, IInteractable
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
             _isInteracting = true;
+            PlayerController.CanMove = false;
+            PlayerController.CanMoveCamera = false;
         }
     }
 }
