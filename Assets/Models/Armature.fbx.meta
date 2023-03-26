@@ -20,13 +20,7 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: "Avatar Rig Configuration mis-match. Bone length in configuration
-      does not match position in animation file:\n\t'Left_UpperLeg' : position error
-      = 9993.781250 mm\n\t'Left_LowerLeg' : position error = 40500.527344 mm\n\t'Left_Foot'
-      : position error = 40568.628906 mm\n\t'Left_Toes' : position error = 13562.437500
-      mm\n\t'Right_UpperLeg' : position error = 9993.789063 mm\n\t'Right_LowerLeg'
-      : position error = 40500.500000 mm\n\t'Right_Foot' : position error = 40568.652344
-      mm\n\t'Right_Toes' : position error = 13562.811523 mm\n"
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
