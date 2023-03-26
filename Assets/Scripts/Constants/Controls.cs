@@ -10,4 +10,5 @@ public static class Controls
     public const string FIRE = "Fire1";
     public const string INTERACT = "Interact";
     public const string INVENTORY = "Inventory";
+    public const string WEAPON = "Weapon";
 }
