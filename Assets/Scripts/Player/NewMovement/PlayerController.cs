@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public bool CanMove = true; 
-    public bool CanMoveCamera = true;
+    public static bool CanMove = true; 
+    public static bool CanMoveCamera = true;
     
     private Rigidbody _rb;
     private Animator _animator;
