@@ -6,7 +6,7 @@ using UnityEngine;
 public class InteractPush : MonoBehaviour, IInteractable
 {
     public GameObject interactionTextObject;
-    private TMP_Text interactionUIText;
+    private TMP_Text _interactionUIText;
     [SerializeField] private float _range = 100f;
     //[SerializeField] private float _impactForce = 30f;
     [SerializeField] private Rigidbody _bodyToPush;
@@ -18,18 +18,18 @@ public class InteractPush : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        interactionUIText = interactionTextObject.GetComponent<TMP_Text>();
+        _interactionUIText = interactionTextObject.GetComponent<TMP_Text>();
         _isNotAChild = true;
     }
 
     public void OnStartLook()
     {
-        interactionUIText.SetText($"Push");
+        _interactionUIText.SetText($"Push");
     }
 
     public void OnEndLook()
     {
-        interactionUIText.SetText("");
+        _interactionUIText.SetText("");
     }
 
     public void OnInteract()
@@ -71,6 +71,4 @@ public class InteractPush : MonoBehaviour, IInteractable
     {
         _bodyToPush.constraints = RigidbodyConstraints.FreezeAll;
     }
-
-
 }
