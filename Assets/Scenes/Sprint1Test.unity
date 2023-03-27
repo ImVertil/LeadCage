@@ -11577,11 +11577,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionTextObject: {fileID: 712002840}
-  _interactionUIText: {fileID: 0}
   _range: 3
   _bodyToPush: {fileID: 1219239874}
   _player: {fileID: 728129617}
-  _isNotAChild: 0
   bulletOrigin: {fileID: 2085064252}
 --- !u!1 &1224944091
 GameObject:
@@ -20182,11 +20180,8 @@ MonoBehaviour:
   bullet: {fileID: 0}
   EnemyHp: 0
   _delayAttack: 0
-  _distanceFromPlayer: 0
   enemySight: 15
   enemyAttackRange: 10
-  _isDead: 0
-  attacked: 0
 --- !u!195 &2092056903
 NavMeshAgent:
   m_ObjectHideFlags: 0
