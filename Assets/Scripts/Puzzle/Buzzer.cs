@@ -13,6 +13,7 @@ public class Buzzer : MonoBehaviour
     private Dictionary<Cable, float> _correctVoltages;
     private Dictionary<Cable, bool> _buzzers;
 
+
     void Start()
     {
         _correctVoltages = new Dictionary<Cable, float>()
@@ -33,6 +34,7 @@ public class Buzzer : MonoBehaviour
 
         Cable.OnCableConnect += CheckForBuzzerActivation;
         Cable.OnCableDisconnect += DeactivateBuzzer;
+
     }
 
     private void CheckForBuzzerActivation(Cable cable)
@@ -51,9 +53,10 @@ public class Buzzer : MonoBehaviour
     {
         if (_buzzers.ContainsKey(cable))
         {
+            if (!_buzzers.ContainsValue(true))
+                SoundManager.Instance.PlaySound(Sound.Puzzle1_Buzzer, transform, true);
             _buzzers[cable] = true;
             gameObject.GetComponent<MeshRenderer>().material = _materialOn;
-            SoundManager.Instance.PlaySound(Sound.Puzzle1_Buzzer, transform, true);
         }
     }
 
