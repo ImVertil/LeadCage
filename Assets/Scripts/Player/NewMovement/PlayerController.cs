@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private float _startHeight;
     private Vector3 _startCenter;
     private float _startRadius;
+    
 
     private int _xVelHash;
     private int _yVelHash;
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviour
     private int _crouchingHash;
     
     private Vector2 _inputVector;
-    private float _xRotation;
+    public float xRotation;
 
     private Vector2 _currentVelocity;
     private float _onSlopeSpeedModifier = 1f;
@@ -175,10 +176,10 @@ public class PlayerController : MonoBehaviour
         var mouseY = Input.GetAxisRaw(Controls.MOUSEY);
         Camera.position = CameraRoot.position;
 
-        _xRotation -= mouseY * MouseSensitivity * Time.smoothDeltaTime;
-        _xRotation = Mathf.Clamp(_xRotation, UpperCameraLimit, BottomCameraLimit);
+        xRotation -= mouseY * MouseSensitivity * Time.smoothDeltaTime;
+        xRotation = Mathf.Clamp(xRotation, UpperCameraLimit, BottomCameraLimit);
 
-        Camera.localRotation = Quaternion.Euler(_xRotation, 0, 0);
+        Camera.localRotation = Quaternion.Euler(xRotation, 0, 0);
         transform.Rotate(Vector3.up * mouseX * MouseSensitivity * Time.smoothDeltaTime);
         //_rb.MoveRotation(_rb.rotation * Quaternion.Euler(0, mouseX * MouseSensitivity * Time.smoothDeltaTime, 0));
     }

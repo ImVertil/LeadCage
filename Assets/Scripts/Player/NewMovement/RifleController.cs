@@ -1,9 +1,12 @@
-using System;
+
 using System.Collections;
-using System.Collections.Generic;
+using System.Numerics;
 using Player.Weapons;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using Quaternion = UnityEngine.Quaternion;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class RifleController : MonoBehaviour
 {
@@ -14,9 +17,13 @@ public class RifleController : MonoBehaviour
     private Rig _handsRig;
     private Rig _aimRig;
     private Rig _weaponPullRig;
+    private Rig _kickbackRig;
     private TwoBoneIKConstraint _rightHandConstraint;
     private TwoBoneIKConstraint _leftHandConstraint;
-    private Camera _mainCamera; 
+    private Camera _mainCamera;
+    private MultiPositionConstraint _hipMPC;
+    private MultiPositionConstraint _aimMPC;
+
 
     private int _riflePulledOutHash;
     private int _aimingHash;
@@ -26,16 +33,21 @@ public class RifleController : MonoBehaviour
     private bool _waiting = false;
 
     private float _startSensitivity;
+    private Vector3 _startGunPos;
+    private Vector3 _desiredGunPos;
+
 
     private float _desiredHipsRigWeight = 0f;
     private float _desiredHandsRigWeight = 0f;
     private float _desiredAimRigWeight = 0f;
     private float _desiredPullRigWeight = 0f;
+    private float _desiredKickbackRigWeight = 0f;
 
     private float _hipRigWeightVelocity = 0f;
     private float _handRigWeightVelocity = 0f;
     private float _aimRigWeightVelocity = 0f;
     private float _pullRigweightVelocity = 0f;
+    private float _kickbackRigWeightVelocity = 0f;
 
     private float _putSpeed = 0.5f;
     private float _glueSpeed = 0.2f;
@@ -51,10 +63,13 @@ public class RifleController : MonoBehaviour
     
     [SerializeField] private float _range = 100f;
     [SerializeField] private float _fireRate = 1f;
-    [SerializeField] private float _impactForce = 30f;
     [SerializeField] private float _recoilX = 2f;
     [SerializeField] private float _recoilY = 2f;
     [SerializeField] private float _recoilZ = 0.35f;
+
+    [SerializeField] private float WeaponKickbackSpeed;
+    [SerializeField] private float WeaponKickbackForce;
+    [SerializeField] private float WeaponReturnSpeed;
     
     public GameObject bulletOrigin;
     
@@ -72,12 +87,18 @@ public class RifleController : MonoBehaviour
         
         _mainCamera = Camera.main;
 
+        
+        
+        
+
         _startSensitivity = _controller.MouseSensitivity;
+        //_startGunPos = _gunMesh.localPosition;
 
         _hipsRig = _rigBuilder.layers[0].rig;
-        _handsRig = _rigBuilder.layers[3].rig;
+        _handsRig = _rigBuilder.layers[4].rig;
         _aimRig = _rigBuilder.layers[1].rig;
         _weaponPullRig = _rigBuilder.layers[2].rig;
+        _kickbackRig = _rigBuilder.layers[3].rig;
 
         _riflePulledOutHash = Animator.StringToHash("RiflePulledOut");
         _aimingHash = Animator.StringToHash("Aiming");
@@ -88,7 +109,14 @@ public class RifleController : MonoBehaviour
     {
        SheatheUnsheatheRifle();
        TakeAim();
+       
+       _kickbackRig.weight = Mathf.SmoothDamp(_kickbackRig.weight, _desiredKickbackRigWeight, ref _kickbackRigWeightVelocity, 1/(_fireRate*2f));
 
+       
+       //Vector3.Slerp(_gunMesh.transform.localPosition, _desiredGunPos, WeaponKickbackSpeed * Time.deltaTime);
+
+       
+       
        if (Input.GetButton(Controls.FIRE) && Time.time >= _cooldownCounter && _riflePulledOut)
        {
            _cooldownCounter = Time.time + 1f / _fireRate;
@@ -97,8 +125,6 @@ public class RifleController : MonoBehaviour
 
        Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
        Ray ray = _mainCamera.ScreenPointToRay(screenCenter);
-
-
 
        DebugTransform.position = ray.GetPoint(2f);
 
@@ -172,17 +198,24 @@ public class RifleController : MonoBehaviour
     
     private void Shoot()
     {
+        StartCoroutine(Kickback());
+
         RaycastHit hit;
         if (Physics.Raycast(bulletOrigin.transform.position, bulletOrigin.transform.forward, out hit, _range, AimMask))
         {
-            Debug.Log("Shoot!");
-          
             var obj = Instantiate(BulletHolePrefab, hit.point, Quaternion.LookRotation(hit.normal));
             obj.transform.position += obj.transform.forward/1000f;
         }
         
         GunPlayEvents.Instance.GunRecoil(_recoilX,_recoilY,_recoilZ);
 
+    }
+
+    IEnumerator Kickback()
+    {
+        _desiredKickbackRigWeight = 0.5f;
+        yield return new WaitForSeconds(1 / (_fireRate*2f));
+        _desiredKickbackRigWeight = 0f;
     }
 
 }
