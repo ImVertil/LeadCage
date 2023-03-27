@@ -27,11 +27,10 @@ public class InteractVent : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
-        // this will be connected to the inventory system later on
         if (IsConditionSatisfied())
             Destroy(this.gameObject); // to be changed :)
         else
-            Debug.Log("[VENT] Missing item: Screwdriver");
+            Debug.Log("[VENT] Missing item: Wrench");
     }
 
     private bool IsConditionSatisfied()
