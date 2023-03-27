@@ -157,6 +157,7 @@ public class RifleController : MonoBehaviour
     {
         if (Input.GetButtonDown(Controls.WEAPON) && !_waiting)
         {
+            SoundManager.Instance.PlaySound(Sound.Holster, transform, false);
             _animator.SetBool(_riflePulledOutHash, !_riflePulledOut);
             _riflePulledOut = !_riflePulledOut;
             if (_riflePulledOut)
@@ -197,6 +198,7 @@ public class RifleController : MonoBehaviour
     
     private void Shoot()
     {
+        SoundManager.Instance.PlaySound(Sound.Shoot, transform, false);
         StartCoroutine(Kickback());
 
         RaycastHit hit;
@@ -205,9 +207,8 @@ public class RifleController : MonoBehaviour
             var obj = Instantiate(BulletHolePrefab, hit.point, Quaternion.LookRotation(hit.normal));
             obj.transform.position += obj.transform.forward/1000f;
         }
-        
-        GunPlayEvents.Instance.GunRecoil(_recoilX,_recoilY,_recoilZ);
 
+        GunPlayEvents.Instance.GunRecoil(_recoilX, _recoilY, _recoilZ);
     }
 
     IEnumerator Kickback()
