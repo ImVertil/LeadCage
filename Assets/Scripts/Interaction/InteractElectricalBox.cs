@@ -35,6 +35,7 @@ public class InteractElectricalBox : MonoBehaviour, IInteractable
             _isInteracting = false;
             PlayerController.CanMove = true;
             PlayerController.CanMoveCamera = true;
+            //PlayerController.EnablePlayerVisibility();
         }
         else
         {
@@ -45,6 +46,7 @@ public class InteractElectricalBox : MonoBehaviour, IInteractable
             _isInteracting = true;
             PlayerController.CanMove = false;
             PlayerController.CanMoveCamera = false;
+            //PlayerController.DisablePlayerVisibility();
         }
     }
 }
