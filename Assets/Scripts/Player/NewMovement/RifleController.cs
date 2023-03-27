@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Player.Weapons;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
@@ -15,6 +16,7 @@ public class RifleController : MonoBehaviour
     private Rig _weaponPullRig;
     private TwoBoneIKConstraint _rightHandConstraint;
     private TwoBoneIKConstraint _leftHandConstraint;
+    private Camera _mainCamera; 
 
     private int _riflePulledOutHash;
     private int _aimingHash;
@@ -42,6 +44,21 @@ public class RifleController : MonoBehaviour
     [SerializeField] private GameObject WeaponPivot;
     [SerializeField] private GameObject RightHandIK;
     [SerializeField] private GameObject LeftHandIK;
+    [SerializeField] private LayerMask AimMask;
+    [SerializeField] private Transform DebugTransform;
+
+    [SerializeField] private GameObject BulletHolePrefab;
+    
+    [SerializeField] private float _range = 100f;
+    [SerializeField] private float _fireRate = 1f;
+    [SerializeField] private float _impactForce = 30f;
+    [SerializeField] private float _recoilX = 2f;
+    [SerializeField] private float _recoilY = 2f;
+    [SerializeField] private float _recoilZ = 0.35f;
+    
+    public GameObject bulletOrigin;
+    
+    private float _cooldownCounter = 0f;
 
     private void Start()
     {
@@ -52,6 +69,8 @@ public class RifleController : MonoBehaviour
 
         _rightHandConstraint = RightHandIK.GetComponent<TwoBoneIKConstraint>();
         _leftHandConstraint = LeftHandIK.GetComponent<TwoBoneIKConstraint>();
+        
+        _mainCamera = Camera.main;
 
         _startSensitivity = _controller.MouseSensitivity;
 
@@ -69,6 +88,25 @@ public class RifleController : MonoBehaviour
     {
        SheatheUnsheatheRifle();
        TakeAim();
+
+       if (Input.GetButton(Controls.FIRE) && Time.time >= _cooldownCounter && _riflePulledOut)
+       {
+           _cooldownCounter = Time.time + 1f / _fireRate;
+           Shoot();
+       }
+
+       Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+       Ray ray = _mainCamera.ScreenPointToRay(screenCenter);
+
+
+
+       DebugTransform.position = ray.GetPoint(2f);
+
+       /*if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, AimMask))
+       {
+           DebugTransform.position = raycastHit.point;
+           raycastHit.dir
+       }*/
     }
 
     private void TakeAim()
@@ -77,11 +115,13 @@ public class RifleController : MonoBehaviour
         {
             _aiming = true;
             _desiredAimRigWeight = 1f;
+            _controller.MouseSensitivity = _startSensitivity * 0.5f;
         }
         else
         {
             _aiming = false;
             _desiredAimRigWeight = 0f;
+            _controller.MouseSensitivity = _startSensitivity;
         }
 
         _aimRig.weight = Mathf.SmoothDamp(_aimRig.weight, _desiredAimRigWeight, ref _aimRigWeightVelocity, 0.2f);
@@ -129,4 +169,20 @@ public class RifleController : MonoBehaviour
         WeaponPivot.SetActive(false);
         _animator.SetLayerWeight(1, 0);
     }
+    
+    private void Shoot()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(bulletOrigin.transform.position, bulletOrigin.transform.forward, out hit, _range, AimMask))
+        {
+            Debug.Log("Shoot!");
+          
+            var obj = Instantiate(BulletHolePrefab, hit.point, Quaternion.LookRotation(hit.normal));
+            obj.transform.position += obj.transform.forward/1000f;
+        }
+        
+        GunPlayEvents.Instance.GunRecoil(_recoilX,_recoilY,_recoilZ);
+
+    }
+
 }

@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float StepReachForce = 25f;
 
-    [SerializeField] private Transform CameraRoot;
+    [SerializeField] public Transform CameraRoot;
     [SerializeField] private Transform Camera;
 
     [SerializeField] private LayerMask GroundMask;
