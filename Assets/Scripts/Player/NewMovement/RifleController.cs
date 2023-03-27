@@ -89,7 +89,6 @@ public class RifleController : MonoBehaviour
 
         
         
-        
 
         _startSensitivity = _controller.MouseSensitivity;
         //_startGunPos = _gunMesh.localPosition;
