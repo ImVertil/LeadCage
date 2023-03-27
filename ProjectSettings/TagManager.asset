@@ -5,14 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - Interactable
+  - Bullet
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PlayerLayer
   - Water
   - UI
-  - 
+  - GroundLayer
   - 
   - 
   - 
