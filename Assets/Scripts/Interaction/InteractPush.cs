@@ -55,7 +55,6 @@ public class InteractPush : MonoBehaviour, IInteractable
                 if (_isNotAChild)
                 {
                     _bodyToPush.transform.SetParent(_player.transform);
-                    //_bodyToPush.gameObject.transform.parent = _player.transform;
                     _bodyToPush.constraints = ~RigidbodyConstraints.FreezePosition;
                     _isNotAChild = false;
                 } else if (!_isNotAChild)

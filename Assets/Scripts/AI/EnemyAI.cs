@@ -6,83 +6,68 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     public NavMeshAgent agent;
-    public Transform player;
+    [SerializeField] public Transform _player;
+    public GameObject bullet;
 
+    
     public int EnemyHp;
-
-    public LayerMask whatIsPlayer;
-
-    public float timeBetweenAttacks;
-    bool alreadyAttacked;
-
-    public bool isDead;
+    public float _delayAttack;
+    private float _distanceFromPlayer;
     public float enemySight;
     public float enemyAttackRange;
-    public bool playerInSightRange;
-    public bool playerInStandRange;
-    public bool isStopped;
-    public float distance;
+    private bool _isDead;
+    bool attacked;
 
-    public GameObject projectile;
+    
 
     private void Awake()
     {
-        player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
-
     }
 
     private void Update()
     {
-        if (!isDead)
+        if (!_isDead)
         {
-            distance = Vector3.Distance(player.transform.position, transform.position);
-            if(distance < enemySight && distance > enemyAttackRange) {
-                ChasePlayer();
-            } else if (distance <= enemyAttackRange)
+            _distanceFromPlayer = Vector3.Distance(_player.transform.position, transform.position);
+            if(_distanceFromPlayer < enemySight && _distanceFromPlayer > enemyAttackRange) {
+                runAfterPlayer();
+            } else if (_distanceFromPlayer <= enemyAttackRange)
             {
-                AttackPlayer();
+                Attack();
             }
         }
     }
 
-
-    private void ChasePlayer()
+    private void runAfterPlayer()
     {
-        if (isDead) return;
-
-        agent.destination = player.position;
-
+        if (_isDead) return;
+        agent.destination = _player.position;
     }
-    private void AttackPlayer()
+    private void Attack()
     {
-        if (isDead) return;
-
+        if (_isDead) return;
         agent.destination = transform.position;
-        
-        transform.LookAt(player);
-
-        if (!alreadyAttacked)
+        transform.LookAt(_player);
+        if (!attacked)
         {
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-
-            rb.AddForce(transform.forward * 4f, ForceMode.Impulse);
-
-            alreadyAttacked = true;
-            Invoke("ResetAttack", timeBetweenAttacks);
+            Rigidbody rigidBody = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            rigidBody.AddForce(transform.forward * 4f, ForceMode.Impulse);
+            attacked = true;
+            Invoke("Reload", _delayAttack);
         }
     }
-    private void ResetAttack()
+    private void Reload()
     {
-        if (isDead) return;
-        alreadyAttacked = false;
+        if (_isDead) return;
+        attacked = false;
     }
     public void TakeDamage(int damage)
     {
         EnemyHp -= damage;
         if (EnemyHp < 0)
         {
-            isDead = true;
+            _isDead = true;
             Destroy(gameObject);
         }
     }
