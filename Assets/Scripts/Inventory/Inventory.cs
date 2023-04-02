@@ -41,6 +41,10 @@ public class Inventory : MonoBehaviour
         {
             ToggleInventory();
         }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            DropItem(_slots.ElementAt(0).Key);
+        }
     }
 
     public void ToggleInventory()
@@ -51,14 +55,14 @@ public class Inventory : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             //PlayerController.CanMove = true;
-            PlayerController.CanMoveCamera = true;
+            //PlayerController.CanMoveCamera = true;
         }
         else
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
             //PlayerController.CanMove = false;
-            PlayerController.CanMoveCamera = false;
+            //PlayerController.CanMoveCamera = false;
         }
         _isShown = !_isShown;
     }
@@ -102,7 +106,7 @@ public class Inventory : MonoBehaviour
         // Find the object associated with the item in the slot that we're dropping it from, set it to active and set its position in front of player
         GameObject itemObject = _items.FirstOrDefault(item => item.Value == _slots[slot]).Key;
         itemObject.SetActive(true);
-        itemObject.transform.localPosition = new Vector3(0, 1, 0); // this will be the "in front of player" position later on
+        itemObject.transform.localPosition = _playerTransform.position + Vector3.forward; // this will be the "in front of player" position later on
         //itemObject.transform.position = new Vector3(0, 1, 0);
 
         // Remove the object/item pair from dictionary and set the slots item to null as there is nothing there after we dropped an item
