@@ -63,9 +63,6 @@ public class InventoryNew : MonoBehaviour
         {
             ToggleInventory();
         }
-
-        if (Input.GetKeyDown(KeyCode.G))
-            SortItems();
     }
 
     public void ToggleInventory()
