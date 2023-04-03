@@ -2,6 +2,7 @@ using System.Collections;
 using Player.Weapons;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using UnityEngine.InputSystem;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -10,6 +11,7 @@ public class RifleController : MonoBehaviour
 {
     private Animator _animator;
     private PlayerController _controller;
+    private InputManager _inputManager;
     private RigBuilder _rigBuilder;
     private Rig _hipsRig;
     private Rig _handsRig;
@@ -79,13 +81,14 @@ public class RifleController : MonoBehaviour
         _animator = GetComponent<Animator>();
         _controller = GetComponent<PlayerController>();
         _rigBuilder = GetComponent<RigBuilder>();
+        _inputManager = GetComponent<InputManager>();
 
         _rightHandConstraint = RightHandIK.GetComponent<TwoBoneIKConstraint>();
         _leftHandConstraint = LeftHandIK.GetComponent<TwoBoneIKConstraint>();
         
         _mainCamera = Camera.main;
 
-        
+        InputManager.current.UnsheatheAction.performed += SheatheUnsheatheRifle; 
         
 
         _startSensitivity = _controller.MouseSensitivity;
@@ -104,7 +107,9 @@ public class RifleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       SheatheUnsheatheRifle();
+       _handsRig.weight = Mathf.SmoothDamp(_handsRig.weight, _desiredHandsRigWeight, ref _handRigWeightVelocity, _putSpeed);
+       _hipsRig.weight = Mathf.SmoothDamp(_hipsRig.weight, _desiredHipsRigWeight, ref _hipRigWeightVelocity, _putSpeed);
+       _weaponPullRig.weight = Mathf.SmoothDamp(_weaponPullRig.weight, _desiredPullRigWeight, ref _pullRigweightVelocity, _glueSpeed);
        TakeAim();
        
        _kickbackRig.weight = Mathf.SmoothDamp(_kickbackRig.weight, _desiredKickbackRigWeight, ref _kickbackRigWeightVelocity, 1/(_fireRate*2f));
@@ -114,7 +119,7 @@ public class RifleController : MonoBehaviour
 
        
        
-       if (Input.GetButton(Controls.FIRE) && Time.time >= _cooldownCounter && _riflePulledOut)
+       if (_inputManager.Fire && Time.time >= _cooldownCounter && _riflePulledOut)
        {
            _cooldownCounter = Time.time + 1f / _fireRate;
            Shoot();
@@ -134,7 +139,7 @@ public class RifleController : MonoBehaviour
 
     private void TakeAim()
     {
-        if (Input.GetButton(Controls.AIM) && _riflePulledOut)
+        if (_inputManager.Aim && _riflePulledOut)
         {
             _aiming = true;
             _desiredAimRigWeight = 1f;
@@ -151,9 +156,10 @@ public class RifleController : MonoBehaviour
         _animator.SetBool(_aimingHash, _aiming);
     }
 
-    private void SheatheUnsheatheRifle()
+    private void SheatheUnsheatheRifle(InputAction.CallbackContext ctx)
     {
-        if (Input.GetButtonDown(Controls.WEAPON) && !_waiting)
+        Debug.Log("ass");
+        if (!_waiting)
         {
             SoundManager.Instance.PlaySound(Sound.Holster, transform, false);
             _animator.SetBool(_riflePulledOutHash, !_riflePulledOut);
@@ -180,9 +186,6 @@ public class RifleController : MonoBehaviour
             }
         }
 
-        _handsRig.weight = Mathf.SmoothDamp(_handsRig.weight, _desiredHandsRigWeight, ref _handRigWeightVelocity, _putSpeed);
-        _hipsRig.weight = Mathf.SmoothDamp(_hipsRig.weight, _desiredHipsRigWeight, ref _hipRigWeightVelocity, _putSpeed);
-        _weaponPullRig.weight = Mathf.SmoothDamp(_weaponPullRig.weight, _desiredPullRigWeight, ref _pullRigweightVelocity, _glueSpeed);
     }
 
     IEnumerator WaitToChangeWeight()
