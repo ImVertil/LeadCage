@@ -15,10 +15,11 @@ public class InventoryNew : MonoBehaviour
             _itemPool = new ObjectPool<GameObject>(CreateItemObject, OnGetItemObject, OnReturnItemObject, OnDestroyItemObject, true, _poolSize, _poolSize + 5);
             foreach (var slot in _inventoryPanel.GetComponentsInChildren<InventorySlotNew>().ToList())
             {
-                //slot.AssignComponents();
+                slot.AssignComponents();
                 _inventoryItems.Add(slot, null);
             }
             _isVisible = false;
+            _itemDropTransform = Camera.main.transform;
         }
         else
         {
@@ -29,7 +30,7 @@ public class InventoryNew : MonoBehaviour
 
     [SerializeField] private int _poolSize = 20;
     [SerializeField] private GameObject _inventoryPanel;
-    [SerializeField] private Transform _itemDropPosition;
+    [SerializeField] private Transform _itemDropTransform;
 
     private ObjectPool<GameObject> _itemPool;
     private Dictionary<InventorySlotNew, Item> _inventoryItems = new();
@@ -43,17 +44,22 @@ public class InventoryNew : MonoBehaviour
         {
             ToggleInventory();
         }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            DropItem(_inventoryItems.ElementAt(0).Key);
+        }
     }
 
     public void ToggleInventory()
     {
-        _inventoryPanel.SetActive(!_isVisible);
         if (_isVisible)
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             PlayerController.CanMove = true;
             PlayerController.CanMoveCamera = true;
+            _inventoryPanel.SetActive(false);
         }
         else
         {
@@ -61,6 +67,7 @@ public class InventoryNew : MonoBehaviour
             Cursor.lockState = CursorLockMode.Confined;
             PlayerController.CanMove = false;
             PlayerController.CanMoveCamera = false;
+            _inventoryPanel.SetActive(true);
         }
         _isVisible = !_isVisible;
     }
@@ -69,15 +76,22 @@ public class InventoryNew : MonoBehaviour
     {
         InventorySlotNew slot = _inventoryItems.FirstOrDefault(s => s.Value == null).Key;
         _inventoryItems[slot] = pickup.item;
-
         _itemPool.Release(pickup.gameObject);
         UpdateItems();
     }
 
     public void DropItem(InventorySlotNew slot)
     {
-        AssignItemData(_itemPool.Get(), _inventoryItems[slot]);
+        GameObject obj = _itemPool.Get();
+        AssignItemData(obj, _inventoryItems[slot]);
+        _inventoryItems[slot] = null;
         UpdateItems();
+    }
+
+    // TODO
+    public void EquipItem(InventorySlotNew slot)
+    {
+
     }
 
     public void UpdateItems()
@@ -99,6 +113,7 @@ public class InventoryNew : MonoBehaviour
         }
     }
 
+    // TODO
     public void SortItems()
     {
 
@@ -108,6 +123,8 @@ public class InventoryNew : MonoBehaviour
     {
         obj.GetComponent<InteractPickup>().item = item;
         obj.GetComponent<MeshFilter>().mesh = item.modelMesh;
+        obj.GetComponent<MeshRenderer>().material = item.modelMaterial;
+        obj.name = item.name;
     }
 
     #region OBJECT_POOL_METHODS
@@ -120,7 +137,7 @@ public class InventoryNew : MonoBehaviour
     private void OnGetItemObject(GameObject obj)
     {
         obj.SetActive(true);
-        obj.transform.position = new Vector3(0, 1, 0); // change to in-front player pos later
+        obj.transform.position = _itemDropTransform.position + Vector3.forward; // change to in-front player pos later
     }
 
     private void OnReturnItemObject(GameObject obj)
