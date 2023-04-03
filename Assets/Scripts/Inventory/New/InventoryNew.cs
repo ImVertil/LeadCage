@@ -29,17 +29,6 @@ public class InventoryNew : MonoBehaviour
             }
             _isVisible = false;
             _itemDropTransform = Camera.main.transform;
-
-            /* uwaga du¿e XD tutaj
-            TextMeshProUGUI[] texts = _inventoryDetailsPanel.GetComponentsInChildren<TextMeshProUGUI>();
-            Image[] images = _inventoryDetailsPanel.GetComponentsInChildren<Image>();
-            Button[] buttons = _inventoryDetailsPanel.GetComponentsInChildren<Button>();
-            _itemName = texts[0];
-            _itemIcon = images[2];
-            _itemDescription = texts[3];
-            _equipButton = buttons[0];
-            _dropButton = buttons[1];
-            _equipButtonText = texts[4];*/
         }
         else
         {
@@ -117,22 +106,17 @@ public class InventoryNew : MonoBehaviour
         UpdateItems();
     }
 
-    // TODO
     public void EquipItem(InventorySlotNew slot)
     {
-        Debug.Log("Equipped (surely)");
         InventorySlotNew weaponSlot = _equippedWeapons.FirstOrDefault(s => s.Value == null).Key;
         _equippedWeapons[weaponSlot] = _inventoryItems[slot];
         _inventoryItems[slot] = null;
-        //_equipButtonText.text = "Equipped";
-        //_equipButton.interactable = false;
         UpdateItems();
         ShowItemDetails(weaponSlot);
     }
 
     public void UnequipItem(InventorySlotNew slot)
     {
-        Debug.Log("Unequipped (surely)");
         InventorySlotNew itemSlot = _inventoryItems.FirstOrDefault(s => s.Value == null).Key;
         _inventoryItems[itemSlot] = _equippedWeapons[slot];
         _equippedWeapons[slot] = null;
@@ -257,14 +241,19 @@ public class InventoryNew : MonoBehaviour
 
     private Item GetItemFromContainer(InventorySlotNew slot)
     {
-        Transform parent = slot.transform.parent;
-        if (parent == _weaponsPanel.transform) return _equippedWeapons[slot];
-        else if (parent == _movementItemsPanel.transform) return _equippedMovementItems[slot];
-        else return _inventoryItems[slot];
-
-        /*if (_equippedWeapons.ContainsKey(slot)) return _equippedWeapons[slot];
+        if (_equippedWeapons.ContainsKey(slot)) return _equippedWeapons[slot];
         else if (_equippedMovementItems.ContainsKey(slot)) return _equippedMovementItems[slot];
-        else return _inventoryItems[slot];*/
+        else return _inventoryItems[slot];
+    }
+
+    public Item GetPrimaryWeapon()
+    {
+        return _equippedWeapons.ElementAt(0).Value;
+    }
+
+    public Item GetSecondaryWeapon()
+    {
+        return _equippedWeapons.ElementAt(1).Value;
     }
 
     #region OBJECT_POOL_METHODS
