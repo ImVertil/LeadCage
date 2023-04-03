@@ -17,8 +17,15 @@ public class InventoryNew : MonoBehaviour
             _itemPool = new ObjectPool<GameObject>(CreateItemObject, OnGetItemObject, OnReturnItemObject, OnDestroyItemObject, true, _poolSize, _poolSize + 5);
             foreach (var slot in _inventoryPanel.GetComponentsInChildren<InventorySlotNew>().ToList())
             {
+                if(slot.transform.parent == _weaponsPanel.transform)
+                {
+                    _equippedWeapons.Add(slot, null);
+                }
+                else
+                {
+                    _inventoryItems.Add(slot, null);
+                }
                 slot.AssignComponents();
-                _inventoryItems.Add(slot, null);
             }
             _isVisible = false;
             _itemDropTransform = Camera.main.transform;
@@ -67,6 +74,9 @@ public class InventoryNew : MonoBehaviour
         {
             ToggleInventory();
         }
+
+        if (Input.GetKeyDown(KeyCode.G))
+            SortItems();
     }
 
     public void ToggleInventory()
@@ -111,10 +121,41 @@ public class InventoryNew : MonoBehaviour
     public void EquipItem(InventorySlotNew slot)
     {
         Debug.Log("Equipped (surely)");
+        InventorySlotNew weaponSlot = _equippedWeapons.FirstOrDefault(s => s.Value == null).Key;
+        _equippedWeapons[weaponSlot] = _inventoryItems[slot];
+        _inventoryItems[slot] = null;
+        //_equipButtonText.text = "Equipped";
+        //_equipButton.interactable = false;
+        UpdateItems();
+        ShowItemDetails(weaponSlot);
+    }
+
+    public void UnequipItem(InventorySlotNew slot)
+    {
+        Debug.Log("Unequipped (surely)");
+        InventorySlotNew itemSlot = _inventoryItems.FirstOrDefault(s => s.Value == null).Key;
+        _inventoryItems[itemSlot] = _equippedWeapons[slot];
+        _equippedWeapons[slot] = null;
+        UpdateItems();
+        ShowItemDetails(itemSlot);
     }
 
     public void UpdateItems()
     {
+        foreach (var slot in _equippedWeapons)
+        {
+            if (slot.Value != null)
+            {
+                slot.Key.icon = slot.Value.icon;
+                slot.Key.EnableSlot();
+            }
+            else
+            {
+                slot.Key.icon = null;
+                slot.Key.DisableSlot();
+            }
+        }
+
         foreach (var slot in _inventoryItems)
         {
             if (slot.Value != null)
@@ -132,33 +173,71 @@ public class InventoryNew : MonoBehaviour
         _inventoryDetailsPanel.SetActive(false);
     }
 
-    // TODO
     public void SortItems()
     {
+        List<InventorySlotNew> slots = new();
+        Queue<Item> items = new();
+        foreach(var entry in _inventoryItems)
+        {
+            slots.Add(entry.Key);
+            if (entry.Value != null)
+            {
+                items.Enqueue(entry.Value);
+            }
+        }
 
+        foreach(var key in slots)
+        {
+            if (items.Count == 0)
+            {
+                _inventoryItems[key] = null;
+            }
+            else
+            {
+                _inventoryItems[key] = items.Dequeue();
+            }
+        }
+        UpdateItems();
     }
 
-
-    // TODO - glownie switch na weapon/movementitem
+    // gotta rewrite the code a bit, it looks awful
     public void ShowItemDetails(InventorySlotNew slot)
     {
-        Item item = _inventoryItems[slot];
+        Item item = GetItemFromContainer(slot);
         if (_isVisible && item != null)
         {
             _inventoryDetailsPanel.SetActive(true);
             _detailsItemName.text = item.itemName;
             _detailsItemIcon.sprite = item.icon;
             _detailsItemDescription.text = item.description;
+
+            // By default we want the buttons to be active, rest is handled in the switch
             _equipButtonText.text = "Equip";
+            _dropButton.interactable = true;
+            _equipButton.interactable = true;
             switch (item.type)
             {
                 case ItemType.Item:
                     _equipButton.interactable = false;
                     _equipButtonText.text = "Not equippable";
                     break;
+
                 case ItemType.Weapon:
-                    _equipButton.interactable = true;
+                    _equipButton.onClick.RemoveAllListeners();
+                    if (_equippedWeapons.ContainsKey(slot))
+                    {
+                        _equipButtonText.text = "Unequip";
+                        _dropButton.interactable = false;
+                        _equipButton.onClick.AddListener(delegate { UnequipItem(slot); });
+                    }
+                    else
+                    {
+                        _dropButton.interactable = true;
+                        _equipButton.interactable = true;
+                        _equipButton.onClick.AddListener(delegate { EquipItem(slot); });
+                    }
                     break;
+
                 case ItemType.MovementItem:
                     _equipButton.interactable = true;
                     break;
@@ -174,6 +253,18 @@ public class InventoryNew : MonoBehaviour
         obj.GetComponent<MeshFilter>().mesh = item.modelMesh;
         obj.GetComponent<MeshRenderer>().material = item.modelMaterial;
         obj.name = item.itemName;
+    }
+
+    private Item GetItemFromContainer(InventorySlotNew slot)
+    {
+        Transform parent = slot.transform.parent;
+        if (parent == _weaponsPanel.transform) return _equippedWeapons[slot];
+        else if (parent == _movementItemsPanel.transform) return _equippedMovementItems[slot];
+        else return _inventoryItems[slot];
+
+        /*if (_equippedWeapons.ContainsKey(slot)) return _equippedWeapons[slot];
+        else if (_equippedMovementItems.ContainsKey(slot)) return _equippedMovementItems[slot];
+        else return _inventoryItems[slot];*/
     }
 
     #region OBJECT_POOL_METHODS
