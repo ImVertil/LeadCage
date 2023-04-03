@@ -6,7 +6,7 @@ public sealed class Item : ScriptableObject
 {
     public int id;
     public string itemName;
-    public string itemDescription;
+    public string description;
     public Sprite icon;
     public Mesh modelMesh;
     public Material modelMaterial;
