@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -84,14 +85,12 @@ public class PlayerController : MonoBehaviour
         _groundedHash = Animator.StringToHash("Grounded");
         _fallingHash = Animator.StringToHash("Falling");
         _crouchingHash = Animator.StringToHash("Crouching");
+
+        InputManager.current.JumpAction.started += JumpHandling;
     }
 
     private void Update()
-    {
-        if (_inputManager.Jump && !_crouching && CanMove)
-        {
-            JumpHandling();
-        }
+    { 
     }
 
     private void FixedUpdate()
@@ -176,9 +175,9 @@ public class PlayerController : MonoBehaviour
         _rb.MoveRotation(_rb.rotation * Quaternion.Euler(0, mouseX * MouseSensitivity * Time.smoothDeltaTime, 0));
     }
 
-    private void JumpHandling()
+    private void JumpHandling(InputAction.CallbackContext ctx)
     {
-        if (!_hasAnimator || !_grounded) return;
+        if (!_hasAnimator || !_grounded || _crouching || !CanMove) return;
         _animator.SetTrigger(_jumpHash);
         JumpForce();    
     }
