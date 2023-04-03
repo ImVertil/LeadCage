@@ -15,4 +15,5 @@ MonoBehaviour:
   id: 2
   itemName: Wrench
   icon: {fileID: 21300000, guid: b9b0f12c0cd437941a3fd0537a3779ef, type: 3}
+  modelMesh: {fileID: 0}
   associatedStoryValue: 1
