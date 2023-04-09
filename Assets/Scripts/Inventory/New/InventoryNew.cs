@@ -89,7 +89,13 @@ public class InventoryNew : MonoBehaviour
 
     public void AddItem(InteractPickup pickup)
     {
-        InventorySlotNew slot = _inventoryItems.FirstOrDefault(s => s.Value == null).Key;
+        /*
+         * LINQ - 0.4111ms
+         * FOREACH - 0.0554ms
+         * ^ Pierwsze podniesienie, nastêpne podniesienia ~0.0022ms w obydwu przypadkach
+        */
+        //InventorySlotNew slot = _inventoryItems.FirstOrDefault(s => s.Value == null).Key;
+        InventorySlotNew slot = GetFirstEmptySlot(ref _inventoryItems);
         _inventoryItems[slot] = pickup.item;
         _itemPool.Release(pickup.gameObject);
         UpdateItems();
@@ -105,7 +111,8 @@ public class InventoryNew : MonoBehaviour
 
     public void EquipItem(InventorySlotNew slot)
     {
-        InventorySlotNew weaponSlot = _equippedWeapons.FirstOrDefault(s => s.Value == null).Key;
+        //InventorySlotNew weaponSlot = _equippedWeapons.FirstOrDefault(s => s.Value == null).Key;
+        InventorySlotNew weaponSlot = GetFirstEmptySlot(ref _equippedWeapons);
         _equippedWeapons[weaponSlot] = _inventoryItems[slot];
         _inventoryItems[slot] = null;
         UpdateItems();
@@ -114,7 +121,8 @@ public class InventoryNew : MonoBehaviour
 
     public void UnequipItem(InventorySlotNew slot)
     {
-        InventorySlotNew itemSlot = _inventoryItems.FirstOrDefault(s => s.Value == null).Key;
+        //InventorySlotNew itemSlot = _inventoryItems.FirstOrDefault(s => s.Value == null).Key;
+        InventorySlotNew itemSlot = GetFirstEmptySlot(ref _inventoryItems);
         _inventoryItems[itemSlot] = _equippedWeapons[slot];
         _equippedWeapons[slot] = null;
         UpdateItems();
@@ -251,6 +259,16 @@ public class InventoryNew : MonoBehaviour
     public Item GetSecondaryWeapon()
     {
         return _equippedWeapons.ElementAt(1).Value;
+    }
+
+    private InventorySlotNew GetFirstEmptySlot(ref Dictionary<InventorySlotNew, Item> _container)
+    {
+        foreach(var entry in _container)
+        {
+            if (entry.Value == null)
+                return entry.Key;
+        }
+        return null;
     }
 
     #region OBJECT_POOL_METHODS
