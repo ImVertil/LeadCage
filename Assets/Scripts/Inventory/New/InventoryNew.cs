@@ -14,7 +14,7 @@ public class InventoryNew : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            _itemPool = new ObjectPool<GameObject>(CreateItemObject, OnGetItemObject, OnReturnItemObject, OnDestroyItemObject, true, _poolSize, _poolSize + 5);
+            _itemPool = new ObjectPool<GameObject>(CreateItemObject, OnGetItemObject, OnReturnItemObject, OnDestroyItemObject, true, _poolSize, _poolSize + 4);
             foreach (var slot in _inventoryPanel.GetComponentsInChildren<InventorySlotNew>().ToList())
             {
                 if(slot.transform.parent == _weaponsPanel.transform)
@@ -37,7 +37,7 @@ public class InventoryNew : MonoBehaviour
     }
     #endregion
 
-    [SerializeField] private int _poolSize = 20;
+    [SerializeField] private int _poolSize = 28;
     [SerializeField] private GameObject _weaponsPanel;
     [SerializeField] private GameObject _movementItemsPanel;
     [SerializeField] private GameObject _inventoryPanel;
@@ -244,13 +244,6 @@ public class InventoryNew : MonoBehaviour
         obj.name = item.itemName;
     }
 
-    private Item GetItemFromContainer(InventorySlotNew slot)
-    {
-        if (_equippedWeapons.ContainsKey(slot)) return _equippedWeapons[slot];
-        else if (_equippedMovementItems.ContainsKey(slot)) return _equippedMovementItems[slot];
-        else return _inventoryItems[slot];
-    }
-
     public Item GetPrimaryWeapon()
     {
         return _equippedWeapons.ElementAt(0).Value;
@@ -261,9 +254,16 @@ public class InventoryNew : MonoBehaviour
         return _equippedWeapons.ElementAt(1).Value;
     }
 
-    private InventorySlotNew GetFirstEmptySlot(ref Dictionary<InventorySlotNew, Item> _container)
+    private Item GetItemFromContainer(InventorySlotNew slot)
     {
-        foreach(var entry in _container)
+        if (_equippedWeapons.ContainsKey(slot)) return _equippedWeapons[slot];
+        else if (_equippedMovementItems.ContainsKey(slot)) return _equippedMovementItems[slot];
+        else return _inventoryItems[slot];
+    }
+
+    private InventorySlotNew GetFirstEmptySlot(ref Dictionary<InventorySlotNew, Item> container)
+    {
+        foreach(var entry in container)
         {
             if (entry.Value == null)
                 return entry.Key;
