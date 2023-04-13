@@ -42,7 +42,6 @@ public class InventoryNew : MonoBehaviour
         _inventoryItems[slot] = pickup.item;
         _itemPool.Release(pickup.gameObject);
         InventoryEvents.InventoryUpdate();
-        //UpdateItems();
     }
 
     public void DropItem(InventorySlotNew slot)
@@ -51,7 +50,6 @@ public class InventoryNew : MonoBehaviour
         AssignItemData(obj, _inventoryItems[slot]);
         _inventoryItems[slot] = null;
         InventoryEvents.InventoryUpdate();
-        //UpdateItems();
     }
 
     public void EquipItem(InventorySlotNew slot)
@@ -62,9 +60,7 @@ public class InventoryNew : MonoBehaviour
             _equippedWeapons[weaponSlot] = _inventoryItems[slot];
             _inventoryItems[slot] = null;
             InventoryEvents.InventoryUpdate();
-            //UpdateItems();
             InventoryEvents.ShowItemDetails(weaponSlot);
-            //ShowItemDetails(weaponSlot);
         }
     }
 
@@ -77,8 +73,6 @@ public class InventoryNew : MonoBehaviour
             _equippedWeapons[slot] = null;
             InventoryEvents.InventoryUpdate();
             InventoryEvents.ShowItemDetails(itemSlot);
-            //UpdateItems();
-            //ShowItemDetails(itemSlot);
         }
     }
 
