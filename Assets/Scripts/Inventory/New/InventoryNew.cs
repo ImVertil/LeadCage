@@ -111,22 +111,26 @@ public class InventoryNew : MonoBehaviour
 
     public void EquipItem(InventorySlotNew slot)
     {
-        //InventorySlotNew weaponSlot = _equippedWeapons.FirstOrDefault(s => s.Value == null).Key;
         InventorySlotNew weaponSlot = GetFirstEmptySlot(ref _equippedWeapons);
-        _equippedWeapons[weaponSlot] = _inventoryItems[slot];
-        _inventoryItems[slot] = null;
-        UpdateItems();
-        ShowItemDetails(weaponSlot);
+        if (weaponSlot != null)
+        {
+            _equippedWeapons[weaponSlot] = _inventoryItems[slot];
+            _inventoryItems[slot] = null;
+            UpdateItems();
+            ShowItemDetails(weaponSlot);
+        }
     }
 
     public void UnequipItem(InventorySlotNew slot)
     {
-        //InventorySlotNew itemSlot = _inventoryItems.FirstOrDefault(s => s.Value == null).Key;
         InventorySlotNew itemSlot = GetFirstEmptySlot(ref _inventoryItems);
-        _inventoryItems[itemSlot] = _equippedWeapons[slot];
-        _equippedWeapons[slot] = null;
-        UpdateItems();
-        ShowItemDetails(itemSlot);
+        if (itemSlot != null)
+        {
+            _inventoryItems[itemSlot] = _equippedWeapons[slot];
+            _equippedWeapons[slot] = null;
+            UpdateItems();
+            ShowItemDetails(itemSlot);
+        }
     }
 
     public void UpdateItems()
@@ -189,7 +193,6 @@ public class InventoryNew : MonoBehaviour
         UpdateItems();
     }
 
-    // gotta rewrite the code a bit, it looks awful
     public void ShowItemDetails(InventorySlotNew slot)
     {
         Item item = GetItemFromContainer(slot);
@@ -204,6 +207,7 @@ public class InventoryNew : MonoBehaviour
             _equipButtonText.text = "Equip";
             _dropButton.interactable = true;
             _equipButton.interactable = true;
+
             switch (item.type)
             {
                 case ItemType.Item:
@@ -212,8 +216,9 @@ public class InventoryNew : MonoBehaviour
                     break;
 
                 case ItemType.Weapon:
+                case ItemType.MovementItem:
                     _equipButton.onClick.RemoveAllListeners();
-                    if (_equippedWeapons.ContainsKey(slot))
+                    if (_equippedWeapons.ContainsKey(slot) || _equippedMovementItems.ContainsKey(slot))
                     {
                         _equipButtonText.text = "Unequip";
                         _dropButton.interactable = false;
@@ -221,16 +226,11 @@ public class InventoryNew : MonoBehaviour
                     }
                     else
                     {
-                        _dropButton.interactable = true;
-                        _equipButton.interactable = true;
                         _equipButton.onClick.AddListener(delegate { EquipItem(slot); });
                     }
                     break;
-
-                case ItemType.MovementItem:
-                    _equipButton.interactable = true;
-                    break;
             }
+
             _dropButton.onClick.RemoveAllListeners();
             _dropButton.onClick.AddListener(delegate { DropItem(slot); });
         }
