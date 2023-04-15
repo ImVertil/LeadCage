@@ -107,11 +107,6 @@ public class Inventory : MonoBehaviour
         InventoryEvents.InventoryUpdate();
     }
 
-    public void ShowItemDetails(InventorySlot slot)
-    {
-        InventoryEvents.ShowItemDetails(slot);
-    }
-
     private void AssignItemData(GameObject obj, Item item)
     {
         MeshFilter mf = obj.GetComponent<MeshFilter>();
@@ -144,12 +139,17 @@ public class Inventory : MonoBehaviour
 
     public Item GetPrimaryWeapon()
     {
-        return _equippedWeapons.ElementAt(0).Value;
+        var e = _equippedWeapons.GetEnumerator();
+        e.MoveNext();
+        return e.Current.Value;
     }
 
     public Item GetSecondaryWeapon()
     {
-        return _equippedWeapons.ElementAt(1).Value;
+        var e = _equippedWeapons.GetEnumerator();
+        e.MoveNext();
+        e.MoveNext();
+        return e.Current.Value;
     }
 
     public Item GetItemFromContainer(InventorySlot slot)

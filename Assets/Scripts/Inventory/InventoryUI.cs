@@ -148,4 +148,9 @@ public class InventoryUI : MonoBehaviour
             _dropButton.onClick.AddListener(delegate { Inventory.Instance.DropItem(slot); });
         }
     }
+
+    public void SortItems()
+    {
+        Inventory.Instance.SortItems();
+    }
 }
