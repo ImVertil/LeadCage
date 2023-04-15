@@ -39162,6 +39162,78 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: AimAction.m_Id
+      value: 76711625-43e2-4906-b1ec-739b00a3d499
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: RunAction.m_Id
+      value: be0e4420-5330-4164-abf8-fe4de4d151c6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: FireAction.m_Id
+      value: 5c121dec-c008-4612-9e88-3673456d2781
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: JumpAction.m_Id
+      value: 39794d63-0997-4660-a6aa-d0a9c09cdc2b
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: LookAction.m_Id
+      value: b216799b-8b9b-47ce-ab31-bb63a4f6beb7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: MoveAction.m_Id
+      value: 697d81cd-a041-4fbf-b163-08538bc7e9b7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: AimAction.m_Name
+      value: Aim
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: RunAction.m_Name
+      value: Run
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: CrouchAction.m_Id
+      value: 073eedc7-3d9f-4e6b-ab89-71bf23915932
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: FireAction.m_Name
+      value: Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: JumpAction.m_Name
+      value: Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: LookAction.m_Name
+      value: Look
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: MoveAction.m_Name
+      value: Move
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: CrouchAction.m_Name
+      value: Crouch
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: InteractAction.m_Id
+      value: 7dc364e2-92e9-41ad-99a5-8a462071c28c
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: UnsheatheAction.m_Id
+      value: 95e7f87b-ffc4-48d5-a90e-00761a70d007
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: InteractAction.m_Name
+      value: Interact
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929502423717128289, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
+      propertyPath: UnsheatheAction.m_Name
+      value: Unsheathe
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f111c331a8dbee428320f9ce65a3504, type: 3}
 --- !u!1 &1357234474
@@ -88803,7 +88875,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh54460
+  m_Name: pb_Mesh25758
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -88967,7 +89039,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh102656
+  m_Name: pb_Mesh25306
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
