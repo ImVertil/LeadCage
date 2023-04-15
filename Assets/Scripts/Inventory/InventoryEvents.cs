@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class InventoryEvents : MonoBehaviour
+public class InventoryEvents
 {
     // UI related events
     public static Action OnInventoryUpdate;
