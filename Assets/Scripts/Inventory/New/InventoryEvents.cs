@@ -27,5 +27,9 @@ public class InventoryEvents : MonoBehaviour
    
     // System related events
     public static Action OnMainWeaponEquipped;
+    public static Action OnMainWeaponUnequipped;
     public static Action OnSecondaryWeaponEquipped;
+    public static Action OnSecondaryWeaponUnequipped;
+    public static Action OnMovementItemEquipped;
+    public static Action OnMovementItemUnequipped;
 }

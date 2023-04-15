@@ -54,23 +54,27 @@ public class InventoryNew : MonoBehaviour
 
     public void EquipItem(InventorySlotNew slot)
     {
-        InventorySlotNew weaponSlot = GetFirstEmptySlot(_equippedWeapons);
-        if (weaponSlot != null)
+        var equipContainer = GetEquipContainer(_inventoryItems[slot].type);
+        InventorySlotNew equipSlot = GetFirstEmptySlot(equipContainer);
+
+        if (equipSlot != null)
         {
-            _equippedWeapons[weaponSlot] = _inventoryItems[slot];
+            equipContainer[equipSlot] = _inventoryItems[slot];
             _inventoryItems[slot] = null;
             InventoryEvents.InventoryUpdate();
-            InventoryEvents.ShowItemDetails(weaponSlot);
+            InventoryEvents.ShowItemDetails(equipSlot);
         }
     }
 
     public void UnequipItem(InventorySlotNew slot)
     {
+        var equipContainer = GetEquipContainer(GetItemFromContainer(slot).type);
         InventorySlotNew itemSlot = GetFirstEmptySlot(_inventoryItems);
+
         if (itemSlot != null)
         {
-            _inventoryItems[itemSlot] = _equippedWeapons[slot];
-            _equippedWeapons[slot] = null;
+            _inventoryItems[itemSlot] = equipContainer[slot];
+            equipContainer[slot] = null;
             InventoryEvents.InventoryUpdate();
             InventoryEvents.ShowItemDetails(itemSlot);
         }
@@ -110,8 +114,15 @@ public class InventoryNew : MonoBehaviour
 
     private void AssignItemData(GameObject obj, Item item)
     {
+        MeshFilter mf = obj.GetComponent<MeshFilter>();
+        mf.mesh = item.modelMesh;
+
+        BoxCollider bc = obj.GetComponent<BoxCollider>();
+        Bounds b = mf.sharedMesh.bounds;
+        bc.center = b.center;
+        bc.size = b.size;
+
         obj.GetComponent<InteractPickup>().item = item;
-        obj.GetComponent<MeshFilter>().mesh = item.modelMesh;
         obj.GetComponent<MeshRenderer>().material = item.modelMaterial;
         obj.name = item.itemName;
     }
@@ -148,6 +159,13 @@ public class InventoryNew : MonoBehaviour
         else return _inventoryItems[slot];
     }
 
+    private Dictionary<InventorySlotNew, Item> GetEquipContainer(ItemType itemType)
+    {
+        if (itemType == ItemType.Weapon) return _equippedWeapons;
+        if (itemType == ItemType.MovementItem) return _equippedMovementItems;
+        return null;
+    }
+
     private InventorySlotNew GetFirstEmptySlot(Dictionary<InventorySlotNew, Item> container)
     {
         foreach(var entry in container)
@@ -168,7 +186,7 @@ public class InventoryNew : MonoBehaviour
     private void OnGetItemObject(GameObject obj)
     {
         obj.SetActive(true);
-        obj.transform.position = _itemDropTransform.position + Vector3.forward; // change to in-front player pos later
+        obj.transform.position = _itemDropTransform.position + _itemDropTransform.forward.normalized;
     }
 
     private void OnReturnItemObject(GameObject obj)

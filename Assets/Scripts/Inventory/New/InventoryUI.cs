@@ -1,4 +1,3 @@
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,7 +20,7 @@ public class InventoryUI : MonoBehaviour
 
     void Start()
     {
-        foreach (var slot in _mainPanel.GetComponentsInChildren<InventorySlotNew>().ToList())
+        foreach (var slot in _mainPanel.GetComponentsInChildren<InventorySlotNew>())
         {
             if (slot.transform.parent == _weaponsPanel.transform)
             {
@@ -53,6 +52,7 @@ public class InventoryUI : MonoBehaviour
 
     public void ToggleInventory()
     {
+        // REPLACE WITH PLAYER EVENTS WHEN THEY'RE ADDED
         if (_isVisible)
         {
             Cursor.visible = false;
