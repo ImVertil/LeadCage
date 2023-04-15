@@ -14,4 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   itemName: Screwdriver
+  description: A brand new screwdriver. Looks like it was brought to the station
+    very recently.
   icon: {fileID: 21300000, guid: 9008546e77a2915439cf458e843b97c6, type: 3}
+  modelMesh: {fileID: -5495902117074765545, guid: ed3361b4bfac79c4cbd07183cce6f211, type: 3}
+  modelMaterial: {fileID: 2100000, guid: b6111fe3aced36148b62f1ce0a143bfd, type: 2}
+  type: 0
+  associatedStoryValue: 0

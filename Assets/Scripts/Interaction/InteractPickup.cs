@@ -9,17 +9,17 @@ public class InteractPickup : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        interactionUIText = interactionTextObject.GetComponent<TMP_Text>();
+        //interactionUIText = interactionTextObject.GetComponent<TMP_Text>();
     }
 
     public void OnStartLook()
     {
-        interactionUIText.SetText($"Pick up {item.itemName}");
+        //interactionUIText.SetText($"Pick up {item.itemName}");
     }
 
     public void OnEndLook()
     {
-        interactionUIText.SetText("");
+        //interactionUIText.SetText("");
     }
 
     public void OnInteract()
