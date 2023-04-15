@@ -5,7 +5,7 @@ public class InventoryEvents : MonoBehaviour
 {
     // UI related events
     public static Action OnInventoryUpdate;
-    public static Action<InventorySlotNew> OnShowItemDetails;
+    public static Action<InventorySlot> OnShowItemDetails;
     public static Action OnInventoryShow;
 
     public static void InventoryUpdate()
@@ -13,7 +13,7 @@ public class InventoryEvents : MonoBehaviour
         OnInventoryUpdate?.Invoke();
     }
 
-    public static void ShowItemDetails(InventorySlotNew slot)
+    public static void ShowItemDetails(InventorySlot slot)
     {
         OnShowItemDetails?.Invoke(slot);
     }

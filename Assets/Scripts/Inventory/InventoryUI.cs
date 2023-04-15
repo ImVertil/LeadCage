@@ -20,19 +20,19 @@ public class InventoryUI : MonoBehaviour
 
     void Start()
     {
-        foreach (var slot in _mainPanel.GetComponentsInChildren<InventorySlotNew>())
+        foreach (var slot in _mainPanel.GetComponentsInChildren<InventorySlot>())
         {
             if (slot.transform.parent == _weaponsPanel.transform)
             {
-                InventoryNew.Instance.AddWeaponSlot(slot);
+                Inventory.Instance.AddWeaponSlot(slot);
             }
             else if (slot.transform.parent == _movementItemsPanel.transform)
             {
-                InventoryNew.Instance.AddMovementItemSlot(slot);
+                Inventory.Instance.AddMovementItemSlot(slot);
             }
             else
             {
-                InventoryNew.Instance.AddInventorySlot(slot);
+                Inventory.Instance.AddInventorySlot(slot);
             }
             slot.AssignComponents();
             
@@ -75,7 +75,7 @@ public class InventoryUI : MonoBehaviour
 
     public void UpdateItems()
     {
-        foreach (var slot in InventoryNew.Instance._equippedWeapons)
+        foreach (var slot in Inventory.Instance._equippedWeapons)
         {
             if (slot.Value != null)
             {
@@ -89,7 +89,7 @@ public class InventoryUI : MonoBehaviour
             }
         }
 
-        foreach (var slot in InventoryNew.Instance._inventoryItems)
+        foreach (var slot in Inventory.Instance._inventoryItems)
         {
             if (slot.Value != null)
             {
@@ -106,9 +106,9 @@ public class InventoryUI : MonoBehaviour
         _inventoryDetailsPanel.SetActive(false);
     }
 
-    public void ShowItemDetails(InventorySlotNew slot)
+    public void ShowItemDetails(InventorySlot slot)
     {
-        Item item = InventoryNew.Instance.GetItemFromContainer(slot);
+        Item item = Inventory.Instance.GetItemFromContainer(slot);
         if (_isVisible && item != null)
         {
             _inventoryDetailsPanel.SetActive(true);
@@ -131,21 +131,21 @@ public class InventoryUI : MonoBehaviour
                 case ItemType.Weapon:
                 case ItemType.MovementItem:
                     _equipButton.onClick.RemoveAllListeners();
-                    if (InventoryNew.Instance._equippedWeapons.ContainsKey(slot) || InventoryNew.Instance._equippedMovementItems.ContainsKey(slot))
+                    if (Inventory.Instance._equippedWeapons.ContainsKey(slot) || Inventory.Instance._equippedMovementItems.ContainsKey(slot))
                     {
                         _equipButtonText.text = "Unequip";
                         _dropButton.interactable = false;
-                        _equipButton.onClick.AddListener(delegate { InventoryNew.Instance.UnequipItem(slot); });
+                        _equipButton.onClick.AddListener(delegate { Inventory.Instance.UnequipItem(slot); });
                     }
                     else
                     {
-                        _equipButton.onClick.AddListener(delegate { InventoryNew.Instance.EquipItem(slot); });
+                        _equipButton.onClick.AddListener(delegate { Inventory.Instance.EquipItem(slot); });
                     }
                     break;
             }
 
             _dropButton.onClick.RemoveAllListeners();
-            _dropButton.onClick.AddListener(delegate { InventoryNew.Instance.DropItem(slot); });
+            _dropButton.onClick.AddListener(delegate { Inventory.Instance.DropItem(slot); });
         }
     }
 }
