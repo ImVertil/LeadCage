@@ -35,6 +35,9 @@ public class InputManager : MonoBehaviour
     
     public InputAction InteractAction;
 
+    // Inventory
+    public InputAction InventoryToggleAction;
+
 
     private void Awake()
     {
@@ -61,6 +64,8 @@ public class InputManager : MonoBehaviour
         UnsheatheAction = _currentMap.FindAction("Unsheathe");
         
         InteractAction = _currentMap.FindAction("Interact");
+
+        InventoryToggleAction = _currentMap.FindAction("Inventory Toggle");
         
         MoveAction.performed += OnMove;
         LookAction.performed += OnLook;
@@ -82,7 +87,6 @@ public class InputManager : MonoBehaviour
         
         InteractAction.canceled += OnInteract;
     
-        
     }
 
     private void OnMove(InputAction.CallbackContext context)

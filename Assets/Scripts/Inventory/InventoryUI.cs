@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
@@ -39,18 +40,11 @@ public class InventoryUI : MonoBehaviour
             _isVisible = false;
             InventoryEvents.OnInventoryUpdate += UpdateItems;
             InventoryEvents.OnShowItemDetails += ShowItemDetails;
+            InputManager.current.InventoryToggleAction.performed += ToggleInventory;
         }
     }
 
-    void Update()
-    {
-        if (Input.GetButtonDown(Controls.INVENTORY))
-        {
-            ToggleInventory();
-        }
-    }
-
-    public void ToggleInventory()
+    public void ToggleInventory(InputAction.CallbackContext ctx)
     {
         // REPLACE WITH PLAYER EVENTS WHEN THEY'RE ADDED
         if (_isVisible)
