@@ -25,6 +25,6 @@ public class InteractPickup : MonoBehaviour, IInteractable
     public void OnInteract()
     {
         Progression.Instance.AddStoryValue(item.associatedStoryValue);
-        InventoryNew.Instance.AddItem(this);
+        Inventory.Instance.AddItem(this);
     }
 }
