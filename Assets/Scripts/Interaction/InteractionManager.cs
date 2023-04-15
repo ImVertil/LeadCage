@@ -21,7 +21,7 @@ public class InteractionManager : MonoBehaviour
     {
         RaycastForInteractable();
 
-        if(Input.GetButtonDown(Controls.INTERACT))
+        if(InputManager.current.Interact)
         {
             if(_interactionInterface != null)
             {

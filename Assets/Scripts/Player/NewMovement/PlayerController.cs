@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private Animator _animator;
     private CapsuleCollider _capsule;
+    private InputManager _inputManager;
     
     private bool _hasAnimator;
     private bool _grounded;
@@ -30,7 +28,6 @@ public class PlayerController : MonoBehaviour
     private int _fallingHash;
     private int _crouchingHash;
     
-    private Vector2 _inputVector;
     public float xRotation;
 
     private Vector2 _currentVelocity;
@@ -75,6 +72,7 @@ public class PlayerController : MonoBehaviour
         _hasAnimator = TryGetComponent<Animator>(out _animator);
         _rb = GetComponent<Rigidbody>();
         _capsule = GetComponent<CapsuleCollider>();
+        _inputManager = GetComponent<InputManager>();
 
         _startHeight = _capsule.height;
         _startCenter = _capsule.center;
@@ -87,14 +85,12 @@ public class PlayerController : MonoBehaviour
         _groundedHash = Animator.StringToHash("Grounded");
         _fallingHash = Animator.StringToHash("Falling");
         _crouchingHash = Animator.StringToHash("Crouching");
+
+        InputManager.current.JumpAction.started += JumpHandling;
     }
 
     private void Update()
-    {
-        if (Input.GetButtonDown(Controls.JUMP) && !_crouching && CanMove)
-        {
-            JumpHandling();
-        }
+    { 
     }
 
     private void FixedUpdate()
@@ -116,14 +112,9 @@ public class PlayerController : MonoBehaviour
     {
         if(!_hasAnimator || !CanMove) return;
 
-        //_horizontalInput = Input.GetAxisRaw(Controls.HORIZONTAL);
-        //_verticalInput = Input.GetAxisRaw(Controls.VERTICAL);
+        float targetSpeed = _inputManager.Run ? RunSpeed : WalkSpeed;
 
-        _inputVector = new Vector2(Input.GetAxisRaw(Controls.HORIZONTAL), Input.GetAxisRaw(Controls.VERTICAL));
-
-        float targetSpeed = Input.GetButton(Controls.SPRINT) ? RunSpeed : WalkSpeed;
-
-        if (Input.GetButton(Controls.CROUCH))
+        if (_inputManager.Crouch)
         {
             _crouching = true;
             targetSpeed = CrouchSpeed;
@@ -149,12 +140,12 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (_inputVector.x == 0 && _inputVector.y == 0) targetSpeed = 0;
+        if (_inputManager.Move == Vector2.zero) targetSpeed = 0;
 
         targetSpeed = targetSpeed * _onSlopeSpeedModifier;
 
-        _currentVelocity.x = Mathf.Lerp(_currentVelocity.x, targetSpeed * _inputVector.normalized.x, AnimBlendSpeed * Time.fixedDeltaTime);
-        _currentVelocity.y = Mathf.Lerp(_currentVelocity.y, targetSpeed * _inputVector.normalized.y, AnimBlendSpeed * Time.fixedDeltaTime);
+        _currentVelocity.x = Mathf.Lerp(_currentVelocity.x, targetSpeed * _inputManager.Move.x, AnimBlendSpeed * Time.fixedDeltaTime);
+        _currentVelocity.y = Mathf.Lerp(_currentVelocity.y, targetSpeed * _inputManager.Move.y, AnimBlendSpeed * Time.fixedDeltaTime);
         //_currentVelocity = Vector2.SmoothDamp(_currentVelocity, new Vector2(targetSpeed, targetSpeed) *_inputVector.normalized, ref _blendVelocity, 1/AnimBlendSpeed);
         
         var xVelDifference = _currentVelocity.x - _rb.velocity.x;
@@ -172,23 +163,23 @@ public class PlayerController : MonoBehaviour
     {
         if (!_hasAnimator || !CanMoveCamera) return;
 
-        var mouseX = Input.GetAxisRaw(Controls.MOUSEX);
-        var mouseY = Input.GetAxisRaw(Controls.MOUSEY);
+        var mouseX = _inputManager.Look.x;
+        var mouseY = _inputManager.Look.y;
         Camera.position = CameraRoot.position;
 
         xRotation -= mouseY * MouseSensitivity * Time.smoothDeltaTime;
         xRotation = Mathf.Clamp(xRotation, UpperCameraLimit, BottomCameraLimit);
 
         Camera.localRotation = Quaternion.Euler(xRotation, 0, 0);
-        transform.Rotate(Vector3.up * mouseX * MouseSensitivity * Time.smoothDeltaTime);
-        //_rb.MoveRotation(_rb.rotation * Quaternion.Euler(0, mouseX * MouseSensitivity * Time.smoothDeltaTime, 0));
+        //transform.Rotate(Vector3.up * mouseX * MouseSensitivity * Time.smoothDeltaTime);
+        _rb.MoveRotation(_rb.rotation * Quaternion.Euler(0, mouseX * MouseSensitivity * Time.smoothDeltaTime, 0));
     }
 
-    private void JumpHandling()
+    private void JumpHandling(InputAction.CallbackContext ctx)
     {
-        if (!_hasAnimator || !_grounded) return;
+        if (!_hasAnimator || !_grounded || _crouching || !CanMove) return;
         _animator.SetTrigger(_jumpHash);
-        JumpForce();
+        JumpForce();    
     }
     
     public void JumpForce()
