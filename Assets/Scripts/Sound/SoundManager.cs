@@ -20,12 +20,13 @@ public class SoundManager : MonoBehaviour
         }
     }
     #endregion
-
     [SerializeField] private int _simultaneousSoundsAmount;
-    [SerializeField] private int _volume = 65;
-    public SoundClip[] sounds;
     private ObjectPool<GameObject> _pool;
     private GameObject _oneShotSoundObject;
+    public int volume = 50;
+    public int sfxVolume = 100;
+    public int bgmVolume = 100;
+    public SoundClip[] sounds;
 
     private void Initialize()
     {
@@ -45,6 +46,7 @@ public class SoundManager : MonoBehaviour
         soundObject.transform.SetParent(transform, false);
         audioSource.clip = GetAudioClip(sound);
         audioSource.loop = loop;
+        audioSource.volume = (volume/100.0f) * (sfxVolume/100.0f);
         audioSource.Play();
         if (!loop)
             StartCoroutine(WaitAndRelease(soundObject, audioSource.clip.length));
@@ -54,6 +56,7 @@ public class SoundManager : MonoBehaviour
     {
         AudioSource audioSource = _oneShotSoundObject.GetComponent<AudioSource>();
         AudioClip clip = GetAudioClip(sound);
+        audioSource.volume = (volume / 100.0f) * (bgmVolume / 100.0f);
         audioSource.PlayOneShot(clip);
     }
 
@@ -94,7 +97,7 @@ public class SoundManager : MonoBehaviour
         AudioSource audioSource = obj.AddComponent<AudioSource>();
         audioSource.spatialBlend = 1;
         audioSource.dopplerLevel = 0.1f;
-        audioSource.volume = _volume / 100.0f;
+        audioSource.volume = volume / 100.0f;
         return obj;
     }
 
