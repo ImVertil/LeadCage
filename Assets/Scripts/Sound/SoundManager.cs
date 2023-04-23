@@ -46,7 +46,7 @@ public class SoundManager : MonoBehaviour
         soundObject.transform.SetParent(transform, false);
         audioSource.clip = GetAudioClip(sound);
         audioSource.loop = loop;
-        audioSource.volume = (volume/100.0f) * (sfxVolume/100.0f);
+        audioSource.volume = (volume / 100.0f) * (GetSoundType(sound) == SoundType.SFX ? (sfxVolume / 100.0f) : (bgmVolume / 100.0f));
         audioSource.Play();
         if (!loop)
             StartCoroutine(WaitAndRelease(soundObject, audioSource.clip.length));
@@ -56,7 +56,7 @@ public class SoundManager : MonoBehaviour
     {
         AudioSource audioSource = _oneShotSoundObject.GetComponent<AudioSource>();
         AudioClip clip = GetAudioClip(sound);
-        audioSource.volume = (volume / 100.0f) * (bgmVolume / 100.0f);
+        audioSource.volume = (volume / 100.0f) * (GetSoundType(sound) == SoundType.SFX ? (sfxVolume / 100.0f) : (bgmVolume / 100.0f));
         audioSource.PlayOneShot(clip);
     }
 
@@ -82,6 +82,11 @@ public class SoundManager : MonoBehaviour
     public Sound GetSound(AudioClip clip)
     {
         return Array.Find(sounds, s => s.audioClip == clip).name;
+    }
+
+    public SoundType GetSoundType(Sound sound)
+    {
+        return Array.Find(sounds, s => s.name == sound).type;
     }
 
     private IEnumerator WaitAndRelease(GameObject obj, float time)
