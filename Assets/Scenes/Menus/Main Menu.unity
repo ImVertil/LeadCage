@@ -234,7 +234,7 @@ RectTransform:
   - {fileID: 2135935346}
   - {fileID: 1122761232}
   m_Father: {fileID: 1964358326}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -772,21 +772,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1122761237}
-        m_TargetAssemblyTypeName: UISettingsSlider, Assembly-CSharp
-        m_MethodName: SetText
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: value
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1122761237}
-        m_TargetAssemblyTypeName: UISettingsSlider, Assembly-CSharp
-        m_MethodName: SetVolume
+      - m_Target: {fileID: 1190847836}
+        m_TargetAssemblyTypeName: UISoundSettings, Assembly-CSharp
+        m_MethodName: ChangeEffectsVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3726,7 +3714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -3757,33 +3745,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1742526369}
-        m_TargetAssemblyTypeName: UISettingsSlider, Assembly-CSharp
-        m_MethodName: SaveSoundSettings
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2135935351}
-        m_TargetAssemblyTypeName: UISettingsSlider, Assembly-CSharp
-        m_MethodName: SaveSoundSettings
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1122761237}
-        m_TargetAssemblyTypeName: UISettingsSlider, Assembly-CSharp
-        m_MethodName: SaveSoundSettings
+      - m_Target: {fileID: 1190847836}
+        m_TargetAssemblyTypeName: UISoundSettings, Assembly-CSharp
+        m_MethodName: SaveVolumeSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3959,21 +3923,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2135935351}
-        m_TargetAssemblyTypeName: UISettingsSlider, Assembly-CSharp
-        m_MethodName: SetText
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: value
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2135935351}
-        m_TargetAssemblyTypeName: UISettingsSlider, Assembly-CSharp
-        m_MethodName: SetVolume
+      - m_Target: {fileID: 1190847836}
+        m_TargetAssemblyTypeName: UISoundSettings, Assembly-CSharp
+        m_MethodName: ChangeMusicVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5903,7 +5855,6 @@ GameObject:
   - component: {fileID: 1122761235}
   - component: {fileID: 1122761234}
   - component: {fileID: 1122761233}
-  - component: {fileID: 1122761237}
   m_Layer: 5
   m_Name: Effects
   m_TagString: Untagged
@@ -6018,20 +5969,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1122761231}
   m_CullTransparentMesh: 1
---- !u!114 &1122761237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1122761231}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06468921a4f6e294ab22a6456a5c8a58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _textObject: {fileID: 533353712}
-  _volume: {fileID: 1742491809}
 --- !u!1 &1147534396
 GameObject:
   m_ObjectHideFlags: 0
@@ -6330,6 +6267,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186458492}
   m_CullTransparentMesh: 1
+--- !u!1 &1190847835
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1190847837}
+  - component: {fileID: 1190847836}
+  m_Layer: 0
+  m_Name: SoundSettingsHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1190847836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190847835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa5ad3bfff2e7ec4e9009868b7341938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _masterVolumeText: {fileID: 1096686384}
+  _musicVolumeText: {fileID: 1299096435}
+  _effectsVolumeText: {fileID: 533353712}
+--- !u!4 &1190847837
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190847835}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1964358326}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1194015570
 GameObject:
   m_ObjectHideFlags: 0
@@ -6363,7 +6347,7 @@ RectTransform:
   m_Children:
   - {fileID: 819783789}
   m_Father: {fileID: 1964358326}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -8008,7 +7992,7 @@ RectTransform:
   - {fileID: 1930675569}
   - {fileID: 1821267580}
   m_Father: {fileID: 1964358326}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -9067,21 +9051,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1742526369}
-        m_TargetAssemblyTypeName: UISettingsSlider, Assembly-CSharp
-        m_MethodName: SetText
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1742526369}
-        m_TargetAssemblyTypeName: UISettingsSlider, Assembly-CSharp
-        m_MethodName: SetVolume
+      - m_Target: {fileID: 1190847836}
+        m_TargetAssemblyTypeName: UISoundSettings, Assembly-CSharp
+        m_MethodName: ChangeMasterVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9552,7 +9524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -10073,7 +10045,6 @@ GameObject:
   - component: {fileID: 1742526367}
   - component: {fileID: 1742526366}
   - component: {fileID: 1742526365}
-  - component: {fileID: 1742526369}
   m_Layer: 5
   m_Name: MasterVolume
   m_TagString: Untagged
@@ -10188,20 +10159,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1742526363}
   m_CullTransparentMesh: 1
---- !u!114 &1742526369
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1742526363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06468921a4f6e294ab22a6456a5c8a58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _textObject: {fileID: 1096686384}
-  _volume: {fileID: 631236410}
 --- !u!1 &1752508902
 GameObject:
   m_ObjectHideFlags: 0
@@ -10581,7 +10538,7 @@ RectTransform:
   - {fileID: 1719972228}
   - {fileID: 658215948}
   m_Father: {fileID: 1964358326}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -11507,7 +11464,7 @@ RectTransform:
   m_Children:
   - {fileID: 1910368269}
   m_Father: {fileID: 1964358326}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -12019,6 +11976,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1190847837}
   - {fileID: 1526140566}
   - {fileID: 30668334}
   - {fileID: 1194015571}
@@ -12986,7 +12944,6 @@ GameObject:
   - component: {fileID: 2135935349}
   - component: {fileID: 2135935348}
   - component: {fileID: 2135935347}
-  - component: {fileID: 2135935351}
   m_Layer: 5
   m_Name: Music
   m_TagString: Untagged
@@ -13101,20 +13058,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2135935345}
   m_CullTransparentMesh: 1
---- !u!114 &2135935351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2135935345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06468921a4f6e294ab22a6456a5c8a58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _textObject: {fileID: 1299096435}
-  _volume: {fileID: 1478081743}
 --- !u!1 &2136032325
 GameObject:
   m_ObjectHideFlags: 0

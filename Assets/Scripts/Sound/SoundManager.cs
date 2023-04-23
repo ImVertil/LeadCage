@@ -35,9 +35,13 @@ public class SoundManager : MonoBehaviour
         {
             _oneShotSoundObject = new GameObject("Sound (One Shot)");
             _oneShotSoundObject.AddComponent<AudioSource>();
+            //_oneShotSoundObject.AddComponent<VolumeHandler>();
         }
     }
 
+    /* TODO:
+     * - Make PlaySoundEffect and PlayMusic to avoid problems with getting the sound type etc. while changing the volume
+     */
     public void PlaySound(Sound sound, Transform transform, bool loop) // if loop is set to true remember to use StopSound to turn the clip off
     {
         GameObject soundObject = _pool.Get();
@@ -84,6 +88,11 @@ public class SoundManager : MonoBehaviour
         return Array.Find(sounds, s => s.audioClip == clip).name;
     }
 
+    public SoundType GetSoundType(AudioClip clip)
+    {
+        return Array.Find(sounds, s => s.audioClip == clip).type;
+    }
+
     public SoundType GetSoundType(Sound sound)
     {
         return Array.Find(sounds, s => s.name == sound).type;
@@ -100,6 +109,7 @@ public class SoundManager : MonoBehaviour
     {
         GameObject obj = new GameObject("Sound");
         AudioSource audioSource = obj.AddComponent<AudioSource>();
+        obj.AddComponent<VolumeHandler>();
         audioSource.spatialBlend = 1;
         audioSource.dopplerLevel = 0.1f;
         audioSource.volume = volume / 100.0f;
