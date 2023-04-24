@@ -19,7 +19,7 @@ public class GoToCoverNode : Node
         Transform coverSpot = ai.GetBestCoverSpot();
         if (coverSpot == null)
             return NodeState.FAILURE;
-        ai.SetColor(Color.blue);
+        ai.SetColor(Color.black);
         float distance = Vector3.Distance(coverSpot.position, agent.transform.position);
         if (distance > 0.2f)
         {
