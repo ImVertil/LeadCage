@@ -158,7 +158,6 @@ public class RifleController : MonoBehaviour
 
     private void SheatheUnsheatheRifle(InputAction.CallbackContext ctx)
     {
-        Debug.Log("ass");
         if (!_waiting)
         {
             SoundManager.Instance.PlaySound(Sound.Holster, transform, false);
