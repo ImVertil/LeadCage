@@ -7,13 +7,24 @@ public class GunManager : MonoBehaviour {
 
 
     [SerializeField] Transform Target;
+    [SerializeField] GameObject Carbine;
+    [SerializeField] GameObject Rifle;
 
     private GunPlayEvents _gpe;
     private Gun _currentGun;
 
     private Camera _mainCamera;
 
-    
+    public enum WeaponSlot
+    {
+        Primary,
+        Secondary
+    }
+
+    public WeaponSlot CurrentWeaponSlot;
+
+
+
     private bool _haveGun;
     private float _cooldownCounter;
 
@@ -23,6 +34,9 @@ public class GunManager : MonoBehaviour {
         _gpe = GunPlayEvents.Instance;
         _gpe.OnGunEquip += GunEquip;
         InputManager.current.UnsheatheAction.performed += SheatheUnsheatheGun;
+        InputManager.current.PrimaryWeaponAction.performed += SwitchToPrimary;
+        InputManager.current.SecondaryWeaponAction.performed += SwitchToSecondary;
+        CurrentWeaponSlot = WeaponSlot.Primary;
     }
 
     private void Update()
@@ -54,11 +68,57 @@ public class GunManager : MonoBehaviour {
         _currentGun.Animator = GetComponent<Animator>();
     }
 
+    void GunUnequip()
+    {
+        _haveGun = false;
+        _currentGun = null;
+    }
+
     private void SheatheUnsheatheGun(InputAction.CallbackContext ctx)
     {
         if(!_haveGun)
             return;
         _currentGun.SheatheUnsheathe();
+    }
+
+    private void SwitchToPrimary(InputAction.CallbackContext ctx)
+    {
+        Item weapon = Inventory.Instance.GetPrimaryWeapon();
+
+        if(weapon == null )
+            return;
+
+        if(weapon.id == 3)
+        {
+            Rifle.SetActive(true);
+            Carbine.SetActive(false);
+        }
+        if(weapon.id == 4)
+        {
+            Rifle.SetActive(false);
+            Carbine.SetActive(true);
+        }
+        CurrentWeaponSlot = WeaponSlot.Primary;
+    }
+
+    private void SwitchToSecondary(InputAction.CallbackContext ctx)
+    {
+        Item weapon = Inventory.Instance.GetSecondaryWeapon();
+
+        if(weapon == null)
+            return;
+
+        if(weapon.id == 3)
+        {
+            Rifle.SetActive(true);
+            Carbine.SetActive(false);
+        }
+        if(weapon.id == 4)
+        {
+            Rifle.SetActive(false);
+            Carbine.SetActive(true);
+        }
+        CurrentWeaponSlot = WeaponSlot.Secondary;
     }
 
 }

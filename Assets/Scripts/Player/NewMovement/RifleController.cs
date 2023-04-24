@@ -91,7 +91,7 @@ public class RifleController : MonoBehaviour
         InputManager.current.UnsheatheAction.performed += SheatheUnsheatheRifle*/; 
         
 
-        _startSensitivity = PlayerController.MouseSensitivity;
+        _startSensitivity = _controller.MouseSensitivity;
         //_startGunPos = _gunMesh.localPosition;
 
         _hipsRig = _rigBuilder.layers[0].rig;
@@ -143,13 +143,13 @@ public class RifleController : MonoBehaviour
         {
             _aiming = true;
             _desiredAimRigWeight = 1f;
-            PlayerController.MouseSensitivity = _startSensitivity * 0.5f;
+            _controller.MouseSensitivity = _startSensitivity * 0.5f;
         }
         else
         {
             _aiming = false;
             _desiredAimRigWeight = 0f;
-            PlayerController.MouseSensitivity = _startSensitivity;
+            _controller.MouseSensitivity = _startSensitivity;
         }
 
         _aimRig.weight = Mathf.SmoothDamp(_aimRig.weight, _desiredAimRigWeight, ref _aimRigWeightVelocity, 0.2f);

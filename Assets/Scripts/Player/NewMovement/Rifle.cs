@@ -16,6 +16,7 @@ public class Rifle : MonoBehaviour, Gun {
     [SerializeField] float _recoilZ;
     [SerializeField] [Range(0,1)] float _kickbackStrength;
     [SerializeField] float _kickbackSpeed;
+    [SerializeField] PlayerController _pc;
 
     public float FireRate {get {return fireRate;}}
     public bool GunPulledOut {get {return _riflePulledOut;} set {_riflePulledOut = value;}}
@@ -50,10 +51,9 @@ public class Rifle : MonoBehaviour, Gun {
     private float _glueSpeed= 0.2f;
     private float ArmLayerWeightDelay= 0.5f;
 
-    private void Awake()
+    private void Start()
     {
-        GunPlayEvents.Instance.GunEquip(this);
-        _startSensitivity = PlayerController.MouseSensitivity;
+        _startSensitivity = 50; // i have no idea but it has to be like this rn
         _riflePulledOutHash = Animator.StringToHash("RiflePulledOut");
         _hipsRig = RigBuilder.layers[0].rig;
         _handsRig = RigBuilder.layers[4].rig;
@@ -62,7 +62,7 @@ public class Rifle : MonoBehaviour, Gun {
         _kickbackRig = RigBuilder.layers[3].rig;
     }
 
-    private void Start()
+    private void OnEnable()
     {
         GunPlayEvents.Instance.GunEquip(this);
     }
@@ -125,13 +125,13 @@ public class Rifle : MonoBehaviour, Gun {
     public void TakeAim()
     {
         _desiredAimRigWeight = 1f;
-        PlayerController.MouseSensitivity = _startSensitivity * 0.5f;
+        _pc.MouseSensitivity = _startSensitivity * 0.5f;
     }
 
     public void StopAim()
     {
         _desiredAimRigWeight = 0f;
-        PlayerController.MouseSensitivity = _startSensitivity;
+        _pc.MouseSensitivity = _startSensitivity;
     }
 
     IEnumerator WaitToChangeWeight()
