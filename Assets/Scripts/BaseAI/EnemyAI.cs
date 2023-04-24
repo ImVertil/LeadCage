@@ -52,6 +52,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake()
     {
+        
         patrol = false;
         agent = GetComponent<NavMeshAgent>();
         material = GetComponentInChildren<MeshRenderer>().material;
@@ -134,6 +135,7 @@ public class EnemyAI : MonoBehaviour
             if (topNode.nodeState == NodeState.FAILURE)
             {
                 SetColor(Color.red);
+                UpdateDest();
                 //agent.isStopped = true;
                 //patrol = true;
             }
