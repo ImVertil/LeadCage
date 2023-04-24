@@ -1,19 +1,153 @@
-public abstract class Rifle : Gun {
+using UnityEngine;
+using System.Collections;
+using Player.Weapons;
+using UnityEngine.Animations.Rigging;
 
+public class Rifle : MonoBehaviour, Gun {
 
-    void Shoot()
+    [SerializeField] Transform bulletOrigin;
+    [SerializeField] private GameObject BulletHolePrefab;
+    [SerializeField] private LayerMask AimMask;
+    [SerializeField] GameObject WeaponPivot;
+    [SerializeField] float fireRate;
+    [SerializeField] float range;
+    [SerializeField] float _recoilX;
+    [SerializeField] float _recoilY;
+    [SerializeField] float _recoilZ;
+    [SerializeField] [Range(0,1)] float _kickbackStrength;
+    [SerializeField] float _kickbackSpeed;
+
+    public float FireRate {get {return fireRate;}}
+    public bool GunPulledOut {get {return _riflePulledOut;} set {_riflePulledOut = value;}}
+
+    private bool _waiting = false;
+    private bool _riflePulledOut = false;
+    private float _startSensitivity;
+
+    private int _riflePulledOutHash;
+    
+    public RigBuilder RigBuilder{get; set;}
+    public Animator Animator{get; set;}
+    private Rig _hipsRig;
+    private Rig _handsRig;
+    private Rig _aimRig;
+    private Rig _weaponPullRig;
+    private Rig _kickbackRig;
+
+    private float _desiredHipsRigWeight = 0f;
+    private float _desiredHandsRigWeight = 0f;
+    private float _desiredAimRigWeight = 0f;
+    private float _desiredPullRigWeight = 0f;
+    private float _desiredKickbackRigWeight = 0f;
+
+    private float _hipRigWeightVelocity = 0f;
+    private float _handRigWeightVelocity = 0f;
+    private float _aimRigWeightVelocity = 0f;
+    private float _pullRigweightVelocity = 0f;
+    private float _kickbackRigWeightVelocity = 0f;
+
+    private float _putSpeed= 0.5f;
+    private float _glueSpeed= 0.2f;
+    private float ArmLayerWeightDelay= 0.5f;
+
+    private void Awake()
+    {
+        GunPlayEvents.Instance.GunEquip(this);
+        _startSensitivity = PlayerController.MouseSensitivity;
+        _riflePulledOutHash = Animator.StringToHash("RiflePulledOut");
+        _hipsRig = RigBuilder.layers[0].rig;
+        _handsRig = RigBuilder.layers[4].rig;
+        _aimRig = RigBuilder.layers[1].rig;
+        _weaponPullRig = RigBuilder.layers[2].rig;
+        _kickbackRig = RigBuilder.layers[3].rig;
+    }
+
+    private void Start()
+    {
+        GunPlayEvents.Instance.GunEquip(this);
+    }
+
+    private void Update()
+    {
+        _handsRig.weight = Mathf.SmoothDamp(_handsRig.weight, _desiredHandsRigWeight, ref _handRigWeightVelocity, _putSpeed);
+        _hipsRig.weight = Mathf.SmoothDamp(_hipsRig.weight, _desiredHipsRigWeight, ref _hipRigWeightVelocity, _putSpeed);
+        _weaponPullRig.weight = Mathf.SmoothDamp(_weaponPullRig.weight, _desiredPullRigWeight, ref _pullRigweightVelocity, _glueSpeed);
+        _kickbackRig.weight = Mathf.SmoothDamp(_kickbackRig.weight, _desiredKickbackRigWeight, ref _kickbackRigWeightVelocity, 1/_kickbackSpeed);
+        _aimRig.weight = Mathf.SmoothDamp(_aimRig.weight, _desiredAimRigWeight, ref _aimRigWeightVelocity, 0.2f);
+    }
+
+    public void Shoot()
     {
         SoundManager.Instance.PlaySound(Sound.Shoot, transform, false);
         StartCoroutine(Kickback());
 
         RaycastHit hit;
-        if (Physics.Raycast(bulletOrigin.transform.position, bulletOrigin.transform.forward, out hit, _range, AimMask))
+        if (Physics.Raycast(bulletOrigin.position, bulletOrigin.forward, out hit, range, AimMask))
         {
             var obj = Instantiate(BulletHolePrefab, hit.point, Quaternion.LookRotation(hit.normal));
             obj.transform.position += obj.transform.forward/1000f;
         }
 
         GunPlayEvents.Instance.GunRecoil(_recoilX, _recoilY, _recoilZ);
+    }
+
+    public void SheatheUnsheathe()
+    {
+        if (!_waiting)
+        {
+            SoundManager.Instance.PlaySound(Sound.Holster, transform, false);
+            Animator.SetBool(_riflePulledOutHash, !_riflePulledOut);
+            _riflePulledOut = !_riflePulledOut;
+            if (_riflePulledOut)
+            {
+                WeaponPivot.SetActive(true);
+                _putSpeed = 0.5f;
+                _glueSpeed = 0.5f;
+                Animator.SetLayerWeight(1, 1);
+                _desiredHipsRigWeight = 1;
+                _desiredHandsRigWeight = 1;
+                _weaponPullRig.weight = 1;
+                _desiredPullRigWeight = 0;
+            }
+            else
+            {
+                _putSpeed = 0.5f;
+                _glueSpeed = 0.2f;
+                _desiredHipsRigWeight = 0;
+                _desiredHandsRigWeight = 0;
+                _desiredPullRigWeight = 1;
+                StartCoroutine(WaitToChangeWeight());
+            }
+        }
+
+    }
+
+    public void TakeAim()
+    {
+        _desiredAimRigWeight = 1f;
+        PlayerController.MouseSensitivity = _startSensitivity * 0.5f;
+    }
+
+    public void StopAim()
+    {
+        _desiredAimRigWeight = 0f;
+        PlayerController.MouseSensitivity = _startSensitivity;
+    }
+
+    IEnumerator WaitToChangeWeight()
+    {
+        _waiting = true;
+        yield return new WaitForSeconds(ArmLayerWeightDelay);
+        _waiting = false;
+        WeaponPivot.SetActive(false);
+        Animator.SetLayerWeight(1, 0);
+    }
+
+    IEnumerator Kickback()
+    {
+        _desiredKickbackRigWeight = _kickbackStrength;
+        yield return new WaitForSeconds(1 / _kickbackSpeed);
+        _desiredKickbackRigWeight = 0f;
     }
 
 

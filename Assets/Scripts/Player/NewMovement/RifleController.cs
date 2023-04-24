@@ -86,12 +86,12 @@ public class RifleController : MonoBehaviour
         _rightHandConstraint = RightHandIK.GetComponent<TwoBoneIKConstraint>();
         _leftHandConstraint = LeftHandIK.GetComponent<TwoBoneIKConstraint>();
         
-        _mainCamera = Camera.main;
+        /*_mainCamera = Camera.main;
 
-        InputManager.current.UnsheatheAction.performed += SheatheUnsheatheRifle; 
+        InputManager.current.UnsheatheAction.performed += SheatheUnsheatheRifle*/; 
         
 
-        _startSensitivity = _controller.MouseSensitivity;
+        _startSensitivity = PlayerController.MouseSensitivity;
         //_startGunPos = _gunMesh.localPosition;
 
         _hipsRig = _rigBuilder.layers[0].rig;
@@ -143,19 +143,20 @@ public class RifleController : MonoBehaviour
         {
             _aiming = true;
             _desiredAimRigWeight = 1f;
-            _controller.MouseSensitivity = _startSensitivity * 0.5f;
+            PlayerController.MouseSensitivity = _startSensitivity * 0.5f;
         }
         else
         {
             _aiming = false;
             _desiredAimRigWeight = 0f;
-            _controller.MouseSensitivity = _startSensitivity;
+            PlayerController.MouseSensitivity = _startSensitivity;
         }
 
         _aimRig.weight = Mathf.SmoothDamp(_aimRig.weight, _desiredAimRigWeight, ref _aimRigWeightVelocity, 0.2f);
         _animator.SetBool(_aimingHash, _aiming);
     }
 
+    //done
     private void SheatheUnsheatheRifle(InputAction.CallbackContext ctx)
     {
         if (!_waiting)
@@ -196,6 +197,7 @@ public class RifleController : MonoBehaviour
         _animator.SetLayerWeight(1, 0);
     }
     
+    //done
     private void Shoot()
     {
         SoundManager.Instance.PlaySound(Sound.Shoot, transform, false);

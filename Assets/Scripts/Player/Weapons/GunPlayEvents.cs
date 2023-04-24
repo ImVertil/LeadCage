@@ -10,7 +10,7 @@ namespace Player.Weapons
         
         //Akcje
         public Action<float, float, float> OnGunRecoil;
-        public Action<float> OnGunEquip;
+        public Action<Gun> OnGunEquip;
 
         private void Awake()
         {

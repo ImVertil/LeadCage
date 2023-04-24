@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float UpperCameraLimit = -40f;
     [SerializeField] private float BottomCameraLimit = 70f;
 
-    [SerializeField] public float MouseSensitivity = 21.9f; 
+    [SerializeField] public static float MouseSensitivity = 21.9f; 
 
     [SerializeField] private float JumpStrength = 260f;
     [SerializeField] private float DistanceToGround = 0.8f;
