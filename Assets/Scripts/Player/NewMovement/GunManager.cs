@@ -1,7 +1,12 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Animations.Rigging;
+using Player.Weapons;
 
 public class GunManager : MonoBehaviour {
 
+
+    [SerializeField] Transform Target;
 
     private GunPlayEvents _gpe;
     private Gun _currentGun;
@@ -10,10 +15,9 @@ public class GunManager : MonoBehaviour {
 
     
     private bool _haveGun;
-    private bool _gunPulledOut;
     private float _cooldownCounter;
 
-    private void Awake()
+    private void Start()
     {
         _mainCamera = Camera.main;
         _gpe = GunPlayEvents.Instance;
@@ -23,23 +27,36 @@ public class GunManager : MonoBehaviour {
 
     private void Update()
     {
-        if(_haveGun.false)
+        Target.position = _mainCamera.transform.position + _mainCamera.transform.forward*10;
+        if(!_haveGun)
             return;
-        if (_inputManager.Fire && Time.time >= _cooldownCounter && _gunPulledOut)
+        if(InputManager.current.Fire && Time.time >= _cooldownCounter && _currentGun.GunPulledOut)
         {
-           _cooldownCounter = Time.time + 1f / _currentGun.GetFireRate();
+           _cooldownCounter = Time.time + 1f / _currentGun.FireRate;
            _currentGun.Shoot();
         }
+        if(InputManager.current.Aim && _currentGun.GunPulledOut)
+        {
+            _currentGun.TakeAim();
+        }
+        else
+        {
+            _currentGun.StopAim();
+        }
+        
     }
 
-    private void GunEquip(Gun gun)
+    void GunEquip(Gun gun)
     {
+        _haveGun = true;
         _currentGun = gun;
+        _currentGun.RigBuilder = GetComponent<RigBuilder>();
+        _currentGun.Animator = GetComponent<Animator>();
     }
 
-    private void SheatheUnsheatheGun()
+    private void SheatheUnsheatheGun(InputAction.CallbackContext ctx)
     {
-        if(!_currentGun)
+        if(!_haveGun)
             return;
         _currentGun.SheatheUnsheathe();
     }
