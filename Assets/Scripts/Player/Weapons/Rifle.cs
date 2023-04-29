@@ -64,7 +64,7 @@ public class Rifle : MonoBehaviour, Gun {
 
     private void OnEnable()
     {
-        GunPlayEvents.Instance.GunEquip(this);
+        GunPlayEvents.GunEquip(this);
     }
 
     private void Update()
@@ -88,7 +88,7 @@ public class Rifle : MonoBehaviour, Gun {
             obj.transform.position += obj.transform.forward/1000f;
         }
 
-        GunPlayEvents.Instance.GunRecoil(_recoilX, _recoilY, _recoilZ);
+        GunPlayEvents.GunRecoil(_recoilX, _recoilY, _recoilZ);
     }
 
     public void SheatheUnsheathe()
