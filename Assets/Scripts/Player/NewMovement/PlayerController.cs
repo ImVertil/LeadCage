@@ -64,6 +64,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private LayerMask GroundMask;
 
+    [SerializeField] private Transform Hips;
+
     private void Start()
     {
         Cursor.visible = false;
@@ -91,6 +93,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     { 
+        if(!CanMove || !CanMoveCamera)
+        {
+            _animator.SetFloat(_xVelHash, 0);
+            _animator.SetFloat(_yVelHash, 0);
+        }
     }
 
     private void FixedUpdate()
@@ -285,7 +292,8 @@ public class PlayerController : MonoBehaviour
             Vector3 footPosition = hit.point;
             footPosition.y += DistanceIKFoot;
             _animator.SetIKPosition(foot, footPosition);
-            Vector3 fwd = Vector3.ProjectOnPlane(transform.forward, hit.normal);
+            //Vector3 direction = new Vector3(_animator.GetFloat(_xVelHash), 0f, _animator.GetFloat(_yVelHash));
+            Vector3 fwd = Vector3.ProjectOnPlane(Hips.forward, hit.normal);
             _animator.SetIKRotation(foot, Quaternion.LookRotation(fwd, hit.normal));
         }
     }

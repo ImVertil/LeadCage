@@ -10,6 +10,8 @@ namespace Player.Weapons
         
         //Akcje
         public Action<float, float, float> OnGunRecoil;
+        public Action<Gun> OnGunEquip;
+
         private void Awake()
         {
             if (Instance == null)
@@ -27,5 +29,11 @@ namespace Player.Weapons
         {
             OnGunRecoil?.Invoke(recoilX,recoilY,recoilZ);
         }
+
+        public void GunEquip(Gun gun)
+        {
+            OnGunEquip?.Invoke(gun);
+        }
+
     }
 }
