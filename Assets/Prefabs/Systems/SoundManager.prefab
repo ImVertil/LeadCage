@@ -45,29 +45,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _simultaneousSoundsAmount: 20
-  _volume: 75
+  volume: 50
+  sfxVolume: 100
+  bgmVolume: 100
   sounds:
-  - name: 0
-    type: 1
-    audioClip: {fileID: 8300000, guid: da57f10518b834544967198012564d96, type: 3}
   - name: 1
     type: 1
-    audioClip: {fileID: 8300000, guid: 8f6a7ec9b4bde524b90735b29ac31f20, type: 3}
-  - name: 2
-    type: 1
-    audioClip: {fileID: 8300000, guid: 9c0f0feeb2397ac41aea6023a05a6e3c, type: 3}
+    audioClip: {fileID: 8300000, guid: 1ee89eee035c6134790324d2c3550854, type: 3}
   - name: 3
     type: 1
-    audioClip: {fileID: 8300000, guid: 1ee89eee035c6134790324d2c3550854, type: 3}
-  - name: 5
-    type: 1
     audioClip: {fileID: 8300000, guid: 0f912a4c837de9b448ca93c164d81107, type: 3}
-  - name: 6
+  - name: 4
     type: 1
     audioClip: {fileID: 8300000, guid: 38dc1d35d4072ea4da0173b5b89921fb, type: 3}
-  - name: 7
+  - name: 5
     type: 1
     audioClip: {fileID: 8300000, guid: fe0d6a272144ab6498419ef947f83b87, type: 3}
-  - name: 8
+  - name: 6
     type: 1
     audioClip: {fileID: 8300000, guid: ee1da210e95194f40b1530bf7df0be05, type: 3}
+  - name: 7
+    type: 1
+    audioClip: {fileID: 8300000, guid: a404a2019780fab499fa04fa3c2e1770, type: 3}
+  - name: 8
+    type: 1
+    audioClip: {fileID: 8300000, guid: 49b7ad7d8bf670e48a75da4c53c3e7ce, type: 3}
