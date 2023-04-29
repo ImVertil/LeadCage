@@ -20,12 +20,13 @@ public class SoundManager : MonoBehaviour
         }
     }
     #endregion
-
     [SerializeField] private int _simultaneousSoundsAmount;
-    [SerializeField] private int _volume = 65;
-    public SoundClip[] sounds;
     private ObjectPool<GameObject> _pool;
     private GameObject _oneShotSoundObject;
+    public int volume = 50;
+    public int sfxVolume = 100;
+    public int bgmVolume = 100;
+    public SoundClip[] sounds;
 
     private void Initialize()
     {
@@ -34,9 +35,13 @@ public class SoundManager : MonoBehaviour
         {
             _oneShotSoundObject = new GameObject("Sound (One Shot)");
             _oneShotSoundObject.AddComponent<AudioSource>();
+            //_oneShotSoundObject.AddComponent<VolumeHandler>();
         }
     }
 
+    /* TODO:
+     * - Make PlaySoundEffect and PlayMusic to avoid problems with getting the sound type etc. while changing the volume
+     */
     public void PlaySound(Sound sound, Transform transform, bool loop) // if loop is set to true remember to use StopSound to turn the clip off
     {
         GameObject soundObject = _pool.Get();
@@ -45,6 +50,7 @@ public class SoundManager : MonoBehaviour
         soundObject.transform.SetParent(transform, false);
         audioSource.clip = GetAudioClip(sound);
         audioSource.loop = loop;
+        audioSource.volume = (volume / 100.0f) * (GetSoundType(sound) == SoundType.SFX ? (sfxVolume / 100.0f) : (bgmVolume / 100.0f));
         audioSource.Play();
         if (!loop)
             StartCoroutine(WaitAndRelease(soundObject, audioSource.clip.length));
@@ -54,6 +60,7 @@ public class SoundManager : MonoBehaviour
     {
         AudioSource audioSource = _oneShotSoundObject.GetComponent<AudioSource>();
         AudioClip clip = GetAudioClip(sound);
+        audioSource.volume = (volume / 100.0f) * (GetSoundType(sound) == SoundType.SFX ? (sfxVolume / 100.0f) : (bgmVolume / 100.0f));
         audioSource.PlayOneShot(clip);
     }
 
@@ -81,6 +88,16 @@ public class SoundManager : MonoBehaviour
         return Array.Find(sounds, s => s.audioClip == clip).name;
     }
 
+    public SoundType GetSoundType(AudioClip clip)
+    {
+        return Array.Find(sounds, s => s.audioClip == clip).type;
+    }
+
+    public SoundType GetSoundType(Sound sound)
+    {
+        return Array.Find(sounds, s => s.name == sound).type;
+    }
+
     private IEnumerator WaitAndRelease(GameObject obj, float time)
     {
         yield return new WaitForSeconds(time);
@@ -92,9 +109,10 @@ public class SoundManager : MonoBehaviour
     {
         GameObject obj = new GameObject("Sound");
         AudioSource audioSource = obj.AddComponent<AudioSource>();
+        obj.AddComponent<VolumeHandler>();
         audioSource.spatialBlend = 1;
         audioSource.dopplerLevel = 0.1f;
-        audioSource.volume = _volume / 100.0f;
+        audioSource.volume = volume / 100.0f;
         return obj;
     }
 

@@ -8,20 +8,11 @@ public class InventoryEvents
     public static Action<InventorySlot> OnShowItemDetails;
     public static Action OnInventoryShow;
 
-    public static void InventoryUpdate()
-    {
-        OnInventoryUpdate?.Invoke();
-    }
+    public static void InventoryUpdate() => OnInventoryUpdate?.Invoke();
 
-    public static void ShowItemDetails(InventorySlot slot)
-    {
-        OnShowItemDetails?.Invoke(slot);
-    }
+    public static void ShowItemDetails(InventorySlot slot) => OnShowItemDetails?.Invoke(slot);
 
-    public static void InventoryShow()
-    {
-        OnInventoryShow?.Invoke();
-    }
+    public static void InventoryShow() => OnInventoryShow?.Invoke();
 
 // =================================================================================================
    
