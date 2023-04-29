@@ -30,6 +30,8 @@ public class InputManager : MonoBehaviour
     public InputAction UnsheatheAction;
     public InputAction AimAction;
     public InputAction FireAction;
+    public InputAction PrimaryWeaponAction;
+    public InputAction SecondaryWeaponAction;
     //Interaction
     public bool Interact { get; private set; }
     
@@ -62,6 +64,8 @@ public class InputManager : MonoBehaviour
         FireAction = _currentMap.FindAction("Fire");
         AimAction = _currentMap.FindAction("Aim");
         UnsheatheAction = _currentMap.FindAction("Unsheathe");
+        PrimaryWeaponAction = _currentMap.FindAction("Primary Weapon");
+        SecondaryWeaponAction = _currentMap.FindAction("Secondary Weapon");
         
         InteractAction = _currentMap.FindAction("Interact");
 

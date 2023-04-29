@@ -86,9 +86,9 @@ public class RifleController : MonoBehaviour
         _rightHandConstraint = RightHandIK.GetComponent<TwoBoneIKConstraint>();
         _leftHandConstraint = LeftHandIK.GetComponent<TwoBoneIKConstraint>();
         
-        _mainCamera = Camera.main;
+        /*_mainCamera = Camera.main;
 
-        InputManager.current.UnsheatheAction.performed += SheatheUnsheatheRifle; 
+        InputManager.current.UnsheatheAction.performed += SheatheUnsheatheRifle*/; 
         
 
         _startSensitivity = _controller.MouseSensitivity;
@@ -125,10 +125,10 @@ public class RifleController : MonoBehaviour
            Shoot();
        }
 
-       Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
-       Ray ray = _mainCamera.ScreenPointToRay(screenCenter);
+       //Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+       //Ray ray = _mainCamera.ScreenPointToRay(screenCenter);
 
-       DebugTransform.position = ray.GetPoint(2f);
+       DebugTransform.position = _mainCamera.transform.position + _mainCamera.transform.forward*10;
 
        /*if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, AimMask))
        {
@@ -156,9 +156,9 @@ public class RifleController : MonoBehaviour
         _animator.SetBool(_aimingHash, _aiming);
     }
 
+    //done
     private void SheatheUnsheatheRifle(InputAction.CallbackContext ctx)
     {
-        Debug.Log("ass");
         if (!_waiting)
         {
             SoundManager.Instance.PlaySound(Sound.Holster, transform, false);
@@ -197,6 +197,7 @@ public class RifleController : MonoBehaviour
         _animator.SetLayerWeight(1, 0);
     }
     
+    //done
     private void Shoot()
     {
         SoundManager.Instance.PlaySound(Sound.Shoot, transform, false);
