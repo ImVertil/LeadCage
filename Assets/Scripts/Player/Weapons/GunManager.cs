@@ -10,7 +10,6 @@ public class GunManager : MonoBehaviour {
     [SerializeField] GameObject Carbine;
     [SerializeField] GameObject Rifle;
 
-    private GunPlayEvents _gpe;
     private Gun _currentGun;
 
     private Camera _mainCamera;
@@ -31,8 +30,7 @@ public class GunManager : MonoBehaviour {
     private void Start()
     {
         _mainCamera = Camera.main;
-        _gpe = GunPlayEvents.Instance;
-        _gpe.OnGunEquip += GunEquip;
+        GunPlayEvents.OnGunEquip += GunEquip;
         InputManager.current.UnsheatheAction.performed += SheatheUnsheatheGun;
         InputManager.current.PrimaryWeaponAction.performed += SwitchToPrimary;
         InputManager.current.SecondaryWeaponAction.performed += SwitchToSecondary;
