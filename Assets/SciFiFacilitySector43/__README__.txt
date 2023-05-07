@@ -19,3 +19,5 @@ Using the URP version.
 1. Create a new URP Unity project using Unity 2019.4 or higher. 
 2. Import the URP package found in HDRP-URP-Package folder.
 Do not double click the URP package in the current Standard project. Manuell Renderpipeline conversion is not necessary.
+
+DEFAULT SMOOTHNESS FOR MATERIAL IN MAINTENANCE ROOMS: 0.97
