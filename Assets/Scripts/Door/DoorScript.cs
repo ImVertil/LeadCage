@@ -40,14 +40,12 @@ public class DoorScript : MonoBehaviour, IInteractable
 
     public void OpenDoor()
     {
-        Debug.Log("Open");
         _audioSource.Play();
         _animator.SetTrigger(_trDoorOpen);
     }
 
     public void CloseDoor()
     {
-        Debug.Log("Close");
         _audioSource.Play();
         _animator.SetTrigger(_trDoorClose);
     }
