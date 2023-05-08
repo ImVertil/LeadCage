@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InteractPickup : MonoBehaviour, IInteractable
 {
@@ -15,14 +16,16 @@ public class InteractPickup : MonoBehaviour, IInteractable
     public void OnStartLook()
     {
         //interactionUIText.SetText($"Pick up {item.itemName}");
+        InteractionManager.Instance.InteractionText.SetText($"Press [E] to pick up {item.itemName}");
     }
 
     public void OnEndLook()
     {
         //interactionUIText.SetText("");
+        InteractionManager.Instance.InteractionText.SetText("");
     }
 
-    public void OnInteract()
+    public void OnInteract(InputAction.CallbackContext ctx)
     {
         Progression.Instance.AddStoryValue(item.associatedStoryValue);
         Inventory.Instance.AddItem(this);

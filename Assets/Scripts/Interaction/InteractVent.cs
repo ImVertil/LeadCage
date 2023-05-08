@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InteractVent : MonoBehaviour, IInteractable
 {
@@ -17,20 +18,23 @@ public class InteractVent : MonoBehaviour, IInteractable
 
     public void OnStartLook()
     {
-        interactionUIText.SetText("Remove vent");
+        InteractionManager.Instance.InteractionText.SetText("Press [E] to remove the vent");
     }
 
     public void OnEndLook()
     {
-        interactionUIText.SetText("");
+        InteractionManager.Instance.InteractionText.SetText("");
     }
 
-    public void OnInteract()
+    public void OnInteract(InputAction.CallbackContext ctx)
     {
         if (IsConditionSatisfied())
             Destroy(this.gameObject); // to be changed :)
         else
-            Debug.Log("[VENT] Missing item: Wrench");
+        {
+            InteractionManager.Instance.InfoText.SetText("You're missing a Screwdriver.");
+            StartCoroutine(TextManager.WaitAndClearInfoText());
+        }
     }
 
     private bool IsConditionSatisfied()

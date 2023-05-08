@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InteractElectricalBox : MonoBehaviour, IInteractable
 {
@@ -16,17 +17,18 @@ public class InteractElectricalBox : MonoBehaviour, IInteractable
     }
     public void OnStartLook()
     {
-        
+        InteractionManager.Instance.InteractionText.SetText("Press [E] to interact");
     }
 
     public void OnEndLook()
     {
-        
+        InteractionManager.Instance.InteractionText.SetText("");
     }
 
-    public void OnInteract()
+    public void OnInteract(InputAction.CallbackContext ctx)
     {
-        if(_isInteracting)
+        InteractionManager.Instance.InteractionText.SetText("");
+        if (_isInteracting)
         {
             _electricalBoxCamera.enabled = false;
             _mainCamera.enabled = true;

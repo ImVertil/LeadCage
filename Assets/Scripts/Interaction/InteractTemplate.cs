@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InteractTemplate : MonoBehaviour, IInteractable //remember to add the interface IInteractable as seen here AND ALWAYS ADD THE OBJECT TO THE INTERACTABLE TAG
 { // also never add things without a script based on this to the interactable tag in unity
@@ -22,7 +23,7 @@ public class InteractTemplate : MonoBehaviour, IInteractable //remember to add t
         //What happens when you put the cursor off the object
     }
 
-    public void OnInteract()
+    public void OnInteract(InputAction.CallbackContext ctx)
     {
         //What happens when you press the interaction key and in range
     }

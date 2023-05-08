@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InteractGate : MonoBehaviour, IInteractable
 {
@@ -28,7 +29,7 @@ public class InteractGate : MonoBehaviour, IInteractable
         interactionUIText.SetText("");
     }
 
-    public void OnInteract()
+    public void OnInteract(InputAction.CallbackContext ctx)
     {
         if(GetComponent<DoorButton>().GetVoltage() == 2.5)
         {
