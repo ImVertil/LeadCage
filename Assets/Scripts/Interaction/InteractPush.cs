@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InteractPush : MonoBehaviour, IInteractable
 {
@@ -32,7 +33,7 @@ public class InteractPush : MonoBehaviour, IInteractable
         _interactionUIText.SetText("");
     }
 
-    public void OnInteract()
+    public void OnInteract(InputAction.CallbackContext ctx)
     {
         //popychanie
 /*        RaycastHit hit;

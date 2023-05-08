@@ -42,7 +42,7 @@ public class DragObject : MonoBehaviour
             // X and Z snap depends on the rotation of the electrical box
             switch(Math.Abs(transform.root.eulerAngles.y)) // the Y rotation of the root component
             {
-                //case 0:
+                case 0:
                 case 180:
                 case 360:
                     transform.position = new Vector3(transform.position.x, _snapTo.transform.position.y, _snapTo.transform.position.z);

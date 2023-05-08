@@ -79,7 +79,7 @@ public class InputManager : MonoBehaviour
         FireAction.performed += OnFire;
         AimAction.performed += OnAim;
 
-        InteractAction.performed += OnInteract;
+        InteractAction.started += OnInteract;
         
         MoveAction.canceled += OnMove;
         LookAction.canceled += OnLook;
@@ -89,7 +89,7 @@ public class InputManager : MonoBehaviour
         FireAction.canceled += OnFire;
         AimAction.canceled += OnAim;
         
-        InteractAction.canceled += OnInteract;
+        //InteractAction.canceled += OnInteract;
     
     }
 
