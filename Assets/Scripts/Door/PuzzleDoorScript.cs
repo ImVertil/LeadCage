@@ -18,7 +18,7 @@ public class PuzzleDoorScript : MonoBehaviour, IInteractable
 
     public void OnEndLook()
     {
-        
+        InteractionManager.Instance.InteractionText.SetText("");
     }
 
     public void OnInteract(InputAction.CallbackContext ctx)
@@ -40,7 +40,7 @@ public class PuzzleDoorScript : MonoBehaviour, IInteractable
 
     public void OnStartLook()
     {
-        
+        InteractionManager.Instance.InteractionText.SetText("Press [E] to emergency open the doors");
     }
 
     public void ChangeDoorLockCableState(Cable c)
