@@ -4,6 +4,8 @@ public class LightManager : MonoBehaviour
 {
     public static LightManager Instance;
     private Material _lightsMat => _lightsMatOn;
+    [SerializeField] private Material _alarmMatOn;
+    [SerializeField] private Material _alarmMatOff;
     [SerializeField] private GameObject _alarms;
     [SerializeField] private Material _lightsMatOn;
     [SerializeField] private Material _lightsMatOff;
@@ -76,6 +78,30 @@ public class LightManager : MonoBehaviour
         _lightsMat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
     }
 
-    public void TurnOnAlarm() => _alarms.SetActive(true);
-    public void TurnOffAlarm() => _alarms.SetActive(false);
+    public void TurnOnAlarm()
+    {
+        foreach (var alarmLight in _alarms.GetComponentsInChildren<Light>())
+        {
+            alarmLight.GetComponentInChildren<MeshRenderer>().material = _alarmMatOn;
+            alarmLight.enabled = true;
+        }
+
+        foreach (var alarmSound in _alarms.GetComponents<AudioSource>())
+        {
+            alarmSound.enabled = true;
+        }
+    }
+    public void TurnOffAlarm()
+    {
+        foreach(var alarmLight in _alarms.GetComponentsInChildren<Light>())
+        {
+            alarmLight.GetComponentInChildren<MeshRenderer>().material = _alarmMatOff;
+            alarmLight.enabled = false;
+        }
+
+        foreach(var alarmSound in _alarms.GetComponentsInChildren<AudioSource>())
+        {
+            alarmSound.enabled = false;
+        }
+    }
 }
