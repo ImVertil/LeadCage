@@ -25,11 +25,6 @@ public class LightFlicker : MonoBehaviour
         StartCoroutine(Flicker());
     }
 
-    void Update()
-    {
-        
-    }
-
     private IEnumerator Flicker()
     {
         float timeNotBlinking, randRange, randIntensity;
