@@ -4,15 +4,25 @@ using UnityEngine;
 public class TestFlicker : MonoBehaviour
 {
     [Range(0.0f, 1.0f)]
-    [SerializeField] private float _clampValue;
-    [Range(0.0f, 2f)]
-    [SerializeField] private float _waitValue;
+    [SerializeField] private float _lerpValue = 0.5f;
+
+    [Range(0.0f, 1f)]
+    [SerializeField] private float _waitValue = 0.05f;
+
+    [SerializeField] private Material _lightFlickerMat;
+
     private Light _light;
+    private float _defaultIntensity;
+    private float _defaultRange;
+    private Color _defaultEmission;
 
     void Awake()
     {
-        _light = GetComponent<Light>();
-        StartCoroutine(Test());
+        _light = GetComponentInChildren<Light>();
+        _defaultIntensity = _light.intensity;
+        _defaultRange = _light.range;
+        _defaultEmission = _lightFlickerMat.GetColor("_EmissionColor");
+        StartCoroutine(Flicker());
     }
 
     void Update()
@@ -20,20 +30,30 @@ public class TestFlicker : MonoBehaviour
         
     }
 
-    private IEnumerator Test()
+    private IEnumerator Flicker()
     {
-        float randRange;
-        float randIntensity;
-        for(int i=0; i<1000; i++)
+        float timeNotBlinking, randRange, randIntensity;
+        int timesBlinking;
+
+        while(true)
         {
-            randRange = Random.Range(0.1f, 4.0f);
-            randIntensity = Random.Range(1f, 10.0f);
-            _light.intensity = randIntensity;
-            _light.range = randRange;
-            //_light.intensity = Mathf.Lerp(_light.intensity, randIntensity, _clampValue);
-            //_light.range = Mathf.Lerp(_light.range, randRange, _clampValue);
-            yield return new WaitForSeconds(_waitValue);
+            timeNotBlinking = Random.Range(1.0f, 5.0f);
+            timesBlinking = Random.Range(4, 10);
+
+            for(int i=0; i<timesBlinking; i++)
+            {
+                randRange = Random.Range(6f, 7.5f);
+                randIntensity = Random.Range(1f, 4f);
+                _light.intensity = Mathf.Lerp(_light.intensity, randIntensity, _lerpValue);
+                _light.range = Mathf.Lerp(_light.range, randRange, _lerpValue);
+                _lightFlickerMat.SetColor("_EmissionColor", _defaultEmission * (randIntensity / _defaultIntensity));
+                yield return new WaitForSeconds(_waitValue);
+            }
+
+            _light.intensity = _defaultIntensity;
+            _light.range = _defaultRange;
+            _lightFlickerMat.SetColor("_EmissionColor", _defaultEmission);
+            yield return new WaitForSeconds(timeNotBlinking);
         }
-        yield return null;
     }
 }
