@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(Outline))]
 public class InteractPush : MonoBehaviour, IInteractable
 {
     public GameObject interactionTextObject;
@@ -13,23 +15,28 @@ public class InteractPush : MonoBehaviour, IInteractable
     [SerializeField] private Rigidbody _bodyToPush;
     [SerializeField] private GameObject _player;
     private bool _isNotAChild;
+    private Outline _outline;
 
 
     public GameObject bulletOrigin;
 
     private void Awake()
     {
+        _outline = GetComponent<Outline>();
+        _outline.enabled = false;
         _interactionUIText = interactionTextObject.GetComponent<TMP_Text>();
         _isNotAChild = true;
     }
 
     public void OnStartLook()
     {
+        _outline.enabled = true;
         _interactionUIText.SetText($"Push");
     }
 
     public void OnEndLook()
     {
+        _outline.enabled = false;
         _interactionUIText.SetText("");
     }
 

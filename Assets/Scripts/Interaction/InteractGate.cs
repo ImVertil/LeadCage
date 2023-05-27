@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Outline))]
 public class InteractGate : MonoBehaviour, IInteractable
 {
     public float MaxRange { get { return _maxRange; } }

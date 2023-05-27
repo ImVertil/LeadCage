@@ -15,6 +15,10 @@ public class PuzzleDoorScript : MonoBehaviour, IInteractable
         PuzzleEvents.DoorLockCableChanged += ChangeDoorLockCableState;
         PuzzleEvents.DoorCableChanged += ChangeDoorCableState;
     }
+    public void OnStartLook()
+    {
+        InteractionManager.Instance.InteractionText.SetText("Press [E] to emergency open the doors");
+    }
 
     public void OnEndLook()
     {
@@ -38,15 +42,11 @@ public class PuzzleDoorScript : MonoBehaviour, IInteractable
         }
     }
 
-    public void OnStartLook()
-    {
-        InteractionManager.Instance.InteractionText.SetText("Press [E] to emergency open the doors");
-    }
-
     public void ChangeDoorLockCableState(Cable c)
     {
         _lockCable = c;
     }
+
     public void ChangeDoorCableState(Cable c)
     {
         _doorCable = c;

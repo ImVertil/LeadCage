@@ -130,6 +130,12 @@ public class InteractionManager : MonoBehaviour
         {
 
             Collider selectedObject = whatIHit.collider;
+            if(_currentTarget != selectedObject && _currentTarget != null && _interactionInterface != null)
+            {
+                _currentTarget = selectedObject;
+                setInterfaceToNull();
+            }
+
             if (_currentTarget != selectedObject)
             {
                 _currentTarget = selectedObject;
