@@ -2,12 +2,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Outline))]
 public class PuzzleOpenInteract : MonoBehaviour, IInteractable
 {
     [SerializeField] private List<StoryValue> _requiredValues = new();
+    private Outline _outline;
+
+    void Awake()
+    {
+        _outline = GetComponent<Outline>();
+        _outline.enabled = false;
+    }
+
+    public void OnStartLook()
+    {
+        _outline.enabled = true;
+        InteractionManager.Instance.InteractionText.SetText("Press [E] to open the electrical box");
+    }
 
     public void OnEndLook()
     {
+        _outline.enabled = false;
         InteractionManager.Instance.InteractionText.SetText("");
     }
 
@@ -25,8 +40,4 @@ public class PuzzleOpenInteract : MonoBehaviour, IInteractable
         }
     }
 
-    public void OnStartLook()
-    {
-        InteractionManager.Instance.InteractionText.SetText("Press [E] to open the electrical box");
-    }
 }
