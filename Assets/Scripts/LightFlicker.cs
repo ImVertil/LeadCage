@@ -10,6 +10,7 @@ public class LightFlicker : MonoBehaviour
     [SerializeField] private float _waitValue = 0.05f;
 
     [SerializeField] private Material _lightFlickerMat;
+    [SerializeField] private Material _defaultOnMat;
 
     private Light _light;
     private float _defaultIntensity;
@@ -21,7 +22,7 @@ public class LightFlicker : MonoBehaviour
         _light = GetComponentInChildren<Light>();
         _defaultIntensity = _light.intensity;
         _defaultRange = _light.range;
-        _defaultEmission = _lightFlickerMat.GetColor("_EmissionColor");
+        _defaultEmission = _defaultOnMat.GetColor("_EmissionColor");
         StartCoroutine(Flicker());
     }
 
