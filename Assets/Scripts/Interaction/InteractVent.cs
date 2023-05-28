@@ -1,15 +1,10 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Outline))]
 public class InteractVent : MonoBehaviour, IInteractable
 {
-    public GameObject interactionTextObject;
-    private TMP_Text interactionUIText;
     public List<StoryValue> requiredTags;
     private Outline _outline;
 
@@ -17,7 +12,6 @@ public class InteractVent : MonoBehaviour, IInteractable
     {
         _outline = GetComponent<Outline>();
         _outline.enabled = false;
-        interactionUIText = interactionTextObject.GetComponent<TMP_Text>();
     }
 
     public void OnStartLook()
