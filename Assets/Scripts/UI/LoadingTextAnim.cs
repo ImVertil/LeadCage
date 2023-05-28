@@ -17,6 +17,8 @@ public class LoadingTextAnim : MonoBehaviour
     {
         while(true)
         {
+            m_TextMeshProUGUI.text = "Loading";
+            yield return new WaitForSeconds(1);
             m_TextMeshProUGUI.text = "Loading.";
             yield return new WaitForSeconds(1);
             m_TextMeshProUGUI.text = "Loading..";
