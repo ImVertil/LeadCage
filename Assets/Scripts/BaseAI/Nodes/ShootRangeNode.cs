@@ -26,10 +26,12 @@ public class ShootRangeNode : Node
 
         if (distance <= range && !Physics.Raycast(origin.position, directionToTarget, distance, obstruction))
         {
+            ai.isShooting = true;
             return NodeState.SUCCESS;
         }
         else
         {
+            ai.isShooting = false;
             return NodeState.FAILURE;
         }
 
