@@ -124,17 +124,17 @@ public class PlayerController : MonoBehaviour
         if (_inputManager.Crouch)
         {
             _crouching = true;
-            targetSpeed = CrouchSpeed;
             _capsule.radius = CrouchRadius;
             if (!_grounded) //TODO, jezeli tego nie ma to crouch jumping sprawia ze mozemy wejsc w rozne niepozadane miejsca przez floating collider
             {
                 _capsule.height = CrouchScale * 1.78f; 
-                _capsule.center = new Vector3(0, CrouchScale*0.89f, 0);
+                _capsule.center = new Vector3(0, CrouchScale*0.89f, 0.25f);
             }
             else
             {
                 _capsule.height = CrouchScale * _startHeight;
                 _capsule.center = CrouchScale * _startCenter;
+                _capsule.center += new Vector3(0,0,0.25f);
             }
 
         }
@@ -146,6 +146,7 @@ public class PlayerController : MonoBehaviour
             _capsule.center = Vector3.SmoothDamp(_capsule.center, _startCenter, ref _uncrouchCenterVelocity, 0.1f);
         }
 
+        if(_crouching) targetSpeed = CrouchSpeed;
 
         if (_inputManager.Move == Vector2.zero) targetSpeed = 0;
 
