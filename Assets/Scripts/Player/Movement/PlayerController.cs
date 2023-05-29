@@ -66,6 +66,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Transform Hips;
 
+    [SerializeField] private GameObject Flashlight;
+    private bool _flashOn = false;
+
     private void Start()
     {
         Cursor.visible = false;
@@ -89,6 +92,7 @@ public class PlayerController : MonoBehaviour
         _crouchingHash = Animator.StringToHash("Crouching");
 
         InputManager.current.JumpAction.started += JumpHandling;
+        InputManager.current.FlashlightToggleAction.started += FlashlightHandling;
     }
 
     private void Update()
@@ -297,6 +301,12 @@ public class PlayerController : MonoBehaviour
             Vector3 fwd = Vector3.ProjectOnPlane(Hips.forward, hit.normal);
             _animator.SetIKRotation(foot, Quaternion.LookRotation(fwd, hit.normal));
         }
+    }
+
+    private void FlashlightHandling(InputAction.CallbackContext ctx)
+    {
+        _flashOn = !_flashOn;
+        Flashlight.SetActive(_flashOn);
     }
     
 }

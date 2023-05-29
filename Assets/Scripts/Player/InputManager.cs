@@ -40,6 +40,9 @@ public class InputManager : MonoBehaviour
     // Inventory
     public InputAction InventoryToggleAction;
 
+    //F
+    public InputAction FlashlightToggleAction;
+
 
     private void Awake()
     {
@@ -70,6 +73,8 @@ public class InputManager : MonoBehaviour
         InteractAction = _currentMap.FindAction("Interact");
 
         InventoryToggleAction = _currentMap.FindAction("Inventory Toggle");
+
+        FlashlightToggleAction = _currentMap.FindAction("Flashlight Toggle");
         
         MoveAction.performed += OnMove;
         LookAction.performed += OnLook;
