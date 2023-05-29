@@ -50,7 +50,7 @@ public class SoundManager : MonoBehaviour
     /* TODO:
      * - Make PlaySoundEffect and PlayMusic to avoid problems with getting the sound type etc. while changing the volume
      */
-    public void PlaySound(Sound sound, Transform transform, bool loop) // if loop is set to true remember to use StopSound to turn the clip off
+    public void PlaySound(Sound sound, Transform transform, bool loop, float? spatial=null) // if loop is set to true remember to use StopSound to turn the clip off
     {
         GameObject soundObject = _pool.Get();
         _activeFromPool.Add(soundObject);
@@ -59,6 +59,7 @@ public class SoundManager : MonoBehaviour
         soundObject.transform.SetParent(transform, false);
         audioSource.clip = GetAudioClip(sound);
         audioSource.loop = loop;
+        audioSource.spatialBlend = (float)(spatial == null ? 1.0f : spatial);
         audioSource.volume = (volume / 100f) * (GetSoundType(sound) == SoundType.SFX ? (sfxVolume / 100f) : (ambientVolume / 100f));
         audioSource.Play();
         if (!loop)
