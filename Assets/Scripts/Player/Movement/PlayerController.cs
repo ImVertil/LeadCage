@@ -66,8 +66,14 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Transform Hips;
 
+
+    //Flashlight
     [SerializeField] private GameObject Flashlight;
     private bool _flashOn = false;
+
+    //Footsteps
+    private float _lastFootstep = 0f; 
+    private float _footstepDur = 0.3f;
 
     private void Start()
     {
@@ -309,4 +315,15 @@ public class PlayerController : MonoBehaviour
         Flashlight.SetActive(_flashOn);
     }
     
+    private void OnFootstep()
+    {
+        if(_inputManager.Move == Vector2.zero)
+            return;
+        var currTime = Time.time;
+        if(currTime - _lastFootstep >= _footstepDur)
+        {
+            SoundManager.Instance.PlaySound(Sound.Shoot, transform, false);
+            _lastFootstep = currTime;
+        }
+    }
 }
