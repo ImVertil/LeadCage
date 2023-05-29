@@ -29,10 +29,10 @@ public class InteractVent : MonoBehaviour, IInteractable
     public void OnInteract(InputAction.CallbackContext ctx)
     {
         if (IsConditionSatisfied())
-            Destroy(this.gameObject); // to be changed :)
+            gameObject.SetActive(false);
         else
         {
-            InteractionManager.Instance.InfoText.SetText("You're missing a Screwdriver.");
+            InteractionManager.Instance.InfoText.SetText($"You are missing a Wrench");
             StartCoroutine(TextManager.WaitAndClearInfoText());
         }
     }
