@@ -322,7 +322,8 @@ public class PlayerController : MonoBehaviour
         var currTime = Time.time;
         if(currTime - _lastFootstep >= _footstepDur)
         {
-            SoundManager.Instance.PlaySound(Sound.Shoot, transform, false);
+            var randPitch = Random.Range(0.8f, 1.2f);
+            SoundManager.Instance.PlaySound(Sound.Footsteps, transform, false, null, randPitch);
             _lastFootstep = currTime;
         }
     }

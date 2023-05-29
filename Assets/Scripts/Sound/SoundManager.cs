@@ -50,7 +50,7 @@ public class SoundManager : MonoBehaviour
     /* TODO:
      * - Make PlaySoundEffect and PlayMusic to avoid problems with getting the sound type etc. while changing the volume
      */
-    public void PlaySound(Sound sound, Transform transform, bool loop, float? spatial=null) // if loop is set to true remember to use StopSound to turn the clip off
+    public void PlaySound(Sound sound, Transform transform, bool loop, float? spatial=null, float? pitch=null) // if loop is set to true remember to use StopSound to turn the clip off
     {
         GameObject soundObject = _pool.Get();
         _activeFromPool.Add(soundObject);
@@ -60,6 +60,7 @@ public class SoundManager : MonoBehaviour
         audioSource.clip = GetAudioClip(sound);
         audioSource.loop = loop;
         audioSource.spatialBlend = (float)(spatial == null ? 1.0f : spatial);
+        audioSource.pitch = (float)(pitch == null ? 1.0f : pitch);
         audioSource.volume = (volume / 100f) * (GetSoundType(sound) == SoundType.SFX ? (sfxVolume / 100f) : (ambientVolume / 100f));
         audioSource.Play();
         if (!loop)
@@ -83,6 +84,7 @@ public class SoundManager : MonoBehaviour
         audioSource.clip = clip;
         audioSource.loop = true;
         audioSource.Play();
+        //StartCoroutine(SmoothMusicChange(2));
     }
 
     public void StopSound(Sound sound, Transform transform) 
@@ -142,6 +144,18 @@ public class SoundManager : MonoBehaviour
         _pool.Release(obj);
     }
 
+    private IEnumerator SmoothMusicChange(float time)
+    {
+        AudioSource aSource = _bgmSoundObject.GetComponent<AudioSource>();
+        float volume = aSource.volume;
+        aSource.volume = 0;
+        var test = time / 100;
+        while(aSource.volume != volume)
+        {
+            aSource.volume += test;
+            yield return new WaitForSeconds(test);
+        }
+    }
     #region OBJECT_POOL_METHODS
     private GameObject CreateSoundObject()
     {
