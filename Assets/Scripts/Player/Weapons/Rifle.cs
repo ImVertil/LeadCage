@@ -17,6 +17,7 @@ public class Rifle : MonoBehaviour, Gun {
     [SerializeField] [Range(0,1)] float _kickbackStrength;
     [SerializeField] float _kickbackSpeed;
     [SerializeField] PlayerController _pc;
+    [SerializeField] float damage;
 
     public float FireRate {get {return fireRate;}}
     public bool GunPulledOut {get {return _riflePulledOut;} set {_riflePulledOut = value;}}
@@ -84,6 +85,13 @@ public class Rifle : MonoBehaviour, Gun {
         RaycastHit hit;
         if (Physics.Raycast(bulletOrigin.position, bulletOrigin.forward, out hit, range, AimMask))
         {
+            var enemy = hit.collider.gameObject.GetComponent<EnemyAI>();
+
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+            }
+
             var obj = Instantiate(BulletHolePrefab, hit.point, Quaternion.LookRotation(hit.normal));
             obj.transform.position += obj.transform.forward/1000f;
         }
