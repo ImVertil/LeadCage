@@ -9,9 +9,9 @@ public class LightManager : MonoBehaviour
     private Material _lightsMat => _lightsMatOn;
     [SerializeField] private Material _alarmMatOn;
     [SerializeField] private Material _alarmMatOff;
-    [SerializeField] private GameObject _alarms;
     [SerializeField] private Material _lightsMatOn;
     [SerializeField] private Material _lightsMatOff;
+    [SerializeField] private GameObject[] _alarms;
     [SerializeField] private GameObject[] _lights;
 
     void Awake()
@@ -83,28 +83,36 @@ public class LightManager : MonoBehaviour
 
     public void TurnOnAlarm()
     {
-        foreach (var alarmLight in _alarms.GetComponentsInChildren<Light>())
+        foreach (var alarmObj in _alarms)
         {
-            alarmLight.GetComponentInChildren<MeshRenderer>().material = _alarmMatOn;
-            alarmLight.enabled = true;
-        }
+            foreach (var alarmLight in alarmObj.GetComponentsInChildren<Light>())
+            {
+                alarmLight.GetComponentInChildren<MeshRenderer>().material = _alarmMatOn;
+                alarmLight.enabled = true;
+            }
 
-        foreach (var alarmSound in _alarms.GetComponents<AudioSource>())
-        {
-            alarmSound.enabled = true;
+            foreach (var alarmSound in alarmObj.GetComponentsInChildren<AudioSource>())
+            {
+                alarmSound.enabled = true;
+                alarmSound.gameObject.GetComponentInChildren<Animator>().enabled = true;
+            }
         }
     }
     public void TurnOffAlarm()
     {
-        foreach(var alarmLight in _alarms.GetComponentsInChildren<Light>())
+        foreach(var alarmObj in _alarms)
         {
-            alarmLight.GetComponentInChildren<MeshRenderer>().material = _alarmMatOff;
-            alarmLight.enabled = false;
-        }
+            foreach (var alarmLight in alarmObj.GetComponentsInChildren<Light>())
+            {
+                alarmLight.GetComponentInChildren<MeshRenderer>().material = _alarmMatOff;
+                alarmLight.enabled = false;
+            }
 
-        foreach(var alarmSound in _alarms.GetComponentsInChildren<AudioSource>())
-        {
-            alarmSound.enabled = false;
+            foreach (var alarmSound in alarmObj.GetComponentsInChildren<AudioSource>())
+            {
+                alarmSound.enabled = false;
+                alarmSound.gameObject.GetComponentInChildren<Animator>().enabled = false;
+            }
         }
     }
 }

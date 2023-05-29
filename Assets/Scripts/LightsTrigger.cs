@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LightsTrigger : MonoBehaviour
@@ -18,11 +17,11 @@ public class LightsTrigger : MonoBehaviour
 
     private IEnumerator WaitAndTurnOff()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(7);
+        SoundManager.Instance.PlaySound(Sound.PowerDown, transform, false);
         LightManager.Instance.TurnOffLightsGlobal();
         LightManager.Instance.TurnOffAlarm();
-        SoundManager.Instance.PlaySound(Sound.Footsteps, _transformToPlay, false, 0.9f);
-        SoundManager.Instance.PlaySound(Sound.PowerDown, transform, false);
+        SoundManager.Instance.PlaySound(Sound.GeneratorDown, _transformToPlay, false, 0.9f);
         SoundManager.Instance.PlayMusic(Sound.BGMThing);
     }
 }
