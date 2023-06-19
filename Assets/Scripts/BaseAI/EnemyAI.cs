@@ -127,10 +127,11 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
+        
         if (currentHealth <= 0)
         {
-            //gameObject.SetActive(false);
-            ragdoll.ActivateRagdoll();
+            gameObject.SetActive(false);
+            //ragdoll.ActivateRagdoll();
         }
         if (isShooting)
         {
@@ -143,7 +144,7 @@ public class EnemyAI : MonoBehaviour
         }
 
         animator.SetFloat("EnemySpeed", agent.velocity.magnitude);
-        //Debug.Log("takeAction " + takeAction);
+        Debug.Log("enemyHP " + currentHealth);
         float distanceToTarget = Vector3.Distance(transform.position, playerRef.transform.position);
 //        Debug.Log(distanceToTarget);
         if (canSeePlayer)

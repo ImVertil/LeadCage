@@ -6,18 +6,20 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     public TextMeshProUGUI healthText;
-    [SerializeField] float health = 100f;
+    [SerializeField] float healthSet;
+    public float health;
     // Start is called before the first frame update
     void Start()
     {
-        healthText.text = health.ToString();
+        health = healthSet;
+        healthText.text = "HP: " + health.ToString();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("playert hp " + health);
+        healthText.text = "HP: " + health.ToString();
 
 
     }
