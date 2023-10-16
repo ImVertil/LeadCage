@@ -17,7 +17,7 @@ public class DoorScript : MonoBehaviour, IInteractable
 
     public void OnEndLook()
     {
-
+        InteractionManager.Instance.InteractionText.SetText("");
     }
 
     public void OnInteract(InputAction.CallbackContext ctx)
@@ -34,7 +34,14 @@ public class DoorScript : MonoBehaviour, IInteractable
 
     public void OnStartLook()
     {
-
+        if(_animator.GetCurrentAnimatorStateInfo(0).IsName("Door_03_Close 0"))
+        {
+            InteractionManager.Instance.InteractionText.SetText("Press [E] to close");
+        }
+        else
+        {
+            InteractionManager.Instance.InteractionText.SetText("Press [E] to open");
+        }
     }
 
 
