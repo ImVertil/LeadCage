@@ -158,7 +158,7 @@ LineRenderer:
     alignment: 1
     textureMode: 0
     shadowBias: 0.5
-    generateLightingData: 0
+    generateLightingData: 1
   m_UseWorldSpace: 0
   m_Loop: 0
 --- !u!1 &154405878480693140
@@ -366,6 +366,7 @@ GameObject:
   - component: {fileID: 8918995542786314334}
   - component: {fileID: 8245805490057076980}
   - component: {fileID: 4063701068811698391}
+  - component: {fileID: 3615399197874784533}
   m_Layer: 0
   m_Name: ElectricalBoxNew
   m_TagString: Interactable
@@ -445,6 +446,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _electricalBoxCamera: {fileID: 7137046827913536644}
+--- !u!114 &3615399197874784533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775987586327617561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &872323579131014696
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,8 +670,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60267bfcd6d7a6f43b712840faadd7c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _materialOff: {fileID: 2100000, guid: f34a86d3be890fa9cad1e4de84023a6f, type: 2}
-  _materialOn: {fileID: 2100000, guid: 94befc80417fe514da8bcce237047262, type: 2}
+  _greenLight: {fileID: 8323232332605576340}
+  _redLight: {fileID: 1204901942270464631}
+  _greenMatOff: {fileID: 2100000, guid: e68fefa6b422ebf489e44431cf2dbd3a, type: 2}
+  _greenMatOn: {fileID: 2100000, guid: 0ce2ac2b049f6cc47a49b9959e104f37, type: 2}
+  _redMatOff: {fileID: 2100000, guid: f34a86d3be890fa9cad1e4de84023a6f, type: 2}
+  _redMatOn: {fileID: 2100000, guid: 94befc80417fe514da8bcce237047262, type: 2}
   _doorCable: {fileID: 5688793885090865048}
   _doorLockCable: {fileID: 5394689013103199597}
   _terminalCable: {fileID: 4052063721805864260}
@@ -670,6 +693,7 @@ GameObject:
   - component: {fileID: 9061714979163938708}
   - component: {fileID: 1639323182747166874}
   - component: {fileID: 2193269540704877891}
+  - component: {fileID: 976299267065626595}
   m_Layer: 0
   m_Name: Door
   m_TagString: Interactable
@@ -770,6 +794,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.027403355, y: 0.5996559, z: 0.41751465}
   m_Center: {x: -0.08767772, y: 0, z: 0}
+--- !u!114 &976299267065626595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589142396605845413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &2138438323394438503
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,7 +1212,7 @@ LineRenderer:
     alignment: 1
     textureMode: 0
     shadowBias: 0.5
-    generateLightingData: 0
+    generateLightingData: 1
   m_UseWorldSpace: 0
   m_Loop: 0
 --- !u!1 &3814165371046526754
@@ -1331,7 +1373,7 @@ LineRenderer:
     alignment: 1
     textureMode: 0
     shadowBias: 0.5
-    generateLightingData: 0
+    generateLightingData: 1
   m_UseWorldSpace: 0
   m_Loop: 0
 --- !u!1 &3904559916237984813
@@ -2286,7 +2328,7 @@ LineRenderer:
     alignment: 1
     textureMode: 0
     shadowBias: 0.5
-    generateLightingData: 0
+    generateLightingData: 1
   m_UseWorldSpace: 0
   m_Loop: 0
 --- !u!1 &7008414074297174526
@@ -2658,7 +2700,7 @@ LineRenderer:
     alignment: 1
     textureMode: 0
     shadowBias: 0.5
-    generateLightingData: 0
+    generateLightingData: 1
   m_UseWorldSpace: 0
   m_Loop: 0
 --- !u!1 &8055288765570799485

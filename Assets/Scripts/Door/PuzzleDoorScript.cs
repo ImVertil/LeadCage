@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -36,19 +34,12 @@ public class PuzzleDoorScript : MonoBehaviour, IInteractable
             }
             else
             {
-                InteractionManager.Instance.InfoText.SetText("Seems that the door is locked.");
+                InteractionManager.Instance.InfoText.SetText("The door doesn't seem to react.");
                 StartCoroutine(TextManager.WaitAndClearInfoText());
             }
         }
     }
 
-    public void ChangeDoorLockCableState(Cable c)
-    {
-        _lockCable = c;
-    }
-
-    public void ChangeDoorCableState(Cable c)
-    {
-        _doorCable = c;
-    }
+    public void ChangeDoorLockCableState(Cable c) => _lockCable = c;
+    public void ChangeDoorCableState(Cable c) => _doorCable = c;
 }

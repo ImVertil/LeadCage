@@ -8,7 +8,6 @@ public class SlotManager : MonoBehaviour
 
     void Start()
     {
-        //turned off so it's easier to test 8)
         ShuffleList(_voltages);
         for(int i=0; i<_slots.Count; i++) 
         {
