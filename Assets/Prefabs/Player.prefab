@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &225156362
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 225156363}
+  m_Layer: 0
+  m_Name: Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &225156363
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 225156362}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -29.001007, y: -4.5, z: 29.44593}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7660301666322086125}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &935586262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1932,7 +1963,7 @@ MonoBehaviour:
     m_SourceObjects:
       m_Length: 1
       m_Item0:
-        transform: {fileID: 0}
+        transform: {fileID: 225156363}
         weight: 1
       m_Item1:
         transform: {fileID: 0}
@@ -3628,6 +3659,7 @@ GameObject:
   - component: {fileID: 4372703949334520471}
   - component: {fileID: 6991006551150797393}
   - component: {fileID: 6991006551150797398}
+  - component: {fileID: 5618934322164225808}
   - component: {fileID: 6991006551150797392}
   - component: {fileID: 6991006551150797405}
   - component: {fileID: 6991006551150797394}
@@ -3664,6 +3696,7 @@ Transform:
   - {fileID: 2934082096186112106}
   - {fileID: 2934082095347011634}
   - {fileID: 2934082094475849531}
+  - {fileID: 225156363}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3718,6 +3751,19 @@ CapsuleCollider:
   m_Height: 1.25
   m_Direction: 1
   m_Center: {x: 0, y: 1.15, z: 0}
+--- !u!114 &5618934322164225808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6991006551150797399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 145b5568d6073804baf7befa6c7d75cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
 --- !u!114 &6991006551150797392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4092,7 +4138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6d256d6cb747d7f6880c09dfa68d767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
+  Target: {fileID: 225156363}
   Carbine: {fileID: 4130798735780023849}
   Rifle: {fileID: 2627460946072417835}
   CurrentWeaponSlot: 0
@@ -4772,6 +4818,7 @@ MonoBehaviour:
   _kickbackStrength: 1
   _kickbackSpeed: 10
   _pc: {fileID: 6991006551150797392}
+  damage: 0
 --- !u!4 &2934082094144350224 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3663959423090512680, guid: 1122187b85b63e10d944946f69414c2d, type: 3}

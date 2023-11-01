@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Outline))]
 public class InteractGate : MonoBehaviour, IInteractable
 {
     public float MaxRange { get { return _maxRange; } }
@@ -28,7 +30,7 @@ public class InteractGate : MonoBehaviour, IInteractable
         interactionUIText.SetText("");
     }
 
-    public void OnInteract()
+    public void OnInteract(InputAction.CallbackContext ctx)
     {
         if(GetComponent<DoorButton>().GetVoltage() == 2.5)
         {

@@ -48,6 +48,7 @@ public class Inventory : MonoBehaviour
     {
         GameObject obj = _itemPool.Get();
         AssignItemData(obj, _inventoryItems[slot]);
+        Progression.Instance.RemoveStoryValue(_inventoryItems[slot].associatedStoryValue);
         _inventoryItems[slot] = null;
         InventoryEvents.InventoryUpdate();
     }

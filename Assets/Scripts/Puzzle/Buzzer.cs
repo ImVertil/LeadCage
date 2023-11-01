@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class Buzzer : MonoBehaviour
 {
-    [SerializeField] private Material _materialOff;
-    [SerializeField] private Material _materialOn;
+    [SerializeField] private GameObject _greenLight;
+    [SerializeField] private GameObject _redLight;
+    [SerializeField] private Material _greenMatOff;
+    [SerializeField] private Material _greenMatOn;
+    [SerializeField] private Material _redMatOff;
+    [SerializeField] private Material _redMatOn;
     [SerializeField] private Cable _doorCable;
     [SerializeField] private Cable _doorLockCable;
     [SerializeField] private Cable _terminalCable;
@@ -12,6 +16,7 @@ public class Buzzer : MonoBehaviour
 
     private Dictionary<Cable, float> _correctVoltages;
     private Dictionary<Cable, bool> _buzzers;
+    private Dictionary<Cable, bool> _properlyConnected;
 
 
     void Start()
@@ -32,8 +37,18 @@ public class Buzzer : MonoBehaviour
             { _lightCable, false }
         };
 
+        _properlyConnected = new Dictionary<Cable, bool>()
+        {
+            { _doorCable, false },
+            { _doorLockCable, false },
+            { _terminalCable, false },
+            { _lightCable, false }
+        };
+
         Cable.OnCableConnect += CheckForBuzzerActivation;
+        Cable.OnCableConnect += CheckForGreenLampActivation;
         Cable.OnCableDisconnect += DeactivateBuzzer;
+        Cable.OnCableDisconnect += CheckForGreenLampActivation;
 
     }
 
@@ -49,6 +64,35 @@ public class Buzzer : MonoBehaviour
         }
     }
 
+    private void CheckForGreenLampActivation(Cable cable)
+    {
+        if (_correctVoltages.ContainsKey(cable))
+        {
+            float correctVoltage = _correctVoltages[cable];
+
+            if (cable.GetSlotVoltage() == correctVoltage)
+            {
+                _properlyConnected[cable] = true;
+            }
+            else
+            {
+                _properlyConnected[cable] = false;
+            }
+
+            if (!_properlyConnected.ContainsValue(false))
+            {
+                ActivateGreenLamp();
+            }
+            else
+            {
+                DeactivateGreenLamp();
+            }
+        }
+    }
+
+    private void ActivateGreenLamp() => _greenLight.GetComponent<MeshRenderer>().material = _greenMatOn;
+    private void DeactivateGreenLamp() => _greenLight.GetComponent<MeshRenderer>().material = _greenMatOff;
+
     private void ActivateBuzzer(Cable cable)
     {
         if (_buzzers.ContainsKey(cable))
@@ -56,7 +100,7 @@ public class Buzzer : MonoBehaviour
             if (!_buzzers.ContainsValue(true))
                 SoundManager.Instance.PlaySound(Sound.Puzzle1_Buzzer, transform, true);
             _buzzers[cable] = true;
-            gameObject.GetComponent<MeshRenderer>().material = _materialOn;
+            _redLight.GetComponent<MeshRenderer>().material = _redMatOn;
         }
     }
 
@@ -67,7 +111,7 @@ public class Buzzer : MonoBehaviour
             _buzzers[cable] = false;
             if(!_buzzers.ContainsValue(true))
             {
-                gameObject.GetComponent<MeshRenderer>().material = _materialOff;
+                _redLight.GetComponent<MeshRenderer>().material = _redMatOff;
                 SoundManager.Instance.StopSound(Sound.Puzzle1_Buzzer, transform);
             }
         }

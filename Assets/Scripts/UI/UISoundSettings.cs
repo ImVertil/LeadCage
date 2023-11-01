@@ -9,12 +9,14 @@ public class UISoundSettings : MonoBehaviour
     private int _masterVolume;
     private int _musicVolume;
     private int _effectsVolume;
+    //private int _ambientVolume;
 
     public void Start()
     {
         _masterVolume = SoundManager.Instance.volume;
         _musicVolume = SoundManager.Instance.bgmVolume;
         _effectsVolume = SoundManager.Instance.sfxVolume;
+        //_ambientVolume = SoungManager.Instance.ambientVolume;
     }
 
     public void ChangeMasterVolume(float val)
@@ -34,6 +36,8 @@ public class UISoundSettings : MonoBehaviour
         _musicVolumeText.text = val.ToString();
         _musicVolume = (int)val;
     }
+
+    //public void ChangeAmbientVolume(float val) TODO
 
     public void SaveVolumeSettings()
     {

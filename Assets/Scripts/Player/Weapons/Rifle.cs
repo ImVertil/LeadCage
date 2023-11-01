@@ -17,6 +17,7 @@ public class Rifle : MonoBehaviour, Gun {
     [SerializeField] [Range(0,1)] float _kickbackStrength;
     [SerializeField] float _kickbackSpeed;
     [SerializeField] PlayerController _pc;
+    [SerializeField] float damage;
 
     public float FireRate {get {return fireRate;}}
     public bool GunPulledOut {get {return _riflePulledOut;} set {_riflePulledOut = value;}}
@@ -64,7 +65,7 @@ public class Rifle : MonoBehaviour, Gun {
 
     private void OnEnable()
     {
-        GunPlayEvents.Instance.GunEquip(this);
+        GunPlayEvents.GunEquip(this);
     }
 
     private void Update()
@@ -78,17 +79,26 @@ public class Rifle : MonoBehaviour, Gun {
 
     public void Shoot()
     {
+        Debug.Log("SHOOOOTOTOTOTOTOTOTTOTO");
         SoundManager.Instance.PlaySound(Sound.Shoot, transform, false);
         StartCoroutine(Kickback());
 
         RaycastHit hit;
         if (Physics.Raycast(bulletOrigin.position, bulletOrigin.forward, out hit, range, AimMask))
         {
+            var enemy = hit.collider.gameObject.GetComponent<EnemyAI>();
+
+            if (enemy != null)
+            {
+                Debug.Log("HITTTTTT");
+                enemy.TakeDamage(damage);
+            }
+
             var obj = Instantiate(BulletHolePrefab, hit.point, Quaternion.LookRotation(hit.normal));
             obj.transform.position += obj.transform.forward/1000f;
         }
 
-        GunPlayEvents.Instance.GunRecoil(_recoilX, _recoilY, _recoilZ);
+        GunPlayEvents.GunRecoil(_recoilX, _recoilY, _recoilZ);
     }
 
     public void SheatheUnsheathe()

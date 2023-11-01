@@ -22,13 +22,14 @@ public class DoorController : MonoBehaviour
     {
         _currentDoorVoltage = _doorCable.GetSlotVoltage();
         _currentLockVoltage = _lockCable.GetSlotVoltage();
+        Open();
     }
 
     private void Open()
     {
         if(CheckVoltages())
         {
-            _animator.Play("DoorOpen", 0);
+            //_animator.Play("DoorOpen", 0);
             _isOpen = true;
             SoundManager.Instance.PlaySound(Sound.Door_Open, transform, false);
         }
@@ -38,7 +39,7 @@ public class DoorController : MonoBehaviour
     {
         if(CheckVoltages())
         {
-            _animator.Play("DoorClose", 0);
+            //_animator.Play("DoorClose", 0);
             _isOpen = false;
             SoundManager.Instance.PlaySound(Sound.Door_Close, transform, false);
         }  

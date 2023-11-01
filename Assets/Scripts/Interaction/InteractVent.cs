@@ -1,36 +1,40 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Outline))]
 public class InteractVent : MonoBehaviour, IInteractable
 {
-    public GameObject interactionTextObject;
-    private TMP_Text interactionUIText;
     public List<StoryValue> requiredTags;
+    private Outline _outline;
 
     private void Awake()
     {
-        interactionUIText = interactionTextObject.GetComponent<TMP_Text>();
+        _outline = GetComponent<Outline>();
+        _outline.enabled = false;
     }
 
     public void OnStartLook()
     {
-        interactionUIText.SetText("Remove vent");
+        _outline.enabled = true;
+        InteractionManager.Instance.InteractionText.SetText("Press [E] to remove the vent");
     }
 
     public void OnEndLook()
     {
-        interactionUIText.SetText("");
+        _outline.enabled = false;
+        InteractionManager.Instance.InteractionText.SetText("");
     }
 
-    public void OnInteract()
+    public void OnInteract(InputAction.CallbackContext ctx)
     {
         if (IsConditionSatisfied())
-            Destroy(this.gameObject); // to be changed :)
+            gameObject.SetActive(false);
         else
-            Debug.Log("[VENT] Missing item: Wrench");
+        {
+            InteractionManager.Instance.InfoText.SetText($"You are missing a Wrench");
+            StartCoroutine(TextManager.WaitAndClearInfoText());
+        }
     }
 
     private bool IsConditionSatisfied()

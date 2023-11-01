@@ -1,5 +1,6 @@
 public enum SoundType
 {
     BGM,
-    SFX
+    SFX,
+    Ambient
 }

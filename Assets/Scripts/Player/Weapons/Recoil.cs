@@ -17,7 +17,7 @@ public class Recoil : MonoBehaviour
     [SerializeField] private PlayerController _pc;
     void Start()
     {
-        GunPlayEvents.Instance.OnGunRecoil += recoilFire;
+        GunPlayEvents.OnGunRecoil += recoilFire;
     } 
 
     // Update is called once per frame
