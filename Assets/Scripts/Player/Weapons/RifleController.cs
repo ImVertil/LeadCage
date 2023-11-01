@@ -210,7 +210,7 @@ public class RifleController : MonoBehaviour
             obj.transform.position += obj.transform.forward/1000f;
         }
 
-        GunPlayEvents.Instance.GunRecoil(_recoilX, _recoilY, _recoilZ);
+        GunPlayEvents.GunRecoil(_recoilX, _recoilY, _recoilZ);
     }
 
     IEnumerator Kickback()

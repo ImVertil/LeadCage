@@ -20,4 +20,4 @@ MonoBehaviour:
   modelMesh: {fileID: -5495902117074765545, guid: ed3361b4bfac79c4cbd07183cce6f211, type: 3}
   modelMaterial: {fileID: 2100000, guid: b6111fe3aced36148b62f1ce0a143bfd, type: 2}
   type: 0
-  associatedStoryValue: 0
+  associatedStoryValue: 1

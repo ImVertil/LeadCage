@@ -9,11 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6156689145678793655}
+  - component: {fileID: 5873572892578867821}
   - component: {fileID: 6156689145678793652}
   - component: {fileID: 6156689145678793608}
   - component: {fileID: 6156689145678793609}
   - component: {fileID: 6156689145678793653}
   - component: {fileID: 6156689145678793654}
+  - component: {fileID: 904477139}
   m_Layer: 0
   m_Name: ScrewdriverNew
   m_TagString: Interactable
@@ -28,7 +30,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6156689145678793610}
-  m_LocalRotation: {x: -0, y: -0.50330466, z: -0, w: 0.8641091}
+  m_LocalRotation: {x: 0, y: -0.50330657, z: 0, w: 0.86410797}
   m_LocalPosition: {x: 30.8021, y: 4.112, z: -26.7985}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
@@ -36,6 +38,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -60.438, z: 0}
+--- !u!114 &5873572892578867821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6156689145678793610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!114 &6156689145678793652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,6 +137,19 @@ Rigidbody:
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!65 &6156689145678793654
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6156689145678793610}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.456768, y: 0.22356926, z: 3.776594}
+  m_Center: {x: 0.3703971, y: 0, z: 0.05956381}
+--- !u!65 &904477139
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

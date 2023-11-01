@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 1603833557653124520}
   - component: {fileID: 1603833557653124524}
   - component: {fileID: 1603833557653124527}
+  - component: {fileID: 2389854391142754150}
+  - component: {fileID: 633181307302101455}
   m_Layer: 0
   m_Name: WrenchNew
   m_TagString: Interactable
@@ -129,3 +131,34 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.1421585, y: 0.100987926, z: 0.5877166}
   m_Center: {x: 0.0001770258, y: 0, z: 0.0010087788}
+--- !u!65 &2389854391142754150
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603833557653124523}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.7748947, y: 0.100987926, z: 3.435669}
+  m_Center: {x: 0.04272461, y: 0, z: -0.075912476}
+--- !u!114 &633181307302101455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603833557653124523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

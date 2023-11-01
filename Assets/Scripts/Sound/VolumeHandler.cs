@@ -2,18 +2,20 @@ using UnityEngine;
 
 public class VolumeHandler : MonoBehaviour
 {
-    private AudioSource _audioSource;
+    private AudioSource[] _audioSources;
 
-    private void Start()
+    void Start()
     {
         SoundEvents.OnVolumeChanged += UpdateVolume;
-        _audioSource = GetComponent<AudioSource>();
+        _audioSources = GetComponents<AudioSource>();
     }
 
     public void UpdateVolume()
     {
-        Debug.Log(_audioSource.clip);
-        SoundType type = SoundManager.Instance.GetSoundType(_audioSource.clip);
-        _audioSource.volume = (SoundManager.Instance.volume / 100.0f) * (type == SoundType.SFX ? (SoundManager.Instance.sfxVolume / 100.0f) : (SoundManager.Instance.bgmVolume / 100.0f));
+        foreach(AudioSource audioSource in _audioSources)
+        {
+            SoundType type = SoundManager.Instance.GetSoundType(audioSource.clip);
+            audioSource.volume = (SoundManager.Instance.volume / 100.0f) * (type == SoundType.SFX ? (SoundManager.Instance.sfxVolume / 100.0f) : (SoundManager.Instance.bgmVolume / 100.0f));
+        }
     }
 }

@@ -21,9 +21,13 @@ public class EnemyAI : MonoBehaviour
     public float radius;
     [Range(0, 360)]
     public float angle;
-    private Material material;
+    //private Material material;
+
+    public EnemyShooting enemyShooting;
 
     public GameObject playerRef;
+    Animator animator;
+    Ragdoll ragdoll;
 
     public LayerMask targetMask;
     public LayerMask obstructionMask;
@@ -31,6 +35,7 @@ public class EnemyAI : MonoBehaviour
 
     public bool canSeePlayer;
     public bool takeAction;
+    public bool isShooting;
 
     public bool patrol;
     public bool patrolDestSet;
@@ -55,17 +60,19 @@ public class EnemyAI : MonoBehaviour
         
         patrol = false;
         agent = GetComponent<NavMeshAgent>();
-        material = GetComponentInChildren<MeshRenderer>().material;
+        //material = GetComponentInChildren<MeshRenderer>().material;
     }
 
     private void Start()
     {
+        enemyShooting = GetComponent<EnemyShooting>();
         UpdateDest();
         //patrol = true;
         takeAction = false;
         StartCoroutine(FOVRoutine());
         _currentHealth = Health;
         ConstructBehahaviourTree();
+        animator = GetComponent<Animator>();
     }
 
     private void ConstructBehahaviourTree()
@@ -79,7 +86,7 @@ public class EnemyAI : MonoBehaviour
 
         ShootRangeNode shootRangeNode = new ShootRangeNode(shootingRange, playerTransform, transform, this, obstructionMask);
         //RangeNode shootingRangeNode = new RangeNode(shootingRange, playerTransform, transform);
-        ShootNode shootNode = new ShootNode(agent, this, playerTransform);
+        ShootNode shootNode = new ShootNode(agent, this, playerTransform, enemyShooting);
 
         Sequence chaseSequence = new Sequence(new List<Node> { chasingRangeNode, chaseNode });
         Sequence shootSequence = new Sequence(new List<Node> { shootRangeNode, shootNode });
@@ -120,7 +127,24 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log("takeAction " + takeAction);
+        
+        if (currentHealth <= 0)
+        {
+            gameObject.SetActive(false);
+            //ragdoll.ActivateRagdoll();
+        }
+        if (isShooting)
+        {
+            animator.SetBool("isShooting", true);
+            //Debug.Log(isShooting);
+        }
+        else
+        {
+            animator.SetBool("isShooting", false);
+        }
+
+        animator.SetFloat("EnemySpeed", agent.velocity.magnitude);
+        Debug.Log("enemyHP " + currentHealth);
         float distanceToTarget = Vector3.Distance(transform.position, playerRef.transform.position);
 //        Debug.Log(distanceToTarget);
         if (canSeePlayer)
@@ -134,7 +158,7 @@ public class EnemyAI : MonoBehaviour
             topNode.Evaluate();
             if (topNode.nodeState == NodeState.FAILURE)
             {
-                SetColor(Color.red);
+                //SetColor(Color.red);
                 UpdateDest();
                 //agent.isStopped = true;
                 //patrol = true;
@@ -161,7 +185,7 @@ public class EnemyAI : MonoBehaviour
             }
         }*/
 
-        Debug.Log(Vector3.Distance(transform.position, patrolDest));
+        //Debug.Log(Vector3.Distance(transform.position, patrolDest));
         //Debug.Log("tra   " + transform.position);
         //Debug.Log("patrol     " + patrolDest);
 
@@ -172,7 +196,7 @@ public class EnemyAI : MonoBehaviour
             //Debug.Log("UpdateDest ffs");
             
             
-            Debug.Log("next ffs");
+            //Debug.Log("next ffs");
             NextWaypoint();
             UpdateDest();
             
@@ -278,10 +302,10 @@ public class EnemyAI : MonoBehaviour
         //Debug.Log("new possssssssss");
 
         patrolDest = new Vector3(transform.position.x+randomX, transform.position.y, transform.position.z + randomZ);
-        Debug.Log("patroldest " + patrolDest); 
+        //Debug.Log("patroldest " + patrolDest); 
         if (Physics.Raycast(patrolDest, -transform.up, 2f, groundMask))
         {
-            Debug.Log("iffffffff");
+            //Debug.Log("iffffffff");
             patrolDestSet = true;
         }
     }
@@ -343,12 +367,13 @@ public class EnemyAI : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        Debug.Log(currentHealth);
     }
 
-    public void SetColor(Color color)
+    /*public void SetColor(Color color)
     {
         material.color = color;
-    }
+    }*/
 
     public void SetBestCoverSpot(Transform bestCoverSpot)
     {

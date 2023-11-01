@@ -66,6 +66,15 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Transform Hips;
 
+
+    //Flashlight
+    [SerializeField] private GameObject Flashlight;
+    private bool _flashOn = false;
+
+    //Footsteps
+    private float _lastFootstep = 0f; 
+    private float _footstepDur = 0.3f;
+
     private void Start()
     {
         Cursor.visible = false;
@@ -89,6 +98,7 @@ public class PlayerController : MonoBehaviour
         _crouchingHash = Animator.StringToHash("Crouching");
 
         InputManager.current.JumpAction.started += JumpHandling;
+        InputManager.current.FlashlightToggleAction.started += FlashlightHandling;
     }
 
     private void Update()
@@ -124,17 +134,17 @@ public class PlayerController : MonoBehaviour
         if (_inputManager.Crouch)
         {
             _crouching = true;
-            targetSpeed = CrouchSpeed;
             _capsule.radius = CrouchRadius;
             if (!_grounded) //TODO, jezeli tego nie ma to crouch jumping sprawia ze mozemy wejsc w rozne niepozadane miejsca przez floating collider
             {
                 _capsule.height = CrouchScale * 1.78f; 
-                _capsule.center = new Vector3(0, CrouchScale*0.89f, 0);
+                _capsule.center = new Vector3(0, CrouchScale*0.89f, 0.25f);
             }
             else
             {
                 _capsule.height = CrouchScale * _startHeight;
                 _capsule.center = CrouchScale * _startCenter;
+                _capsule.center += new Vector3(0,0,0.25f);
             }
 
         }
@@ -146,6 +156,7 @@ public class PlayerController : MonoBehaviour
             _capsule.center = Vector3.SmoothDamp(_capsule.center, _startCenter, ref _uncrouchCenterVelocity, 0.1f);
         }
 
+        if(_crouching) targetSpeed = CrouchSpeed;
 
         if (_inputManager.Move == Vector2.zero) targetSpeed = 0;
 
@@ -297,5 +308,23 @@ public class PlayerController : MonoBehaviour
             _animator.SetIKRotation(foot, Quaternion.LookRotation(fwd, hit.normal));
         }
     }
+
+    private void FlashlightHandling(InputAction.CallbackContext ctx)
+    {
+        _flashOn = !_flashOn;
+        Flashlight.SetActive(_flashOn);
+    }
     
+    private void OnFootstep()
+    {
+        if(_inputManager.Move == Vector2.zero)
+            return;
+        var currTime = Time.time;
+        if(currTime - _lastFootstep >= _footstepDur)
+        {
+            var randPitch = Random.Range(0.8f, 1.2f);
+            SoundManager.Instance.PlaySound(Sound.Footsteps, transform, false, null, randPitch);
+            _lastFootstep = currTime;
+        }
+    }
 }
