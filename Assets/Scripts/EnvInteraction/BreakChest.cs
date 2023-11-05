@@ -7,10 +7,12 @@ public class BreakChest : MonoBehaviour
     public GameObject brokenChest;
     private GameObject _brokenObj;
     private GameObject _heavyobject;
+    public LayerMask heavierLayer;
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Heavy")
+        int layer = collision.gameObject.layer;
+        if (heavierLayer == (heavierLayer | (1 << layer)))
         {
             _heavyobject = collision.gameObject;
             gameObject.SetActive(false);
@@ -31,8 +33,14 @@ public class BreakChest : MonoBehaviour
 
     private void Deactivate()
     {
-        _brokenObj.SetActive(false);
-        _heavyobject.SetActive(false);
+        if (_brokenObj != null)
+        {
+            _brokenObj.SetActive(false);
+        }
+        if (_heavyobject != null)
+        {
+            _heavyobject.SetActive(false);
+        }
     }
 
 /*    private void OnMouseDown()
