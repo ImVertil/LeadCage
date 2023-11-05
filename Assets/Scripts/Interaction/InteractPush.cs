@@ -10,8 +10,8 @@ public class InteractPush : MonoBehaviour, IInteractable
 {
     public GameObject interactionTextObject;
     private TMP_Text _interactionUIText;
-    [SerializeField] private float _range = 100f;
-    //[SerializeField] private float _impactForce = 30f;
+    [SerializeField] private float _range = 1000f;
+    [SerializeField] private float _impactForce = 100f;
     [SerializeField] private Rigidbody _bodyToPush;
     [SerializeField] private GameObject _player;
     private bool _isNotAChild;
@@ -24,38 +24,64 @@ public class InteractPush : MonoBehaviour, IInteractable
     {
         _outline = GetComponent<Outline>();
         _outline.enabled = false;
-        _interactionUIText = interactionTextObject.GetComponent<TMP_Text>();
+        //_interactionUIText = interactionTextObject.GetComponent<TMP_Text>();
         _isNotAChild = true;
     }
 
     public void OnStartLook()
     {
+        InteractionManager.Instance.InteractionText.SetText($"Press [E] to push object");
         _outline.enabled = true;
-        _interactionUIText.SetText($"Push");
+        //_interactionUIText.SetText($"Push");
     }
 
     public void OnEndLook()
     {
+        InteractionManager.Instance.InteractionText.SetText("");
         _outline.enabled = false;
-        _interactionUIText.SetText("");
+        //_interactionUIText.SetText("");
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            _outline.enabled = false;
+            Debug.Log("interact kurwa");
+            //popychanie
+            RaycastHit hit;
+            if (Physics.Raycast(bulletOrigin.transform.position, bulletOrigin.transform.forward, out hit, _range))
+            {
+                if (hit.rigidbody == _bodyToPush)
+                {
+                    Debug.Log("hit kurwa");
+                    //hit.rigidbody.constraints = ~RigidbodyConstraints.FreezePosition;
+                    hit.rigidbody.AddForce(-hit.normal * _impactForce);
+                    //Invoke("Freeze", 0.7f);
+                }
+            }
+        }
     }
 
     public void OnInteract(InputAction.CallbackContext ctx)
     {
+        _outline.enabled = false;
+        Debug.Log("interact kurwa");
         //popychanie
-/*        RaycastHit hit;
+        RaycastHit hit;
         if (Physics.Raycast(bulletOrigin.transform.position, bulletOrigin.transform.forward, out hit, _range))
         {
             if (hit.rigidbody == _bodyToPush)
             {
-                hit.rigidbody.constraints = ~RigidbodyConstraints.FreezePosition;
+                Debug.Log("hit kurwa");
+                //hit.rigidbody.constraints = ~RigidbodyConstraints.FreezePosition;
                 hit.rigidbody.AddForce(-hit.normal * _impactForce);
-                Invoke("Freeze", 0.7f);
+                //Invoke("Freeze", 0.7f);
             }
-        }*/
+        }
 
         //³apanie
-        RaycastHit hit;
+        /*RaycastHit hit;
         if (Physics.Raycast(bulletOrigin.transform.position, bulletOrigin.transform.forward, out hit, _range))
         {
             if (hit.rigidbody == _bodyToPush)
@@ -72,11 +98,11 @@ public class InteractPush : MonoBehaviour, IInteractable
                     _isNotAChild = true;
                 }
             }
-        }
+        }*/
     }
 
-    public void Freeze()
+    /*public void Freeze()
     {
         _bodyToPush.constraints = RigidbodyConstraints.FreezeAll;
-    }
+    }*/
 }

@@ -31,6 +31,9 @@ public class Bullet : MonoBehaviour
             playerH.TakeDamage(10f);
         }
 
-        
+        if (collision.gameObject.layer == 9)
+        {
+            Destroy(gameObject);
+        }
     }
 }
