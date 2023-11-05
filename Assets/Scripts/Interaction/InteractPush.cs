@@ -11,7 +11,7 @@ public class InteractPush : MonoBehaviour, IInteractable
     public GameObject interactionTextObject;
     private TMP_Text _interactionUIText;
     [SerializeField] private float _range = 100f;
-    //[SerializeField] private float _impactForce = 30f;
+    [SerializeField] private float _impactForce = 30f;
     [SerializeField] private Rigidbody _bodyToPush;
     [SerializeField] private GameObject _player;
     private bool _isNotAChild;
@@ -43,7 +43,7 @@ public class InteractPush : MonoBehaviour, IInteractable
     public void OnInteract(InputAction.CallbackContext ctx)
     {
         //popychanie
-/*        RaycastHit hit;
+        RaycastHit hit;
         if (Physics.Raycast(bulletOrigin.transform.position, bulletOrigin.transform.forward, out hit, _range))
         {
             if (hit.rigidbody == _bodyToPush)
@@ -52,10 +52,10 @@ public class InteractPush : MonoBehaviour, IInteractable
                 hit.rigidbody.AddForce(-hit.normal * _impactForce);
                 Invoke("Freeze", 0.7f);
             }
-        }*/
+        }
 
         //³apanie
-        RaycastHit hit;
+        /*RaycastHit hit;
         if (Physics.Raycast(bulletOrigin.transform.position, bulletOrigin.transform.forward, out hit, _range))
         {
             if (hit.rigidbody == _bodyToPush)
@@ -72,7 +72,7 @@ public class InteractPush : MonoBehaviour, IInteractable
                     _isNotAChild = true;
                 }
             }
-        }
+        }*/
     }
 
     public void Freeze()
