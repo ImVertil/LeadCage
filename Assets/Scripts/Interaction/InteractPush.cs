@@ -47,14 +47,12 @@ public class InteractPush : MonoBehaviour, IInteractable
         if (Input.GetKeyDown(KeyCode.E))
         {
             _outline.enabled = false;
-            Debug.Log("interact kurwa");
             //popychanie
             RaycastHit hit;
             if (Physics.Raycast(bulletOrigin.transform.position, bulletOrigin.transform.forward, out hit, _range))
             {
                 if (hit.rigidbody == _bodyToPush)
                 {
-                    Debug.Log("hit kurwa");
                     //hit.rigidbody.constraints = ~RigidbodyConstraints.FreezePosition;
                     hit.rigidbody.AddForce(-hit.normal * _impactForce);
                     //Invoke("Freeze", 0.7f);
@@ -66,14 +64,12 @@ public class InteractPush : MonoBehaviour, IInteractable
     public void OnInteract(InputAction.CallbackContext ctx)
     {
         _outline.enabled = false;
-        Debug.Log("interact kurwa");
         //popychanie
         RaycastHit hit;
         if (Physics.Raycast(bulletOrigin.transform.position, bulletOrigin.transform.forward, out hit, _range))
         {
             if (hit.rigidbody == _bodyToPush)
             {
-                Debug.Log("hit kurwa");
                 //hit.rigidbody.constraints = ~RigidbodyConstraints.FreezePosition;
                 hit.rigidbody.AddForce(-hit.normal * _impactForce);
                 //Invoke("Freeze", 0.7f);
