@@ -4,6 +4,8 @@ using UnityEngine;
 public class LightsTrigger : MonoBehaviour
 {
     [SerializeField] private Transform _transformToPlay;
+    [SerializeField] private MeshRenderer test1;
+    [SerializeField] private MeshRenderer test2;
     private bool _hasEntered = false;
 
     private void OnTriggerEnter(Collider other)
