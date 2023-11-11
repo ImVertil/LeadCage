@@ -34,7 +34,7 @@ public class LightFlickering : MonoBehaviour
 
         while (true)
         {
-            timeNotBlinking = Random.Range(1.0f, 5.0f);
+            timeNotBlinking = Random.Range(2.0f, 6.0f);
             timesBlinking = Random.Range(4, 10);
 
             for (int i = 0; i < timesBlinking; i++)
