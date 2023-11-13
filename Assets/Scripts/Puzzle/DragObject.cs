@@ -22,7 +22,7 @@ public class DragObject : MonoBehaviour
         // offset - difference between the middle of the object that we are dragging and our cursor position
         _offset = transform.position - GetMouseWorldPosition();
 
-        if(_snapTo is not null)
+        if(_snapTo != null)
         {
             _snapTo.GetComponent<CableSlot>().isCableConnected = false;
             GetComponentInParent<Cable>().DisconnectFromSlot();
@@ -37,9 +37,8 @@ public class DragObject : MonoBehaviour
     private void OnMouseUp()
     {
         // snap the cable to the slot if there's no other cable connected, otherwise snap back to initial position
-        if (_snapTo is not null && !_snapTo.GetComponent<CableSlot>().isCableConnected)
+        if (_snapTo != null && !_snapTo.GetComponent<CableSlot>().isCableConnected)
         {
-            // X and Z snap depends on the rotation of the electrical box
             switch(Math.Abs(transform.root.eulerAngles.y)) // the Y rotation of the root component
             {
                 case 0:
@@ -65,6 +64,7 @@ public class DragObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
+        Debug.Log(collider.gameObject.name);
         _snapTo = collider.gameObject;
     }
 
