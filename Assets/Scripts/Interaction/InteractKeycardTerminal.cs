@@ -8,14 +8,12 @@ public class InteractKeycardTerminal : MonoBehaviour, IInteractable
     [SerializeField] private GameObject _door;
     private Outline _outline;
     private Animator _animator;
-    private AudioSource _audioSource;
-    private int _trDoorOpen = Animator.StringToHash("DoorOpen");
-    private int _trDoorClose = Animator.StringToHash("DoorClose");
+    private Door _doorScript;
 
     private void Start()
     {
         _animator = _door.GetComponentInChildren<Animator>();
-        _audioSource = _door.GetComponentInChildren<AudioSource>();
+        _doorScript = _door.GetComponent<Door>();
         _outline = GetComponent<Outline>();
         _outline.enabled = false;
     }
@@ -38,28 +36,17 @@ public class InteractKeycardTerminal : MonoBehaviour, IInteractable
         {
             if(_animator.GetCurrentAnimatorStateInfo(0).IsName("Door_01"))
             {
-                CloseDoor();
+                _doorScript.CloseDoor();
             }
             else
             {
-                OpenDoor();
+                _doorScript.OpenDoor();
             }
         }
         else
         {
             InteractionManager.Instance.InfoText.SetText("You don't have a valid keycard");
+            StartCoroutine(TextManager.WaitAndClearInfoText());
         }
-    }
-
-    public void OpenDoor()
-    {
-        _audioSource.Play();
-        _animator.SetTrigger(_trDoorOpen);
-    }
-
-    public void CloseDoor()
-    {
-        _audioSource.Play();
-        _animator.SetTrigger(_trDoorClose);
     }
 }
