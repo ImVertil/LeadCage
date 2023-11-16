@@ -23,15 +23,19 @@ public class DoorScript : MonoBehaviour, IInteractable
 
     public void OnInteract(InputAction.CallbackContext ctx)
     {
-        if(_animator.GetCurrentAnimatorStateInfo(0).IsName("Door_03_Close 0") && !_animator.IsInTransition(0))
+        var currentStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        if(currentStateInfo.normalizedTime >= 1f)
         {
-            CloseDoor();
+            if (currentStateInfo.IsName("Door_03_Close 0"))
+            {
+                CloseDoor();
+            }
+            else
+            {
+                OpenDoor();
+            }
+            InteractionManager.Instance.InteractionText.SetText($"Press [E] to {_interactionStatus}");
         }
-        else
-        {
-            OpenDoor();
-        }
-        InteractionManager.Instance.InteractionText.SetText($"Press [E] to {_interactionStatus}");
     }
 
     public void OnStartLook()
