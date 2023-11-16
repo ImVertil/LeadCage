@@ -8,6 +8,7 @@ public class DoorScript : MonoBehaviour, IInteractable
     private int _trDoorClose = Animator.StringToHash("DoorClose");
     private Animator _animator;
     private AudioSource _audioSource;
+    private string _interactionStatus;
 
     void Start()
     {
@@ -22,7 +23,7 @@ public class DoorScript : MonoBehaviour, IInteractable
 
     public void OnInteract(InputAction.CallbackContext ctx)
     {
-        if(_animator.GetCurrentAnimatorStateInfo(0).IsName("Door_03_Close 0"))
+        if(_animator.GetCurrentAnimatorStateInfo(0).IsName("Door_03_Close 0") && !_animator.IsInTransition(0))
         {
             CloseDoor();
         }
@@ -30,18 +31,13 @@ public class DoorScript : MonoBehaviour, IInteractable
         {
             OpenDoor();
         }
+        InteractionManager.Instance.InteractionText.SetText($"Press [E] to {_interactionStatus}");
     }
 
     public void OnStartLook()
     {
-        if(_animator.GetCurrentAnimatorStateInfo(0).IsName("Door_03_Close 0"))
-        {
-            InteractionManager.Instance.InteractionText.SetText("Press [E] to close");
-        }
-        else
-        {
-            InteractionManager.Instance.InteractionText.SetText("Press [E] to open");
-        }
+        _interactionStatus = _animator.GetCurrentAnimatorStateInfo(0).IsName("Door_03_Close 0") ? "close" : "open";
+        InteractionManager.Instance.InteractionText.SetText($"Press [E] to {_interactionStatus}");
     }
 
 
@@ -49,11 +45,13 @@ public class DoorScript : MonoBehaviour, IInteractable
     {
         _audioSource.Play();
         _animator.SetTrigger(_trDoorOpen);
+        _interactionStatus = "close";
     }
 
     public void CloseDoor()
     {
         _audioSource.Play();
         _animator.SetTrigger(_trDoorClose);
+        _interactionStatus = "open";
     }
 }
