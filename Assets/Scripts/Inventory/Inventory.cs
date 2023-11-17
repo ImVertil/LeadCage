@@ -110,13 +110,36 @@ public class Inventory : MonoBehaviour
 
     private void AssignItemData(GameObject obj, Item item)
     {
+        /*float maxSize = 3;
+        MeshFilter mf = obj.GetComponent<MeshFilter>();
+        mf.mesh = item.modelMesh;
+
+        foreach(var bc in obj.GetComponents<BoxCollider>())
+        {
+            Bounds b = mf.sharedMesh.bounds;
+            bc.center = b.center;
+
+            if(bc.isTrigger) // trigger collider should be increased by maxSize to make picking up things easier
+            {
+                bc.size = b.size + new Vector3(maxSize, maxSize, maxSize);
+            }
+            else
+            {
+                bc.size = b.size;
+            }
+        }*/
+        float maxSize = 2;
         MeshFilter mf = obj.GetComponent<MeshFilter>();
         mf.mesh = item.modelMesh;
 
         BoxCollider bc = obj.GetComponent<BoxCollider>();
+        SphereCollider sc = obj.GetComponent<SphereCollider>();
         Bounds b = mf.sharedMesh.bounds;
         bc.center = b.center;
         bc.size = b.size;
+
+        sc.center = b.center;
+        sc.radius = Mathf.Max(b.size.x, b.size.y, b.size.z) / 2 + maxSize;
 
         obj.GetComponent<InteractPickup>().item = item;
         obj.GetComponent<MeshRenderer>().material = item.modelMaterial;
