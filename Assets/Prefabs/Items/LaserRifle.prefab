@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2547766967438417002}
   - component: {fileID: 2547766967438416998}
   - component: {fileID: 2547766967438416999}
+  - component: {fileID: 3250070932163945590}
   - component: {fileID: 1055319796041131914}
   m_Layer: 0
   m_Name: LaserRifle
@@ -129,6 +130,19 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.555646, y: 1.980405, z: 11.443438}
+  m_Center: {x: -0.049477004, y: -0.4917925, z: -1.0371616}
+--- !u!135 &3250070932163945590
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2547766967438417003}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 7.721719
   m_Center: {x: -0.049477004, y: -0.4917925, z: -1.0371616}
 --- !u!114 &1055319796041131914
 MonoBehaviour:
