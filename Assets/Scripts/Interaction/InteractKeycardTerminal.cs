@@ -34,14 +34,19 @@ public class InteractKeycardTerminal : MonoBehaviour, IInteractable
     {
         if(Progression.Instance.HasAllValues(requiredTags))
         {
-            if(_animator.GetCurrentAnimatorStateInfo(0).IsName("Door_01"))
+            var currentStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            if(currentStateInfo.normalizedTime >= 1f)
             {
-                _doorScript.CloseDoor();
+                if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Door_01"))
+                {
+                    _doorScript.CloseDoor();
+                }
+                else
+                {
+                    _doorScript.OpenDoor();
+                }
             }
-            else
-            {
-                _doorScript.OpenDoor();
-            }
+            
         }
         else
         {

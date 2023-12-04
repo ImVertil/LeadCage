@@ -146,13 +146,13 @@ public class SoundManager : MonoBehaviour
 
     private IEnumerator SmoothMusicChange(float time)
     {
-        AudioSource aSource = _bgmSoundObject.GetComponent<AudioSource>();
-        float volume = aSource.volume;
-        aSource.volume = 0;
+        AudioSource audioSource = _bgmSoundObject.GetComponent<AudioSource>();
+        float volume = audioSource.volume;
+        audioSource.volume = 0;
         var test = time / 100;
-        while(aSource.volume != volume)
+        while(audioSource.volume != volume)
         {
-            aSource.volume += test;
+            audioSource.volume += test;
             yield return new WaitForSeconds(test);
         }
     }
