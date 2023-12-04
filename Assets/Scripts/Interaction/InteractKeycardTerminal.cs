@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,11 +9,13 @@ public class InteractKeycardTerminal : MonoBehaviour, IInteractable
     [SerializeField] private GameObject _door;
     private Outline _outline;
     private Animator _animator;
+    private Animator _keycardTerminalAnimator;
     private Door _doorScript;
 
     private void Start()
     {
         _animator = _door.GetComponentInChildren<Animator>();
+        _keycardTerminalAnimator = GetComponent<Animator>();
         _doorScript = _door.GetComponent<Door>();
         _outline = GetComponent<Outline>();
         _outline.enabled = false;
@@ -43,7 +46,8 @@ public class InteractKeycardTerminal : MonoBehaviour, IInteractable
                 }
                 else
                 {
-                    _doorScript.OpenDoor();
+                    StartCoroutine(Test());
+                    //_doorScript.OpenDoor();
                 }
             }
             
@@ -53,5 +57,23 @@ public class InteractKeycardTerminal : MonoBehaviour, IInteractable
             InteractionManager.Instance.InfoText.SetText("You don't have a valid keycard");
             StartCoroutine(TextManager.WaitAndClearInfoText());
         }
+    }
+
+    public IEnumerator Test()
+    {
+        OnEndLook();
+        gameObject.tag = "Untagged";
+
+        _keycardTerminalAnimator.Play(Animator.StringToHash("KeycardAnim"));
+        yield return new WaitForSeconds(_keycardTerminalAnimator.GetCurrentAnimatorStateInfo(0).length);
+
+        SoundManager.Instance.PlaySound(Sound.KeypadPress, transform, false);
+        yield return new WaitForSeconds(SoundManager.Instance.GetAudioClip(Sound.KeypadPress).length);
+
+        _keycardTerminalAnimator.Play(Animator.StringToHash("KeycardAnimR"));
+        _doorScript.OpenDoor();
+        gameObject.tag = "Interactable";
+
+        yield return null;
     }
 }
