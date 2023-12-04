@@ -47,7 +47,7 @@ MonoBehaviour:
   _simultaneousSoundsAmount: 20
   volume: 50
   sfxVolume: 100
-  bgmVolume: 100
+  bgmVolume: 70
   ambientVolume: 100
   sounds:
   - name: 1
@@ -73,7 +73,7 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 49b7ad7d8bf670e48a75da4c53c3e7ce, type: 3}
   - name: 2
     type: 1
-    audioClip: {fileID: 8300000, guid: b70d54320e3e5cb4f80cb0ee117f66f2, type: 3}
+    audioClip: {fileID: 8300000, guid: ce7ffdc08b9bd72448f39148e8216db1, type: 3}
   - name: 9
     type: 0
     audioClip: {fileID: 8300000, guid: bc649fc27c35ef343beaa9f8b6a6c66a, type: 3}
@@ -86,3 +86,6 @@ MonoBehaviour:
   - name: 12
     type: 1
     audioClip: {fileID: 8300000, guid: b70d54320e3e5cb4f80cb0ee117f66f2, type: 3}
+  - name: 13
+    type: 1
+    audioClip: {fileID: 8300000, guid: a9c28358083d2c74cb4ee2cf423f6ad8, type: 3}
