@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -65,6 +66,8 @@ public class InteractKeycardTerminal : MonoBehaviour, IInteractable
         gameObject.tag = "Untagged";
 
         _keycardTerminalAnimator.Play(Animator.StringToHash("KeycardAnim"));
+
+        yield return null; // this is so the animator state info actually updates properly next frame
         yield return new WaitForSeconds(_keycardTerminalAnimator.GetCurrentAnimatorStateInfo(0).length);
 
         SoundManager.Instance.PlaySound(Sound.KeypadPress, transform, false);
