@@ -48,7 +48,7 @@ public class Puzzle3Lever : MonoBehaviour
         return true; 
     }
 
-    private void DisableSwitches()
+    private void DisableAllSwitches()
     {
         for (int i=0 ; i<_switches.Length; i++)
         {
@@ -66,12 +66,12 @@ public class Puzzle3Lever : MonoBehaviour
 
         if (CheckPuzzle())
         {
+            DisableAllSwitches();
             _animator.Play(Animator.StringToHash("Puzzle3_Voltage"), 1);
             yield return null;
             yield return new WaitForSeconds(_animator.GetCurrentAnimatorStateInfo(1).length);
             _greenLampMr.material = _greenMatOn;
             _isCompleted = true;
-            
         }
         else
         {
