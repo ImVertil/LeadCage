@@ -29,7 +29,7 @@ public class Health : MonoBehaviour
         if (health > 0)
         {
             health -= damage;
-            healthText.text = health.ToString();
+            healthText.text = "HP: " + health.ToString();
 
         }
         

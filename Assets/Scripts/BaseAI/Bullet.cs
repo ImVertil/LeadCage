@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,9 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private Rigidbody rigidbody;
     [SerializeField] private float force;
-    void Start()
+
+    private Action<Bullet> _killAction;
+    public void OnObjectSpawn()
     {
         rigidbody.velocity = transform.forward * force;
     }
@@ -14,11 +17,24 @@ public class Bullet : MonoBehaviour
     void Update()
     {
 
-        Destroy(gameObject,5f);
+        //Destroy(gameObject,5f);
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.transform.CompareTag("Player") || collision.gameObject.layer == 8)
+        {
+            Health playerH = collision.transform.GetComponent<Health>();
+            if (playerH != null)
+            {
+                playerH.TakeDamage(10f);
+            }
+            _killAction(this);
+        }
+
+
+
+
+        /*if (collision.gameObject.tag == "Player")
         {
             Health playerH = collision.transform.GetComponent<Health>();
 
@@ -29,11 +45,20 @@ public class Bullet : MonoBehaviour
             }
 
             playerH.TakeDamage(10f);
+            //Destroy(gameObject);
+
+            _killAction(this);
         }
 
-        if (collision.gameObject.layer == 9)
+        if (collision.gameObject.layer == 8)
         {
-            Destroy(gameObject);
-        }
+            //Destroy(gameObject);
+            _killAction(this);
+        }*/
+    }
+
+    public void Init(Action<Bullet> killAction)
+    {
+        _killAction = killAction;
     }
 }

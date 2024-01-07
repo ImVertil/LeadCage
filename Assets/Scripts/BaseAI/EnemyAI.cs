@@ -144,7 +144,7 @@ public class EnemyAI : MonoBehaviour
         }
 
         animator.SetFloat("EnemySpeed", agent.velocity.magnitude);
-        Debug.Log("enemyHP " + currentHealth);
+        //Debug.Log("enemyHP " + currentHealth);
         float distanceToTarget = Vector3.Distance(transform.position, playerRef.transform.position);
 //        Debug.Log(distanceToTarget);
         if (canSeePlayer)
@@ -221,7 +221,7 @@ public class EnemyAI : MonoBehaviour
 
 
 
-        currentHealth += Time.deltaTime * healingRate;
+        //currentHealth += Time.deltaTime * healingRate;
     }
 
 
@@ -276,7 +276,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    public void RandomNavmeshLocation(float radius)
+/*    public void RandomNavmeshLocation(float radius)
     {
         Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
         randomDirection += transform.position;
@@ -289,7 +289,7 @@ public class EnemyAI : MonoBehaviour
         
         patrolDest =  finalPosition;
         patrolDestSet = true;
-    }
+    }*/
 
     private void NewPosition()
     {
@@ -367,7 +367,7 @@ public class EnemyAI : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        Debug.Log(currentHealth);
+        //Debug.Log(currentHealth);
     }
 
     /*public void SetColor(Color color)
