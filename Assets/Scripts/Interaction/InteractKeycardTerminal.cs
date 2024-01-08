@@ -63,7 +63,7 @@ public class InteractKeycardTerminal : MonoBehaviour, IInteractable
     public IEnumerator Test()
     {
         OnEndLook();
-        gameObject.tag = "Untagged";
+        gameObject.tag = Tags.UNTAGGED;
 
         _keycardTerminalAnimator.Play(Animator.StringToHash("KeycardAnim"));
 

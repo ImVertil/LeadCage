@@ -38,7 +38,7 @@ public class Puzzle3Switch : MonoBehaviour
         LeanTween.moveLocalX(gameObject, pos, _time)
             .setEase(LeanTweenType.easeInOutQuad);
 
-        gameObject.tag = "Untagged";
+        gameObject.tag = Tags.UNTAGGED;
         yield return new WaitForSeconds(_time);
         gameObject.tag = Tags.INTERACTABLE;
         _isMoving = false;

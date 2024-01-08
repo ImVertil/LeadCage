@@ -1,0 +1,4 @@
+public enum ValveState
+{
+    FULLY_OPEN, PARTIALLY_OPEN, PARTIALLY_CLOSED, FULLY_CLOSED
+}
