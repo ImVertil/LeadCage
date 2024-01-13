@@ -27,12 +27,18 @@ public class Puzzle3Valve : MonoBehaviour
 
     public bool RotateValve(int direction, bool reverse)
     {
-        int nextState = (int)_currentState + (direction * (reverse ? -1 : 1));
         if (_isMoving) // temporary :^)
             return true;
 
+        int nextState = (int)_currentState + (direction * (reverse ? -1 : 1));
         if (nextState < 0 || nextState >= Enum.GetNames(typeof(ValveState)).Length)
             return false;
+
+        // we want to invoke the event whether the state goes into FULLY_CLOSED or goes out of it
+        if((ValveState)nextState == ValveState.FULLY_CLOSED || _currentState == ValveState.FULLY_CLOSED)
+        {
+            PuzzleEvents.OnGeneratorPipeStatusChanged(this);
+        }
 
         _currentState = (ValveState)nextState;
         int rotation = GetRotation(_currentState) * (reverse ? -1 : 1);

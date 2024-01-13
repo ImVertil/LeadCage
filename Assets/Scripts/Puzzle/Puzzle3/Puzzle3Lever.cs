@@ -71,6 +71,7 @@ public class Puzzle3Lever : MonoBehaviour
             yield return new WaitForSeconds(_animator.GetCurrentAnimatorStateInfo(1).length);
             _greenLampMr.material = _greenMatOn;
             _isCompleted = true;
+            PuzzleEvents.OnGeneratorShieldStatusChanged(this);
         }
         else
         {
