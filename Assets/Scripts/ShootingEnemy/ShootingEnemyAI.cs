@@ -177,11 +177,11 @@ public class ShootingEnemyAI : MonoBehaviour
 
         if (canSeePlayer)
         {
-            Debug.Log("+++I CAN SEE+++");
+            //Debug.Log("+++I CAN SEE+++");
         }
         else
         {
-            Debug.Log("---I CAN'T SEE---");
+            //Debug.Log("---I CAN'T SEE---");
         }
     }
 

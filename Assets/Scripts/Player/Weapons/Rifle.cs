@@ -79,7 +79,7 @@ public class Rifle : MonoBehaviour, Gun {
 
     public void Shoot()
     {
-        Debug.Log("SHOOOOTOTOTOTOTOTOTTOTO");
+        //Debug.Log("SHOOOOTOTOTOTOTOTOTTOTO");
         SoundManager.Instance.PlaySound(Sound.Shoot, transform, false);
         StartCoroutine(Kickback());
 
