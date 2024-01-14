@@ -25,7 +25,7 @@ public class AttackNode : Node
         agent.isStopped = true;
         ai.isShooting = true;
         //ai.SetColor(Color.green);
-        Debug.Log("enemy shooting player");
+        //Debug.Log("enemy shooting player");
         Vector3 direction = target.position - ai.transform.position;
         Vector3 currentDirection = Vector3.SmoothDamp(ai.transform.forward, direction, ref currentVelocity, smoothDamp);
         Quaternion rotation = Quaternion.LookRotation(currentDirection, Vector3.up);
