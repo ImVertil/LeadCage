@@ -17,22 +17,23 @@ public class Puzzle3Valve : MonoBehaviour
 
     void Start()
     {
-        float initialX = transform.rotation.eulerAngles.x;
-        float initialY = transform.rotation.eulerAngles.y;
-        transform.rotation = Quaternion.Euler(initialX, initialY, GetRotation(_initialState));
         _sizeOverLifetimeModule = _smokeParticles.sizeOverLifetime;
         _sizeOverLifetimeModule.size = GetCurveFromState(_initialState);
         _currentState = _initialState;
     }
 
-    public bool RotateValve(int direction, bool reverse)
+    public void RotateValve(int direction, bool reverse)
     {
-        if (_isMoving) // temporary :^)
-            return true;
+        if (_isMoving)
+            return;
 
         int nextState = (int)_currentState + (direction * (reverse ? -1 : 1));
         if (nextState < 0 || nextState >= Enum.GetNames(typeof(ValveState)).Length)
-            return false;
+        {
+            InteractionManager.Instance.InfoText.SetText("It's not going any further than that...");
+            StartCoroutine(TextManager.WaitAndClearInfoText());
+            return;
+        }
 
         // we want to invoke the event whether the state goes into FULLY_CLOSED or goes out of it
         if((ValveState)nextState == ValveState.FULLY_CLOSED || _currentState == ValveState.FULLY_CLOSED)
@@ -41,31 +42,8 @@ public class Puzzle3Valve : MonoBehaviour
         }
 
         _currentState = (ValveState)nextState;
-        int rotation = GetRotation(_currentState) * (reverse ? -1 : 1);
+        int rotation = (int)transform.rotation.eulerAngles.z + Puzzle.ROTATION_VALUE * direction;
         StartCoroutine(Rotate(rotation));
-        return true;
-    }
-
-    private int GetRotation(ValveState state)
-    {
-        switch (state)
-        {
-            case ValveState.FULLY_OPEN:
-                return Puzzle.FULLY_OPEN_ROTATION;
-
-            case ValveState.PARTIALLY_OPEN:
-                return Puzzle.PARTIALLY_OPEN_ROTATION;
-
-            case ValveState.PARTIALLY_CLOSED:
-                return Puzzle.PARTIALLY_CLOSED_ROTATION;
-
-            case ValveState.FULLY_CLOSED:
-                return Puzzle.FULLY_CLOSED_ROTATION;
-
-            default:
-                Debug.LogError("Valve rotation undefined");
-                return 0;
-        }
     }
 
     private ParticleSystem.MinMaxCurve GetCurveFromState(ValveState state)
