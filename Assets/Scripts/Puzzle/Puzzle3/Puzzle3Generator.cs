@@ -1,19 +1,42 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class Puzzle3Generator : MonoBehaviour
+public class Puzzle3Generator : MonoBehaviour, IInteractable
 {
     [SerializeField] private int _amountOfShields = 2;
     [SerializeField] private int _amountOfPipes = 4;
 
+    [SerializeField] private MeshRenderer _shieldLamp1;
+    [SerializeField] private MeshRenderer _shieldLamp2;
+    [SerializeField] private MeshRenderer _pipesLamp;
+
+    [SerializeField] private Material _lampMatRed;
+    [SerializeField] private Material _lampMatGreen;
+
     private HashSet<Puzzle3Lever> _part1done = new();
     private HashSet<Puzzle3Valve> _part2done = new();
-    // Start is called before the first frame update
+
+    private Animator _animator;
+
     void Awake()
     {
         PuzzleEvents.GeneratorShieldStatusChanged += CheckPart1;
         PuzzleEvents.GeneratorPipeStatusChanged += CheckPart2;
+        _animator = GetComponentInParent<Animator>();
     }
+
+    public void OnStartLook()
+    {
+        InteractionManager.Instance.InteractionText.SetText($"Press [E] to turn on the generator");
+    }
+
+    public void OnEndLook()
+    {
+        InteractionManager.Instance.InteractionText.SetText($"");
+    }
+
+    public void OnInteract(InputAction.CallbackContext ctx) => ActivateGenerator();
 
     public void CheckPart1(Puzzle3Lever p)
     {
@@ -25,6 +48,8 @@ public class Puzzle3Generator : MonoBehaviour
         {
             _part1done.Add(p);
         }
+
+        CheckForLampSwitch();
     }
 
     public void CheckPart2(Puzzle3Valve p)
@@ -37,6 +62,14 @@ public class Puzzle3Generator : MonoBehaviour
         {
             _part2done.Add(p);
         }
+
+        CheckForLampSwitch();
+    }
+
+    public void CheckForLampSwitch()
+    {
+        _animator.SetBool($"LampSwitch{_part1done.Count}", true);
+        _animator.SetBool("LampSwitch3", _part2done.Count == _amountOfPipes);
     }
 
     public void ActivateGenerator()
@@ -50,4 +83,6 @@ public class Puzzle3Generator : MonoBehaviour
             Debug.Log("OFF");
         }
     }
+
+    
 }

@@ -14,11 +14,6 @@ public class Puzzle3ValveInteract : MonoBehaviour, IInteractable
     [SerializeField] private TurnType _turnType;
     [SerializeField] private Puzzle3Valve _valveScript;
 
-    void Start()
-    {
-        
-    }
-
     public void OnStartLook()
     {
         InteractionManager.Instance.InteractionText.SetText("Press [E] to turn the valve to the " + _turnType.ToString().ToLower());
@@ -32,12 +27,8 @@ public class Puzzle3ValveInteract : MonoBehaviour, IInteractable
     public void OnInteract(InputAction.CallbackContext ctx)
     {
         int direction = _turnType == TurnType.LEFT ? -1 : 1;
-        bool result = _valveScript.RotateValve(direction, _isReverse);
-        if(!result)
-        {
-            InteractionManager.Instance.InfoText.SetText("It's not going any further than that...");
-            StartCoroutine(TextManager.WaitAndClearInfoText());
-        }
+        _valveScript.RotateValve(direction, _isReverse);
+        
     }
 
 }
