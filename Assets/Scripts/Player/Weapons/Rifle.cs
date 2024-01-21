@@ -86,12 +86,12 @@ public class Rifle : MonoBehaviour, Gun {
         RaycastHit hit;
         if (Physics.Raycast(bulletOrigin.position, bulletOrigin.forward, out hit, range, AimMask))
         {
-            var enemy = hit.collider.gameObject.GetComponent<EnemyAI>();
+            var enemyHealth = hit.collider.gameObject.GetComponent<EnemyHealth>();
 
-            if (enemy != null)
+            if (enemyHealth != null)
             {
                 Debug.Log("HITTTTTT");
-                enemy.TakeDamage(damage);
+                enemyHealth.TakeDamage(damage);
             }
 
             var obj = Instantiate(BulletHolePrefab, hit.point, Quaternion.LookRotation(hit.normal));

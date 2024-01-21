@@ -5,9 +5,9 @@ using UnityEngine.AI;
 
 public class ShootingEnemyAI : MonoBehaviour
 {
-    [SerializeField] private float startingHealth;
-    [SerializeField] private float lowHealthThreshold;
-    [SerializeField] private float healthRestoreRate;
+    //[SerializeField] private float startingHealth;
+    //[SerializeField] private float lowHealthThreshold;
+    //[SerializeField] private float healthRestoreRate;
 
     [SerializeField] private float chasingRange;
     [SerializeField] private float shootingRange;
@@ -37,11 +37,11 @@ public class ShootingEnemyAI : MonoBehaviour
     int waypointIndex;
 
     private float _currentHealth;
-    public float currentHealth
+/*    public float currentHealth
     {
         get { return _currentHealth; }
         set { _currentHealth = Mathf.Clamp(value, 0, startingHealth); }
-    }
+    }*/
 
     private void Awake()
     {
@@ -55,7 +55,7 @@ public class ShootingEnemyAI : MonoBehaviour
         playerRef = playerTransform.gameObject;
         UpdateDest();
         StartCoroutine(ShootingFOVRoutine());
-        _currentHealth = startingHealth;
+        //_currentHealth = startingHealth;
         ConstructBehahaviourTree();
         takeAction = false;
         animator = GetComponent<Animator>();
