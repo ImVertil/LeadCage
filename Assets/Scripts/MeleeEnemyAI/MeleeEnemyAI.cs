@@ -5,9 +5,9 @@ using UnityEngine.AI;
 
 public class MeleeEnemyAI : MonoBehaviour
 {
-    [SerializeField] private float startingHealth;
-    [SerializeField] private float lowHealthThreshold;
-    [SerializeField] private float healthRestoreRate;
+    //[SerializeField] private float startingHealth;
+    //[SerializeField] private float lowHealthThreshold;
+    //[SerializeField] private float healthRestoreRate;
 
     [SerializeField] private float chasingRange;
     [SerializeField] private float shootingRange;
@@ -36,11 +36,11 @@ public class MeleeEnemyAI : MonoBehaviour
     int waypointIndex;
 
     private float _currentHealth;
-    public float currentHealth
+/*    public float currentHealth
     {
         get { return _currentHealth; }
         set { _currentHealth = Mathf.Clamp(value, 0, startingHealth); }
-    }
+    }*/
 
     private void Awake()
     {
@@ -52,7 +52,7 @@ public class MeleeEnemyAI : MonoBehaviour
         playerRef = playerTransform.gameObject;
         UpdateDest();
         StartCoroutine(MeleegFOVRoutine());
-        _currentHealth = startingHealth;
+        //_currentHealth = startingHealth;
         ConstructBehahaviourTree();
         takeAction = false;
         animator = GetComponent<Animator>();
@@ -60,6 +60,8 @@ public class MeleeEnemyAI : MonoBehaviour
 
     private void Update()
     {
+        //Debug.Log(canSeePlayer);
+        //Debug.Log(takeAction);
         //Animacje
         if (isShooting)
         {
@@ -98,11 +100,19 @@ public class MeleeEnemyAI : MonoBehaviour
 
 
         //Przejscie do kolejnego punktu patrolu
-        if (takeAction == false && Vector3.Distance(transform.position, patrolDest) < 2)
+        if (takeAction == false /*&& Vector3.Distance(transform.position, patrolDest) < 2*/)
         {
-            NextWaypoint();
+            //NextWaypoint();
             UpdateDest();
 
+        }
+
+        if (takeAction == false && Vector3.Distance(transform.position, patrolDest) < 2)
+        {
+            agent.isStopped = true;
+        } else if (takeAction == true)
+        {
+            agent.isStopped = false;
         }
     }
     //AttackRangeNode shootingRangeNode = new AttackRangeNode(shootingRange, playerTransform, transform, this);
@@ -127,6 +137,7 @@ public class MeleeEnemyAI : MonoBehaviour
     {
         patrolDest = waypoints[waypointIndex].position;
         agent.SetDestination(patrolDest);
+        
     }
 
     private void NextWaypoint()

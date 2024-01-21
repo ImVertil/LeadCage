@@ -6,15 +6,34 @@ using UnityEngine.Pool;
 
 public class Shooting : MonoBehaviour
 {
-    [SerializeField] private Projectile _projectilePrefab;
-    [SerializeField] private Transform _spawnPoint;
-    private float _firerate;
+    [SerializeField] public Projectile projectilePrefab;
+    [SerializeField] public Transform spawnPoint;
+    [SerializeField] public bool shoot = true;
+    private float _firerate = 10f;
     private float _timer;
     private Transform _enemyTransform;
-    private ObjectPool<Projectile> _pool;
+    private ProjectileSpawner projectileSpawner;
 
+    private void Start()
+    {
+        projectileSpawner = GetComponent<ProjectileSpawner>();
+    }
 
-    private void Awake()
+    private void Update()
+    {
+        if (shoot)
+        {
+            _timer += Time.deltaTime;
+            if (_timer >= 2f / _firerate)
+            {
+                projectileSpawner._pool.Get();
+                _timer = 0f;
+            }
+            
+        }
+    }
+
+    /*private void Awake()
     {
         _enemyTransform = gameObject.transform;
         _pool = new ObjectPool<Projectile>(CreateProjectile, null, OnPutBackInPool, defaultCapacity: 500);
@@ -52,7 +71,7 @@ public class Shooting : MonoBehaviour
     {
         SpawnProjectile();
 
-    }
+    }*/
 
 
 }
