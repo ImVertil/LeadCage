@@ -8,6 +8,7 @@ public class Projectile : MonoBehaviour
     private Rigidbody _rb;
     private ObjectPool<Projectile> _pool;
     [SerializeField] private float _destroyTime = 2f;
+    [SerializeField] private float _velocity = 20f;
 
     //private Coroutine deactivateProjectileAfterTimeCoroutine;
     private Collider _collider;
@@ -26,7 +27,7 @@ public class Projectile : MonoBehaviour
         _mr.enabled = true;
         _collider.enabled = true;
         StartCoroutine(DeactivateProjectileAfterTime());
-        _rb.velocity = transform.right * 20f;
+        _rb.velocity = transform.right * _velocity;
     }
 
     public void SetPool(ObjectPool<Projectile> pool)
