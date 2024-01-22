@@ -14,6 +14,9 @@ public class Puzzle3Generator : MonoBehaviour, IInteractable
     [SerializeField] private Material _lampMatRed;
     [SerializeField] private Material _lampMatGreen;
 
+    // REMOVE LATER AND REPLACE WHEN KEYPAD PUZZLE IS DONE
+    [SerializeField] private GameObject[] _doorsToOpen;
+
     private HashSet<Puzzle3Lever> _part1done = new();
     private HashSet<Puzzle3Valve> _part2done = new();
 
@@ -78,8 +81,12 @@ public class Puzzle3Generator : MonoBehaviour, IInteractable
         {
             gameObject.tag = Tags.UNTAGGED;
             LightManager.Instance.TurnOnLightsGlobal();
-            InteractionManager.Instance.InfoText.SetText("The generator has been powered on.");
+            InteractionManager.Instance.InfoText.SetText("The generator has been powered on. Find a way to escape the station.");
             StartCoroutine(TextManager.WaitAndClearInfoText());
+            foreach(var door in _doorsToOpen)
+            {
+                door.GetComponentInChildren<DoorScript>().OpenDoor();
+            }
         }
         else
         {
