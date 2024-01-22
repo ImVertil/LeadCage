@@ -18,7 +18,8 @@ public class ShootingEnemyAI : MonoBehaviour
     private Node topNode;
     Animator animator;
     public bool isShooting;
-    ShootingTest shootingTest;
+    //ShootingTest shootingTest;
+    Shooting shootingTest;
 
     //FOV
     public bool takeAction;
@@ -51,7 +52,8 @@ public class ShootingEnemyAI : MonoBehaviour
 
     private void Start()
     {
-        shootingTest = GetComponent<ShootingTest>();
+        //shootingTest = GetComponent<ShootingTest>();
+        shootingTest = GetComponent<Shooting>();
         playerRef = playerTransform.gameObject;
         UpdateDest();
         StartCoroutine(ShootingFOVRoutine());

@@ -12,7 +12,7 @@ public class ProjectileSpawner : MonoBehaviour
     private void Start()
     {
         shooting = GetComponent<Shooting>();
-        _pool = new ObjectPool<Projectile>(CreateProjectile, OnTakeProjectileFromPool, OnReturnProjectileToPool, OnDestroyProjectile, true, 1000, 2000);
+        _pool = new ObjectPool<Projectile>(CreateProjectile, OnTakeProjectileFromPool, OnReturnProjectileToPool, OnDestroyProjectile, true, 100, 150);
     }
 
     private Projectile CreateProjectile()

@@ -7,20 +7,25 @@ public class Projectile : MonoBehaviour
 {
     private Rigidbody _rb;
     private ObjectPool<Projectile> _pool;
-    [SerializeField] private float _destroyTime = 3f;
+    [SerializeField] private float _destroyTime = 2f;
 
-    private Coroutine deactivateProjectileAfterTimeCoroutine;
-
+    //private Coroutine deactivateProjectileAfterTimeCoroutine;
+    private Collider _collider;
+    private MeshRenderer _mr;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        
+        _mr = GetComponent<MeshRenderer>();
+        _collider = GetComponent<CapsuleCollider>();
     }
 
     private void OnEnable()
     {
-        deactivateProjectileAfterTimeCoroutine = StartCoroutine(DeactivateProjectileAfterTime());
+        //deactivateProjectileAfterTimeCoroutine = StartCoroutine(DeactivateProjectileAfterTime());
+        _mr.enabled = true;
+        _collider.enabled = true;
+        StartCoroutine(DeactivateProjectileAfterTime());
         _rb.velocity = transform.right * 20f;
     }
 
@@ -40,19 +45,22 @@ public class Projectile : MonoBehaviour
             }
 
         }
-        _pool.Release(this);
+        //_pool.Release(this);
+        _mr.enabled = false;
+        _collider.enabled = false;
     }
 
     
 
     private IEnumerator DeactivateProjectileAfterTime()
     {
-        float timePassed = 0f;
-        while(timePassed < _destroyTime)
+        //float timePassed = 0f;
+        /*while(timePassed < _destroyTime)
         {
             timePassed += Time.deltaTime;
             yield return null;
-        }
+        }*/
+        yield return new WaitForSeconds(_destroyTime);
         _pool.Release(this);
     }
 
