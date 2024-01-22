@@ -26,7 +26,7 @@ public class InteractShip : MonoBehaviour, IInteractable
 
     public void OnInteract(InputAction.CallbackContext ctx)
     {
-        Debug.Log("Escape!");
+        InteractionManager.Instance.InfoText.SetText("Well... There was supposed to be an ending scene but... it is what it is. Anyways, you have completed the game! Now ALT + F4 :)");
     }
 
 }

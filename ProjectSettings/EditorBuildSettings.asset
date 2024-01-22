@@ -11,8 +11,11 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Gameplay AI.unity
     guid: 1db47cdd53ee4ad448fdcd606fed6141
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/!TB_Gameplay.unity
     guid: ebb49a28f4b4abe448ce029e56afb9e0
+  - enabled: 1
+    path: Assets/Scenes/!GAMEPLAY NEW.unity
+    guid: 087266cd1f8fc7a4583cc4b299299c7b
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 6253bb297537dc449ba222aca0344098, type: 2}

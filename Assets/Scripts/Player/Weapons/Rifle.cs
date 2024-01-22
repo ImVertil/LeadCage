@@ -90,7 +90,7 @@ public class Rifle : MonoBehaviour, Gun {
 
             if (enemyHealth != null)
             {
-                Debug.Log("HITTTTTT");
+                //Debug.Log("HITTTTTT");
                 enemyHealth.TakeDamage(damage);
             }
 
