@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 6156689145678793608}
   - component: {fileID: 6156689145678793609}
   - component: {fileID: 6156689145678793653}
-  - component: {fileID: 6156689145678793654}
   - component: {fileID: 904477139}
+  - component: {fileID: 6561725798624277863}
   m_Layer: 0
   m_Name: ScrewdriverNew
   m_TagString: Interactable
@@ -129,26 +129,13 @@ Rigidbody:
   m_GameObject: {fileID: 6156689145678793610}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 5
+  m_Drag: 7.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!65 &6156689145678793654
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6156689145678793610}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.456768, y: 0.22356926, z: 3.776594}
-  m_Center: {x: 0.3703971, y: 0, z: 0.05956381}
 --- !u!65 &904477139
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -162,3 +149,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.4999423, y: 0.22356924, z: 0.31719834}
   m_Center: {x: 0.29783672, y: 0, z: 0}
+--- !u!135 &6561725798624277863
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6156689145678793610}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3.249971
+  m_Center: {x: 0.29783666, y: 0, z: 0}
