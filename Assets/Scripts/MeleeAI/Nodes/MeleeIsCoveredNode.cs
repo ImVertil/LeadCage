@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IsCoveredNode : Node
+public class MeleeIsCoveredNode : Node
 {
     private Transform target;
     private Transform origin;
 
-    public IsCoveredNode(Transform target, Transform origin)
+    public MeleeIsCoveredNode(Transform target, Transform origin)
     {
         this.target = target;
         this.origin = origin;
