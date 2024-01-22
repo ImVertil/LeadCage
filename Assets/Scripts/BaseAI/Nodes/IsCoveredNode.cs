@@ -25,4 +25,6 @@ public class IsCoveredNode : Node
         }
         return NodeState.FAILURE;
     }
+
+    //dodac skrypt healthAI ktory ma metode HEAL() i ta metoda uruchamia siê w momencie kiedy ten node ma wartosc success
 }

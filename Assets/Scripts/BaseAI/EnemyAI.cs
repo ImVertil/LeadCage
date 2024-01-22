@@ -31,13 +31,13 @@ public class EnemyAI : MonoBehaviour
 
     public LayerMask targetMask;
     public LayerMask obstructionMask;
-    public LayerMask groundMask;
+    //public LayerMask groundMask;
 
     public bool canSeePlayer;
     public bool takeAction;
     public bool isShooting;
 
-    public bool patrol;
+    //public bool patrol;
     public bool patrolDestSet;
     public Vector3 patrolDest;
     public Transform[] waypoints;
@@ -58,7 +58,7 @@ public class EnemyAI : MonoBehaviour
     private void Awake()
     {
         
-        patrol = false;
+        //patrol = false;
         agent = GetComponent<NavMeshAgent>();
         //material = GetComponentInChildren<MeshRenderer>().material;
     }
@@ -133,6 +133,8 @@ public class EnemyAI : MonoBehaviour
             gameObject.SetActive(false);
             //ragdoll.ActivateRagdoll();
         }
+
+        //Animacje!!!
         if (isShooting)
         {
             animator.SetBool("isShooting", true);
@@ -144,7 +146,7 @@ public class EnemyAI : MonoBehaviour
         }
 
         animator.SetFloat("EnemySpeed", agent.velocity.magnitude);
-        Debug.Log("enemyHP " + currentHealth);
+        //Debug.Log("enemyHP " + currentHealth);
         float distanceToTarget = Vector3.Distance(transform.position, playerRef.transform.position);
 //        Debug.Log(distanceToTarget);
         if (canSeePlayer)
@@ -221,7 +223,7 @@ public class EnemyAI : MonoBehaviour
 
 
 
-        currentHealth += Time.deltaTime * healingRate;
+        //currentHealth += Time.deltaTime * healingRate;
     }
 
 
@@ -276,7 +278,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    public void RandomNavmeshLocation(float radius)
+/*    public void RandomNavmeshLocation(float radius)
     {
         Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
         randomDirection += transform.position;
@@ -289,9 +291,11 @@ public class EnemyAI : MonoBehaviour
         
         patrolDest =  finalPosition;
         patrolDestSet = true;
-    }
+    }*/
 
-    private void NewPosition()
+
+    //old random patrol
+    /*private void NewPosition()
     {
         float agentX = transform.position.x;
         float agentZ = transform.position.z;
@@ -332,7 +336,7 @@ public class EnemyAI : MonoBehaviour
         }
 
 
-        /*if (patrolDestSet)
+        *//*if (patrolDestSet)
         {
             Debug.Log("set dest");
             agent.SetDestination(patrolDest);
@@ -343,10 +347,10 @@ public class EnemyAI : MonoBehaviour
                 Debug.Log("arrived");
                 patrolDestSet = false;
             }
-        }*/
+        }*//*
 
         
-    }
+    }*/
 
     /*private IEnumerator PatrolRoutine()
     {
@@ -367,7 +371,7 @@ public class EnemyAI : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        Debug.Log(currentHealth);
+        //Debug.Log(currentHealth);
     }
 
     /*public void SetColor(Color color)

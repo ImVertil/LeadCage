@@ -8,7 +8,6 @@ public class Health : MonoBehaviour
     public TextMeshProUGUI healthText;
     [SerializeField] float healthSet;
     public float health;
-    // Start is called before the first frame update
     void Start()
     {
         health = healthSet;
@@ -29,7 +28,7 @@ public class Health : MonoBehaviour
         if (health > 0)
         {
             health -= damage;
-            healthText.text = health.ToString();
+            healthText.text = "HP: " + health.ToString();
 
         }
         
