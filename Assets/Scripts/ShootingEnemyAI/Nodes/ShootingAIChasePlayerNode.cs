@@ -36,17 +36,31 @@ public class ShootingAIChasePlayerNode : Node
         }*/
 
         float distance = Vector3.Distance(target.position, agent.transform.position);
-        if (distance > 0.5f)
+
+        if (distance < 0.5f && ai.canSeePlayer)
+        {
+            agent.isStopped = true;
+            return NodeState.SUCCESS;
+        }
+        else
         {
             ai.isShooting = false;
             agent.isStopped = false;
             agent.SetDestination(target.position);
             return NodeState.RUNNING;
         }
-        else
+
+        /*if (distance > 0.5f)
+        {
+            ai.isShooting = false;
+            agent.isStopped = false;
+            agent.SetDestination(target.position);
+            return NodeState.RUNNING;
+        }
+        else if (distance < 1.5f && ai.canSeePlayer)
         {
             agent.isStopped = true;
             return NodeState.SUCCESS;
-        }
+        }*/
     }
 }
