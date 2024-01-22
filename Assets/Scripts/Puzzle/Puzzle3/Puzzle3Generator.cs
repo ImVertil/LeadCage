@@ -76,11 +76,15 @@ public class Puzzle3Generator : MonoBehaviour, IInteractable
     {
         if(_part1done.Count == _amountOfShields && _part2done.Count == _amountOfPipes)
         {
-            Debug.Log("ON");
+            gameObject.tag = Tags.UNTAGGED;
+            LightManager.Instance.TurnOnLightsGlobal();
+            InteractionManager.Instance.InfoText.SetText("The generator has been powered on.");
+            StartCoroutine(TextManager.WaitAndClearInfoText());
         }
         else
         {
-            Debug.Log("OFF");
+            InteractionManager.Instance.InfoText.SetText("Nothing happened. There's still something to do.");
+            StartCoroutine(TextManager.WaitAndClearInfoText());
         }
     }
 

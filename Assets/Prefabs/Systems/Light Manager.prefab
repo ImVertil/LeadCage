@@ -46,8 +46,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _alarmMatOn: {fileID: 2100000, guid: 2bb8ea045cad3364392e3e7db1065f05, type: 2}
   _alarmMatOff: {fileID: 2100000, guid: c851ca3b9eafb2f4c91a5e9b9a525736, type: 2}
-  _alarms: {fileID: 0}
   _lightsMatOn: {fileID: 2100000, guid: 079933812fe10c14b83a2806c8f3c674, type: 2}
   _lightsMatOff: {fileID: 2100000, guid: 644b419609379ac4a9056dd258e3d529, type: 2}
+  _alarms:
+  - {fileID: 0}
+  - {fileID: 0}
   _lights:
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _lightPrefabs: []
