@@ -39,7 +39,7 @@ public class DragObject : MonoBehaviour
         // snap the cable to the slot if there's no other cable connected, otherwise snap back to initial position
         if (_snapTo != null && !_snapTo.GetComponent<CableSlot>().isCableConnected)
         {
-            switch(Math.Abs(transform.root.eulerAngles.y)) // the Y rotation of the root component
+            switch (Math.Abs(transform.root.eulerAngles.y)) // the Y rotation of the root component
             {
                 case 0:
                 case 180:
@@ -64,7 +64,7 @@ public class DragObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        Debug.Log(collider.gameObject.name);
+        //Debug.Log(collider.gameObject.name);
         _snapTo = collider.gameObject;
     }
 
