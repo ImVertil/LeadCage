@@ -46,8 +46,8 @@ public class ShootingEnemyAI : MonoBehaviour
 
     private void Awake()
     {
-        
         agent = GetComponent<NavMeshAgent>();
+        PuzzleEvents.GeneratorActivated += DisableEnemy;
     }
 
     private void Start()
@@ -191,4 +191,6 @@ public class ShootingEnemyAI : MonoBehaviour
             //Debug.Log("---I CAN'T SEE---");
         }
     }
+
+    public void DisableEnemy() => gameObject.SetActive(false);
 }

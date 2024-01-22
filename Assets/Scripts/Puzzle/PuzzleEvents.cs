@@ -12,6 +12,7 @@ public class PuzzleEvents
     // PUZZLE 3
     public static Action<Puzzle3Lever> GeneratorShieldStatusChanged;
     public static Action<Puzzle3Valve> GeneratorPipeStatusChanged;
+    public static Action GeneratorActivated;
 
     public static void OnDoorCableChanged(Cable c)
     {
@@ -31,5 +32,10 @@ public class PuzzleEvents
     public static void OnGeneratorPipeStatusChanged(Puzzle3Valve completed)
     {
         GeneratorPipeStatusChanged?.Invoke(completed);
+    }
+
+    public static void OnGeneratorActivated()
+    {
+        GeneratorActivated?.Invoke();
     }
 }
