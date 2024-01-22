@@ -89,6 +89,5 @@ public enum StoryValue
     None,
     HasScrewdriver,
     HasWrench,
-    ReachedMagazineArea, 
-    KilledX              
+    HasOfficeKeycard           
 }

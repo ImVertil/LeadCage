@@ -4,41 +4,58 @@ using UnityEngine;
 
 public class Door : MonoBehaviour 
 {
-    private int trDoorOpen = Animator.StringToHash("DoorOpen");
-    private int trDoorClose = Animator.StringToHash("DoorClose");
-    private Animator animator;
-    private AudioSource audioSource;
+    private int _trDoorOpen = Animator.StringToHash("DoorOpen");
+    private int _trDoorClose = Animator.StringToHash("DoorClose");
+    private Animator _animator;
+    private AudioSource _audioSource;
+    private bool _isOpen;
 
 	void Start() 
     {
-        animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
+        _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
 	}
 
 
 	void OnTriggerEnter(Collider c) 
     {
-        openDoor(c);
+        if(c.tag.Equals(Tags.PLAYER))
+        {
+            if (_isOpen)
+            {
+                StopAllCoroutines();
+            }
+            else
+            {
+                OpenDoor();
+            }
+        }
     }
 
 	void OnTriggerExit(Collider c) 
     {
-        closeDoor(c);
+        if(c.tag.Equals(Tags.PLAYER))
+        {
+            StartCoroutine(Test());
+        }
 	}
 
-    public void openDoor(Collider c) 
+    public void OpenDoor() 
     {
-        if (c.tag.Equals("GameController")) {
-            audioSource.Play();
-            animator.SetTrigger(trDoorOpen);
-
-        }
+        _isOpen = true;
+        _audioSource.Play();
+        _animator.SetTrigger(_trDoorOpen);
     }
 
-    public void closeDoor(Collider c) {
-        if (c.tag.Equals("GameController")) {
-            audioSource.Play();
-            animator.SetTrigger(trDoorClose);
-        }
+    public void CloseDoor() {
+        _isOpen = false;
+        _audioSource.Play();
+        _animator.SetTrigger(_trDoorClose);
+    }
+
+    private IEnumerator Test()
+    {
+        yield return new WaitForSeconds(2);
+        CloseDoor();
     }
 }
