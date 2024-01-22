@@ -2265,7 +2265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chasingRange: 22
-  shootingRange: 8
+  shootingRange: 12
   playerTransform: {fileID: 0}
   playerRef: {fileID: 0}
   isShooting: 0
