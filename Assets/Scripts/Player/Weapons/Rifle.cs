@@ -94,8 +94,9 @@ public class Rifle : MonoBehaviour, Gun {
                 enemyHealth.TakeDamage(damage);
             }
 
-            var obj = Instantiate(BulletHolePrefab, hit.point, Quaternion.LookRotation(hit.normal));
-            obj.transform.position += obj.transform.forward/1000f;
+            // to be replaced
+            //var obj = Instantiate(BulletHolePrefab, hit.point, Quaternion.LookRotation(hit.normal));
+            //obj.transform.position += obj.transform.forward/1000f;
         }
 
         GunPlayEvents.GunRecoil(_recoilX, _recoilY, _recoilZ);

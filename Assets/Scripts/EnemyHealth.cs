@@ -5,8 +5,10 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     private float _timer;
-    private float _regenerationRate;
-    [SerializeField] private float _health;
+    [SerializeField] private float _regenerationRate = 2;
+    [SerializeField] private float _maxHealth = 100;
+
+    private float _health;
     private MeleeEnemyAI meleeEnemy;
     private ShootingEnemyAI shootingEnemy;
 
@@ -15,8 +17,7 @@ public class EnemyHealth : MonoBehaviour
     {
         meleeEnemy = GetComponent<MeleeEnemyAI>();
         shootingEnemy = GetComponent<ShootingEnemyAI>();
-        _regenerationRate = 2;
-        _health = 200;
+        _health = _maxHealth;
     }
 
 
@@ -25,7 +26,7 @@ public class EnemyHealth : MonoBehaviour
     {
         if(meleeEnemy != null)
         {
-            if (_health < 200 && meleeEnemy.takeAction == false) {
+            if (_health < _maxHealth && meleeEnemy.takeAction == false) {
                 _timer += Time.deltaTime;
                 if (_timer >= 2f / _regenerationRate)
                 {
@@ -37,7 +38,7 @@ public class EnemyHealth : MonoBehaviour
             
         } else if (shootingEnemy != null)
         {
-            if (_health < 200 && shootingEnemy.takeAction == false)
+            if (_health < _maxHealth && shootingEnemy.takeAction == false)
             {
                 _timer += Time.deltaTime;
                 if (_timer >= 2f / _regenerationRate)
