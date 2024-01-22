@@ -87,6 +87,7 @@ public class Puzzle3Generator : MonoBehaviour, IInteractable
             {
                 door.GetComponentInChildren<DoorScript>().OpenDoor();
             }
+            PuzzleEvents.OnGeneratorActivated();
         }
         else
         {

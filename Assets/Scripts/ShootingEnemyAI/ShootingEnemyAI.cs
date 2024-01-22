@@ -32,6 +32,10 @@ public class ShootingEnemyAI : MonoBehaviour
     public Transform[] waypoints;
     int waypointIndex;
 
+    //Keycard
+    [SerializeField] private bool _doesDropItemOnDeath;
+    [SerializeField] private GameObject _dropPrefab;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -191,5 +195,12 @@ public class ShootingEnemyAI : MonoBehaviour
         //Debug.Log(canSeePlayer);
     }
 
-    public void DisableEnemy() => gameObject.SetActive(false);
+    public void DisableEnemy()
+    {
+        if(_doesDropItemOnDeath && _dropPrefab != null)
+        {
+            Instantiate(_dropPrefab, gameObject.transform.position, gameObject.transform.rotation);
+        }
+        gameObject.SetActive(false);
+    }
 }
