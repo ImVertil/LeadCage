@@ -9,7 +9,7 @@ public class Shooting : MonoBehaviour
     [SerializeField] public Projectile projectilePrefab;
     [SerializeField] public Transform spawnPoint;
     [SerializeField] public bool shoot = true;
-    private float _firerate = 10f;
+    [SerializeField] private float _firerate = 10f;
     private float _timer;
     private Transform _enemyTransform;
     private ProjectileSpawner projectileSpawner;
