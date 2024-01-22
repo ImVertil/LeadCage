@@ -5,10 +5,6 @@ using UnityEngine.AI;
 
 public class ShootingEnemyAI : MonoBehaviour
 {
-    //[SerializeField] private float startingHealth;
-    //[SerializeField] private float lowHealthThreshold;
-    //[SerializeField] private float healthRestoreRate;
-
     [SerializeField] private float chasingRange;
     [SerializeField] private float shootingRange;
 
@@ -18,7 +14,6 @@ public class ShootingEnemyAI : MonoBehaviour
     private Node topNode;
     Animator animator;
     public bool isShooting;
-    //ShootingTest shootingTest;
     Shooting shootingTest;
 
     //FOV
@@ -37,13 +32,6 @@ public class ShootingEnemyAI : MonoBehaviour
     public Transform[] waypoints;
     int waypointIndex;
 
-    private float _currentHealth;
-/*    public float currentHealth
-    {
-        get { return _currentHealth; }
-        set { _currentHealth = Mathf.Clamp(value, 0, startingHealth); }
-    }*/
-
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -52,12 +40,10 @@ public class ShootingEnemyAI : MonoBehaviour
 
     private void Start()
     {
-        //shootingTest = GetComponent<ShootingTest>();
         shootingTest = GetComponent<Shooting>();
         playerRef = playerTransform.gameObject;
         UpdateDest();
         StartCoroutine(ShootingFOVRoutine());
-        //_currentHealth = startingHealth;
         ConstructBehahaviourTree();
         takeAction = false;
         animator = GetComponent<Animator>();
@@ -70,7 +56,6 @@ public class ShootingEnemyAI : MonoBehaviour
         {
             animator.SetBool("isShooting", true);
             shootingTest.shoot = true;
-            //Debug.Log(isShooting);
         }
         else
         {
@@ -81,11 +66,14 @@ public class ShootingEnemyAI : MonoBehaviour
         animator.SetFloat("EnemySpeed", agent.velocity.magnitude);
 
 
-        //Rozpoczecie ataku w momencie zobaczenia gracza(jesli bedzie czas, zamienic na maszyne stanowa)
+        //Rozpoczecie ataku w momencie zobaczenia gracza
         if (canSeePlayer)
         {
             takeAction = true;
         }
+
+        
+        
 
         if (takeAction)
         {
@@ -105,20 +93,38 @@ public class ShootingEnemyAI : MonoBehaviour
 
 
         //Przejscie do kolejnego punktu patrolu
-        if (takeAction == false && Vector3.Distance(transform.position, patrolDest) < 2)
+        if (waypoints.Length > 1)
         {
-            NextWaypoint();
-            UpdateDest();
+            if (takeAction == false && Vector3.Distance(transform.position, patrolDest) < 2)
+            {
+                NextWaypoint();
+                UpdateDest();
 
+            }
         }
+        else if (waypoints.Length == 1)
+        {
+            if (takeAction == false && Vector3.Distance(transform.position, patrolDest) < 2)
+            {
+                agent.isStopped = true;
+            }
+            else if (takeAction == true)
+            {
+                agent.isStopped = false;
+            }
+        }
+
+
+        
     }
-    //AttackRangeNode shootingRangeNode = new AttackRangeNode(shootingRange, playerTransform, transform, this);
+
     //Drzewo behawioralne
     private void ConstructBehahaviourTree()
     {
         ShootingAIChasePlayerNode chaseNode = new ShootingAIChasePlayerNode(playerTransform, agent, this);
         BasicRangeNode chasingRangeNode = new BasicRangeNode(chasingRange, playerTransform, transform);
-        BasicRangeNode shootingRangeNode = new BasicRangeNode(shootingRange, playerTransform, transform);
+        //BasicRangeNode shootingRangeNode = new BasicRangeNode(shootingRange, playerTransform, transform);
+        AttackRangeNode shootingRangeNode = new AttackRangeNode(shootingRange, playerTransform, transform, this, obstructionMask);
 
 
         ShootingAIAttackNode attackNode = new ShootingAIAttackNode(agent, this, playerTransform);
@@ -182,14 +188,7 @@ public class ShootingEnemyAI : MonoBehaviour
         else if (canSeePlayer)
             canSeePlayer = false;
 
-        if (canSeePlayer)
-        {
-            //Debug.Log("+++I CAN SEE+++");
-        }
-        else
-        {
-            //Debug.Log("---I CAN'T SEE---");
-        }
+        //Debug.Log(canSeePlayer);
     }
 
     public void DisableEnemy() => gameObject.SetActive(false);

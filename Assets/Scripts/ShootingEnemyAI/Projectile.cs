@@ -9,8 +9,6 @@ public class Projectile : MonoBehaviour
     private ObjectPool<Projectile> _pool;
     [SerializeField] private float _destroyTime = 2f;
     [SerializeField] private float _velocity = 20f;
-
-    //private Coroutine deactivateProjectileAfterTimeCoroutine;
     private Collider _collider;
     private MeshRenderer _mr;
 
@@ -23,7 +21,6 @@ public class Projectile : MonoBehaviour
 
     private void OnEnable()
     {
-        //deactivateProjectileAfterTimeCoroutine = StartCoroutine(DeactivateProjectileAfterTime());
         _mr.enabled = true;
         _collider.enabled = true;
         StartCoroutine(DeactivateProjectileAfterTime());
@@ -46,7 +43,6 @@ public class Projectile : MonoBehaviour
             }
 
         }
-        //_pool.Release(this);
         _mr.enabled = false;
         _collider.enabled = false;
     }
@@ -55,43 +51,7 @@ public class Projectile : MonoBehaviour
 
     private IEnumerator DeactivateProjectileAfterTime()
     {
-        //float timePassed = 0f;
-        /*while(timePassed < _destroyTime)
-        {
-            timePassed += Time.deltaTime;
-            yield return null;
-        }*/
         yield return new WaitForSeconds(_destroyTime);
         _pool.Release(this);
     }
-
-
-    /*public void Init(Vector3 direction, ObjectPool<Projectile> pool)
-    {
-        transform.forward = direction;
-        _pool = pool;
-        gameObject.SetActive(true);
-        
-    }
-
-    private void Update()
-    {
-        transform.position += transform.forward * 10 * Time.deltaTime;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.CompareTag("Player") || collision.gameObject.layer == 8)
-        {
-            Health playerH = collision.transform.GetComponent<Health>();
-            if (playerH != null)
-            {
-                playerH.TakeDamage(10f);
-            }
-            
-        }
-        Destroy();
-    }
-
-    private void Destroy() => _pool.Release(this);*/
 }

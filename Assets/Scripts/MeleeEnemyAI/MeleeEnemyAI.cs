@@ -5,10 +5,6 @@ using UnityEngine.AI;
 
 public class MeleeEnemyAI : MonoBehaviour
 {
-    //[SerializeField] private float startingHealth;
-    //[SerializeField] private float lowHealthThreshold;
-    //[SerializeField] private float healthRestoreRate;
-
     [SerializeField] private float chasingRange;
     [SerializeField] private float shootingRange;
 
@@ -35,13 +31,6 @@ public class MeleeEnemyAI : MonoBehaviour
     public Transform[] waypoints;
     int waypointIndex;
 
-    private float _currentHealth;
-/*    public float currentHealth
-    {
-        get { return _currentHealth; }
-        set { _currentHealth = Mathf.Clamp(value, 0, startingHealth); }
-    }*/
-
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -52,7 +41,6 @@ public class MeleeEnemyAI : MonoBehaviour
         playerRef = playerTransform.gameObject;
         UpdateDest();
         StartCoroutine(MeleegFOVRoutine());
-        //_currentHealth = startingHealth;
         ConstructBehahaviourTree();
         takeAction = false;
         animator = GetComponent<Animator>();
@@ -60,13 +48,10 @@ public class MeleeEnemyAI : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log(canSeePlayer);
-        //Debug.Log(takeAction);
         //Animacje
         if (isShooting)
         {
             animator.SetBool("isAttacking", true);
-            //Debug.Log(isShooting);
         }
         else
         {
@@ -100,9 +85,8 @@ public class MeleeEnemyAI : MonoBehaviour
 
 
         //Przejscie do kolejnego punktu patrolu
-        if (takeAction == false /*&& Vector3.Distance(transform.position, patrolDest) < 2*/)
+        if (takeAction == false)
         {
-            //NextWaypoint();
             UpdateDest();
 
         }
@@ -115,19 +99,18 @@ public class MeleeEnemyAI : MonoBehaviour
             agent.isStopped = false;
         }
     }
-    //AttackRangeNode shootingRangeNode = new AttackRangeNode(shootingRange, playerTransform, transform, this);
     //Drzewo behawioralne
     private void ConstructBehahaviourTree()
     {
         ChasePlayerNode chaseNode = new ChasePlayerNode(playerTransform, agent, this);
         BasicRangeNode chasingRangeNode = new BasicRangeNode(chasingRange, playerTransform, transform);
-        BasicRangeNode shootingRangeNode = new BasicRangeNode(shootingRange, playerTransform, transform);
+        BasicRangeNode attackRangeNode = new BasicRangeNode(shootingRange, playerTransform, transform);
 
         
         AttackNode attackNode = new AttackNode(agent, this, playerTransform);
 
         Sequence chaseSequence = new Sequence(new List<Node> { chasingRangeNode, chaseNode });
-        Sequence shootSequence = new Sequence(new List<Node> { shootingRangeNode, attackNode });
+        Sequence shootSequence = new Sequence(new List<Node> { attackRangeNode, attackNode });
 
         topNode = new Selector(new List<Node> {shootSequence, chaseSequence });
     }
@@ -185,15 +168,6 @@ public class MeleeEnemyAI : MonoBehaviour
         }
         else if (canSeePlayer)
             canSeePlayer = false;
-
-        if (canSeePlayer)
-        {
-            //Debug.Log("+++I CAN SEE+++");
-        }
-        else
-        {
-            //Debug.Log("---I CAN'T SEE---");
-        }
     }
 
 }
