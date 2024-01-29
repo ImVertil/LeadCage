@@ -1,0 +1,15 @@
+public static class Controls
+{
+    public const string HORIZONTAL = "Horizontal";
+    public const string VERTICAL = "Vertical";
+    public const string JUMP = "Jump";
+    public const string MOUSEX = "Mouse X";
+    public const string MOUSEY = "Mouse Y";
+    public const string SPRINT = "Sprint";
+    public const string CROUCH = "Crouch";
+    public const string FIRE = "Fire1";
+    public const string INTERACT = "Interact";
+    public const string INVENTORY = "Inventory";
+    public const string WEAPON = "Weapon";
+    public const string AIM = "Aim";
+}
