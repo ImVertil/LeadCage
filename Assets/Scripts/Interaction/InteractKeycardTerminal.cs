@@ -70,8 +70,8 @@ public class InteractKeycardTerminal : MonoBehaviour, IInteractable
         yield return null; // this is so the animator state info actually updates properly next frame
         yield return new WaitForSeconds(_keycardTerminalAnimator.GetCurrentAnimatorStateInfo(0).length);
 
-        SoundManager.Instance.PlaySound(Sound.KeypadPress, transform, false);
-        yield return new WaitForSeconds(SoundManager.Instance.GetAudioClip(Sound.KeypadPress).length);
+        SoundManager.Instance.PlaySound(Sound.Keycard, transform, false);
+        yield return new WaitForSeconds(SoundManager.Instance.GetAudioClip(Sound.Keycard).length);
 
         _keycardTerminalAnimator.Play(Animator.StringToHash("KeycardAnimR"));
         _doorScript.OpenDoor();
