@@ -32,8 +32,10 @@ public class InteractVent : MonoBehaviour, IInteractable
             gameObject.SetActive(false);
         else
         {
-            InteractionManager.Instance.InfoText.SetText($"You are missing a Wrench");
-            StartCoroutine(TextManager.WaitAndClearInfoText());
+            //InteractionManager.Instance.InfoText.SetText($"You are missing a Wrench");
+            TextManager.SetInfoText("You are missing a Wrench");
+            //StartCoroutine(TextManager.WaitAndClearInfoText());
+            //TextManager.ClearInfoText();
         }
     }
 

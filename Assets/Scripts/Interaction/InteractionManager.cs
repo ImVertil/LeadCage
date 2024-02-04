@@ -100,6 +100,7 @@ public class InteractionManager : MonoBehaviour
         Instance = this;
         _mainCamera = Camera.main;
         InputManager.current.InteractAction.performed += OnInteract;
+        InfoText.color = new Color(255, 255, 255, 0);
     }
 
     private void Update()
