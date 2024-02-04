@@ -75,7 +75,7 @@ public class Puzzle3Valve : MonoBehaviour
             gameObject.tag = Tags.UNTAGGED;
             
             var randPitch = UnityEngine.Random.Range(0.8f, 1f);
-            SoundManager.Instance.PlaySound(Sound.Countdown, transform, false, null, randPitch);
+            SoundManager.Instance.PlaySound(Sound.Valve_Squeak, transform, false, null, randPitch);
 
             _smokeParticles.Stop();
             _sizeOverLifetimeModule.size = GetCurveFromState(_currentState);
