@@ -40,16 +40,14 @@ public class SoundManager : MonoBehaviour
         {
             _oneShotSoundObject = new GameObject("Sound (One Shot)");
             _bgmSoundObject = new GameObject("Sound (BGM)");
-            // delete later if not needed
             AudioSource as1 = _oneShotSoundObject.AddComponent<AudioSource>();
             AudioSource as2 = _bgmSoundObject.AddComponent<AudioSource>();
-            //_oneShotSoundObject.AddComponent<VolumeHandler>();
+            as1.bypassReverbZones = true;
+            as2.bypassReverbZones = true;
         }
     }
 
-    /* TODO:
-     * - Make PlaySoundEffect and PlayMusic to avoid problems with getting the sound type etc. while changing the volume
-     */
+    // PlaySound - this one spawns the sound object on the transform and plays the sound with given additional parameters
     public void PlaySound(Sound sound, Transform transform, bool loop, float? spatial=null, float? pitch=null) // if loop is set to true remember to use StopSound to turn the clip off
     {
         GameObject soundObject = _pool.Get();
@@ -67,6 +65,7 @@ public class SoundManager : MonoBehaviour
             StartCoroutine(WaitAndRelease(soundObject, audioSource.clip.length));
     }
 
+    // PlaySound - this one plays the sound as OneShot object (use for 2D space)
     public void PlaySound(Sound sound)
     {
         AudioSource audioSource = _oneShotSoundObject.GetComponent<AudioSource>();
@@ -76,6 +75,7 @@ public class SoundManager : MonoBehaviour
         audioSource.PlayOneShot(clip);
     }
 
+    // PlayMusic - plays a looped sound in the background (use for BGM)
     public void PlayMusic(Sound sound)
     {
         AudioSource audioSource = _bgmSoundObject.GetComponent<AudioSource>();
@@ -86,7 +86,8 @@ public class SoundManager : MonoBehaviour
         audioSource.Play();
         //StartCoroutine(SmoothMusicChange(2));
     }
-
+    
+    // StopSound - stops all instances of a sound on given transform
     public void StopSound(Sound sound, Transform transform) 
     {
         AudioSource[] audioSources = transform.GetComponentsInChildren<AudioSource>();
@@ -144,6 +145,7 @@ public class SoundManager : MonoBehaviour
         _pool.Release(obj);
     }
 
+    // draft
     private IEnumerator SmoothMusicChange(float time)
     {
         AudioSource audioSource = _bgmSoundObject.GetComponent<AudioSource>();
