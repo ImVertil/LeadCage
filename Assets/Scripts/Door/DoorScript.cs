@@ -13,7 +13,8 @@ public class DoorScript : MonoBehaviour, IInteractable
     void Start()
     {
         _animator = GetComponentInParent<Animator>();
-        _audioSource = GetComponentInParent<AudioSource>();
+        //_audioSource = GetComponentInParent<AudioSource>();
+        _audioSource = gameObject.transform.parent.GetComponentInChildren<AudioSource>();
     }
 
     public void OnEndLook()
