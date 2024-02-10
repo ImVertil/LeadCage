@@ -31,12 +31,12 @@ public class Puzzle3Generator : MonoBehaviour, IInteractable
 
     public void OnStartLook()
     {
-        InteractionManager.Instance.InteractionText.SetText($"Press [E] to turn on the generator");
+        InteractionManager.Instance.SetInteractionText($"Press [E] to turn on the generator");
     }
 
     public void OnEndLook()
     {
-        InteractionManager.Instance.InteractionText.SetText($"");
+        InteractionManager.Instance.SetInteractionText($"");
     }
 
     public void OnInteract(InputAction.CallbackContext ctx) => ActivateGenerator();
@@ -81,8 +81,8 @@ public class Puzzle3Generator : MonoBehaviour, IInteractable
         {
             gameObject.tag = Tags.UNTAGGED;
             LightManager.Instance.TurnOnLightsGlobal();
-            InteractionManager.Instance.InfoText.SetText("The generator has been powered on. Find a way to escape the station.");
-            StartCoroutine(TextManager.WaitAndClearInfoText());
+            InteractionManager.Instance.SetInfoText("The generator has been powered on. Find a way to escape the station.");
+            
             foreach(var door in _doorsToOpen)
             {
                 door.GetComponentInChildren<DoorScript>().OpenDoor();
@@ -91,8 +91,8 @@ public class Puzzle3Generator : MonoBehaviour, IInteractable
         }
         else
         {
-            InteractionManager.Instance.InfoText.SetText("Nothing happened. There's still something to do.");
-            StartCoroutine(TextManager.WaitAndClearInfoText());
+            InteractionManager.Instance.SetInfoText("Nothing happened. There's still something to do.");
+            
         }
     }
 

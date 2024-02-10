@@ -30,8 +30,8 @@ public class Puzzle3Valve : MonoBehaviour
         int nextState = (int)_currentState + (direction * (reverse ? -1 : 1));
         if (nextState < 0 || nextState >= Enum.GetNames(typeof(ValveState)).Length)
         {
-            InteractionManager.Instance.InfoText.SetText("It's not going any further than that...");
-            StartCoroutine(TextManager.WaitAndClearInfoText());
+            InteractionManager.Instance.SetInfoText("It's not going any further than that...");
+            
             return;
         }
 
