@@ -29,14 +29,13 @@ public class InteractVent : MonoBehaviour, IInteractable
     public void OnInteract(InputAction.CallbackContext ctx)
     {
         if (IsConditionSatisfied())
-            gameObject.SetActive(false);
+        {
+            LeanTween.rotateZ(gameObject, 0, 2f)
+                .setEase(LeanTweenType.easeInQuad);
+        }
         else
         {
-            //InteractionManager.Instance.SetInfoText($"You are missing a Wrench");
-            //TextManager.Instance.SetInfoText("You are missing a Wrench");
             InteractionManager.Instance.SetInfoText($"You are missing a Wrench");
-            //
-            //TextManager.ClearInfoText();
         }
     }
 
