@@ -19,14 +19,14 @@ public class InteractPickup : MonoBehaviour, IInteractable
     public void OnStartLook()
     {
         //interactionUIText.SetText($"Pick up {item.itemName}");
-        InteractionManager.Instance.InteractionText.SetText($"Press [E] to pick up {item.itemName}");
+        InteractionManager.Instance.SetInteractionText($"Press [E] to pick up {item.itemName}");
         _outline.enabled = true;
     }
 
     public void OnEndLook()
     {
         //interactionUIText.SetText("");
-        InteractionManager.Instance.InteractionText.SetText("");
+        InteractionManager.Instance.SetInteractionText("");
         _outline.enabled = false;
     }
 

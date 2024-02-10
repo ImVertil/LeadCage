@@ -24,13 +24,13 @@ public class InteractKeycardTerminal : MonoBehaviour, IInteractable
 
     public void OnStartLook()
     {
-        InteractionManager.Instance.InteractionText.SetText($"Press [E] to open the doors");
+        InteractionManager.Instance.SetInteractionText($"Press [E] to open the doors");
         _outline.enabled = true;
     }
 
     public void OnEndLook()
     {
-        InteractionManager.Instance.InteractionText.SetText("");
+        InteractionManager.Instance.SetInteractionText("");
         _outline.enabled = false;
     }
 
@@ -55,8 +55,8 @@ public class InteractKeycardTerminal : MonoBehaviour, IInteractable
         }
         else
         {
-            InteractionManager.Instance.InfoText.SetText("You don't have a valid keycard");
-            StartCoroutine(TextManager.WaitAndClearInfoText());
+            InteractionManager.Instance.SetInfoText("You don't have a valid keycard");
+            
         }
     }
 

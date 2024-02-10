@@ -14,19 +14,19 @@ public class InteractShip : MonoBehaviour, IInteractable
 
     public void OnStartLook()
     {
-        InteractionManager.Instance.InteractionText.SetText($"Press [E] to escape.");
+        InteractionManager.Instance.SetInteractionText($"Press [E] to escape.");
         _outline.enabled = true;
     }
 
     public void OnEndLook()
     {
-        InteractionManager.Instance.InteractionText.SetText("");
+        InteractionManager.Instance.SetInteractionText("");
         _outline.enabled = false;
     }
 
     public void OnInteract(InputAction.CallbackContext ctx)
     {
-        InteractionManager.Instance.InfoText.SetText("Well... There was supposed to be an ending scene but... it is what it is. Anyways, you have completed the game! Now ALT + F4 :)");
+        InteractionManager.Instance.SetInfoText("Well... There was supposed to be an ending scene but... it is what it is. Anyways, you have completed the game! Now ALT + F4 :)");
     }
 
 }

@@ -17,13 +17,13 @@ public class PuzzleOpenInteract : MonoBehaviour, IInteractable
     public void OnStartLook()
     {
         _outline.enabled = true;
-        InteractionManager.Instance.InteractionText.SetText("Press [E] to open the electrical box");
+        InteractionManager.Instance.SetInteractionText("Press [E] to open the electrical box");
     }
 
     public void OnEndLook()
     {
         _outline.enabled = false;
-        InteractionManager.Instance.InteractionText.SetText("");
+        InteractionManager.Instance.SetInteractionText("");
     }
 
     public void OnInteract(InputAction.CallbackContext ctx)
@@ -35,8 +35,8 @@ public class PuzzleOpenInteract : MonoBehaviour, IInteractable
         }
         else
         {
-            InteractionManager.Instance.InfoText.SetText("Missing an item: Screwdriver");
-            StartCoroutine(TextManager.WaitAndClearInfoText());
+            InteractionManager.Instance.SetInfoText("Missing an item: Screwdriver");
+            
         }
     }
 
