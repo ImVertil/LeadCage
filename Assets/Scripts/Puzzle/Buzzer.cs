@@ -9,10 +9,13 @@ public class Buzzer : MonoBehaviour
     [SerializeField] private Material _greenMatOn;
     [SerializeField] private Material _redMatOff;
     [SerializeField] private Material _redMatOn;
+
+    // names are leftovers from previous idea
     [SerializeField] private Cable _doorCable;
     [SerializeField] private Cable _doorLockCable;
     [SerializeField] private Cable _terminalCable;
     [SerializeField] private Cable _lightCable;
+    [SerializeField] private Cable _redCable;
 
     private Dictionary<Cable, float> _correctVoltages;
     private Dictionary<Cable, bool> _buzzers;
@@ -23,10 +26,11 @@ public class Buzzer : MonoBehaviour
     {
         _correctVoltages = new Dictionary<Cable, float>()
         {
-            { _doorCable, Puzzle.DOOR_VOLTAGE },
-            { _doorLockCable, Puzzle.DOOR_LOCK_VOLTAGE },
-            { _terminalCable, Puzzle.TERMINAL_VOLTAGE },
-            { _lightCable, Puzzle.LIGHT_VOLTAGE }
+            { _doorCable, Puzzle.ORANGE_CABLE_VOLTAGE },
+            { _doorLockCable, Puzzle.GREEN_CABLE_VOLTAGE },
+            { _terminalCable, Puzzle.BLUE_CABLE_VOLTAGE },
+            { _lightCable, Puzzle.YELLOW_CABLE_VOLTAGE },
+            { _redCable, Puzzle.RED_CABLE_VOLTAGE }
         };
 
         _buzzers = new Dictionary<Cable, bool>()
@@ -34,7 +38,8 @@ public class Buzzer : MonoBehaviour
             { _doorCable, false },
             { _doorLockCable, false },
             { _terminalCable, false },
-            { _lightCable, false }
+            { _lightCable, false },
+            { _redCable, false }
         };
 
         _properlyConnected = new Dictionary<Cable, bool>()
@@ -42,7 +47,8 @@ public class Buzzer : MonoBehaviour
             { _doorCable, false },
             { _doorLockCable, false },
             { _terminalCable, false },
-            { _lightCable, false }
+            { _lightCable, false },
+            { _redCable, false }
         };
 
         Cable.OnCableConnect += CheckForBuzzerActivation;
