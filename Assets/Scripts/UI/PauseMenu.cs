@@ -19,6 +19,8 @@ public class PauseMenu : MonoBehaviour
 
     public void TogglePauseMenu()
     {
+        SoundEvents.GamePaused(!_isPaused);
+
         if (_isPaused)
         {
             Cursor.visible = false;

@@ -45,6 +45,7 @@ public class SoundManager : MonoBehaviour
             as1.bypassReverbZones = true;
             as2.bypassReverbZones = true;
         }
+        SoundEvents.OnGamePaused += ToggleSoundPause;
     }
 
     // PlaySound - this one spawns the sound object on the transform and plays the sound with given additional parameters
@@ -115,6 +116,26 @@ public class SoundManager : MonoBehaviour
             AudioSource audioSource = obj.GetComponent<AudioSource>();
             SoundType type = GetSoundType(audioSource.clip);
             audioSource.volume = (volume / 100f) * (type == SoundType.SFX ? (sfxVolume / 100f) : (ambientVolume / 100f));
+        }
+    }
+
+    public void ToggleSoundPause(bool gamePaused)
+    {
+        if (gamePaused)
+        {
+            _oneShotSoundObject.GetComponent<AudioSource>().Pause();
+            _bgmSoundObject.GetComponent<AudioSource>().Pause();
+
+            foreach (var obj in _activeFromPool)
+                obj.GetComponent<AudioSource>().Pause();
+        }
+        else
+        {
+            _oneShotSoundObject.GetComponent<AudioSource>().UnPause();
+            _bgmSoundObject.GetComponent<AudioSource>().UnPause();
+
+            foreach (var obj in _activeFromPool)
+                obj.GetComponent<AudioSource>().UnPause();
         }
     }
 
