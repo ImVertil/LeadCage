@@ -30,8 +30,11 @@ public class InteractVent : MonoBehaviour, IInteractable
     {
         if (IsConditionSatisfied())
         {
-            LeanTween.rotateZ(gameObject, 0, 2f)
+            LeanTween.rotateZ(gameObject, 0, 0.75f)
                 .setEase(LeanTweenType.easeInQuad);
+
+            gameObject.tag = Tags.UNTAGGED;
+            gameObject.GetComponent<Collider>().enabled = false;
         }
         else
         {

@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,8 +5,6 @@ using UnityEngine.InputSystem;
 public class InteractPickup : MonoBehaviour, IInteractable
 {
     public Item item;
-    public GameObject interactionTextObject;
-    private TMP_Text interactionUIText;
     private Outline _outline;
 
     private void Awake()
