@@ -9,7 +9,6 @@ public class MeleeWrapon : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player") || collision.gameObject.layer == 8)
         {
-            //Debug.Log(collision.gameObject.tag + " + " + collision.gameObject.name);
             Health playerH = collision.transform.GetComponent<Health>();
             if (playerH != null)
             {

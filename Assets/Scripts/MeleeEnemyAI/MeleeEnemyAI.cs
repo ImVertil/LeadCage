@@ -105,9 +105,6 @@ public class MeleeEnemyAI : MonoBehaviour
             Quaternion rotation = Quaternion.LookRotation(currentDirection, Vector3.up);
             transform.rotation = rotation;
 
-        } else if (takeAction == true)
-        {
-            //agent.isStopped = false;
         }
     }
     //Drzewo behawioralne
