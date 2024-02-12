@@ -27,6 +27,7 @@ public class InteractShip : MonoBehaviour, IInteractable
     public void OnInteract(InputAction.CallbackContext ctx)
     {
         InteractionManager.Instance.SetInfoText("Well... There was supposed to be an ending scene but... it is what it is. Anyways, you have completed the game! Now ALT + F4 :)");
+        SceneLoader.Instance.LoadEndScene();
     }
 
 }

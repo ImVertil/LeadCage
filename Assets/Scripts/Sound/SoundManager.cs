@@ -19,7 +19,9 @@ public class SoundManager : MonoBehaviour
         {
             Destroy(this);
         }
+
         SoundEvents.OnVolumeChanged += UpdateSoundVolume;
+        SoundEvents.OnGamePaused += ToggleSoundPause;
     }
     #endregion
     [SerializeField] private int _simultaneousSoundsAmount;
@@ -36,7 +38,8 @@ public class SoundManager : MonoBehaviour
     private void Initialize()
     {
         _pool = new ObjectPool<GameObject>(CreateSoundObject, OnGetSoundObject, OnReturnSoundObject, OnDestroySoundObject, true, _simultaneousSoundsAmount, _simultaneousSoundsAmount + 10);
-        if(_oneShotSoundObject == null)
+
+        if (_oneShotSoundObject == null)
         {
             _oneShotSoundObject = new GameObject("Sound (One Shot)");
             _bgmSoundObject = new GameObject("Sound (BGM)");
@@ -45,7 +48,6 @@ public class SoundManager : MonoBehaviour
             as1.bypassReverbZones = true;
             as2.bypassReverbZones = true;
         }
-        SoundEvents.OnGamePaused += ToggleSoundPause;
     }
 
     // PlaySound - this one spawns the sound object on the transform and plays the sound with given additional parameters
@@ -123,6 +125,7 @@ public class SoundManager : MonoBehaviour
     {
         if (gamePaused)
         {
+
             _oneShotSoundObject.GetComponent<AudioSource>().Pause();
             _bgmSoundObject.GetComponent<AudioSource>().Pause();
 
@@ -137,6 +140,12 @@ public class SoundManager : MonoBehaviour
             foreach (var obj in _activeFromPool)
                 obj.GetComponent<AudioSource>().UnPause();
         }
+    }
+
+    private void OnDestroy()
+    {
+        SoundEvents.OnVolumeChanged -= UpdateSoundVolume;
+        SoundEvents.OnGamePaused -= ToggleSoundPause;
     }
 
     public AudioClip GetAudioClip(Sound sound)
@@ -188,6 +197,7 @@ public class SoundManager : MonoBehaviour
         audioSource.spatialBlend = 1;
         audioSource.dopplerLevel = 0.1f;
         audioSource.volume = volume / 100f;
+        audioSource.bypassReverbZones = true;
         return obj;
     }
 

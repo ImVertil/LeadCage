@@ -8,11 +8,12 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject _pausePanel;
     [SerializeField] private GameObject _backgroundDarken;
     [SerializeField] private GameObject _settingsPanel;
-    private bool _isPaused = false;
+    private bool _isPaused;
 
     private void Start()
     {
         InputManager.current.PauseToggleAction.performed += TogglePauseMenu;
+        _isPaused = false;
     }
 
     public void TogglePauseMenu(InputAction.CallbackContext context) => TogglePauseMenu();
