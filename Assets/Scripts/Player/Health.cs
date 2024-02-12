@@ -7,7 +7,7 @@ public class Health : MonoBehaviour
 {
     public TextMeshProUGUI healthText;
     [SerializeField] float healthSet;
-    public float health;
+    private float health;
     void Start()
     {
         health = healthSet;
