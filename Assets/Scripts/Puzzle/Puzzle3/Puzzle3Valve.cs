@@ -30,8 +30,8 @@ public class Puzzle3Valve : MonoBehaviour
         int nextState = (int)_currentState + (direction * (reverse ? -1 : 1));
         if (nextState < 0 || nextState >= Enum.GetNames(typeof(ValveState)).Length)
         {
-            InteractionManager.Instance.InfoText.SetText("It's not going any further than that...");
-            StartCoroutine(TextManager.WaitAndClearInfoText());
+            InteractionManager.Instance.SetInfoText("It's not going any further than that...");
+            
             return;
         }
 
@@ -75,7 +75,7 @@ public class Puzzle3Valve : MonoBehaviour
             gameObject.tag = Tags.UNTAGGED;
             
             var randPitch = UnityEngine.Random.Range(0.8f, 1f);
-            SoundManager.Instance.PlaySound(Sound.Countdown, transform, false, null, randPitch);
+            SoundManager.Instance.PlaySound(Sound.Valve_Squeak, transform, false, null, randPitch);
 
             _smokeParticles.Stop();
             _sizeOverLifetimeModule.size = GetCurveFromState(_currentState);

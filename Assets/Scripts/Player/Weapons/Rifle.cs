@@ -80,7 +80,8 @@ public class Rifle : MonoBehaviour, Gun {
     public void Shoot()
     {
         //Debug.Log("SHOOOOTOTOTOTOTOTOTTOTO");
-        SoundManager.Instance.PlaySound(Sound.Shoot, transform, false);
+        var randPitch = Random.Range(0.98f, 1.02f);
+        SoundManager.Instance.PlaySound(Sound.Shoot, transform, false, null, randPitch);
         StartCoroutine(Kickback());
 
         RaycastHit hit;
