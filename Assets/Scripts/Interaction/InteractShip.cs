@@ -6,7 +6,7 @@ public class InteractShip : MonoBehaviour, IInteractable
 {
     private Outline _outline;
 
-    void Start() // start because awake doesn't let the outline compute properly
+    void Start()
     {
         _outline = GetComponent<Outline>();
         _outline.enabled = false;
@@ -26,8 +26,9 @@ public class InteractShip : MonoBehaviour, IInteractable
 
     public void OnInteract(InputAction.CallbackContext ctx)
     {
-        InteractionManager.Instance.SetInfoText("Well... There was supposed to be an ending scene but... it is what it is. Anyways, you have completed the game! Now ALT + F4 :)");
-        SceneLoader.Instance.LoadEndScene();
+        //InteractionManager.Instance.SetInfoText("Well... There was supposed to be an ending scene but... it is what it is. Anyways, you have completed the game! Now ALT + F4 :)");
+        //SceneLoader.Instance.LoadEndScene();
+        SceneLoader.Instance.LoadNextScene();
     }
 
 }
