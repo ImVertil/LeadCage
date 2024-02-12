@@ -11,16 +11,7 @@ public class Health : MonoBehaviour
     void Start()
     {
         health = healthSet;
-        healthText.text = "HP: " + health.ToString();
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // @mati nie wiem po co to tu jest ale zakomentuje bo tworzy pierdyliard b³êdów
         //healthText.text = "HP: " + health.ToString();
-
 
     }
 
@@ -28,7 +19,7 @@ public class Health : MonoBehaviour
         if (health > 0)
         {
             health -= damage;
-            healthText.text = "HP: " + health.ToString();
+            //healthText.text = "HP: " + health.ToString();
 
         }
         

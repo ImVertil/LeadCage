@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class ShootingEnemyAI : MonoBehaviour
 {
-    [SerializeField] private float chasingRange;
+    [SerializeField] public float chasingRange;
     [SerializeField] private float shootingRange;
 
     [SerializeField] private Transform playerTransform;
@@ -77,10 +77,6 @@ public class ShootingEnemyAI : MonoBehaviour
         if (canSeePlayer)
         {
             takeAction = true;
-
-            /*if (canSeePlayer && agent.isStopped) {
-                agent.isStopped = false;
-            }*/
         }
 
         
@@ -125,10 +121,6 @@ public class ShootingEnemyAI : MonoBehaviour
                 Quaternion rotation = Quaternion.LookRotation(currentDirection, Vector3.up);
                 transform.rotation = rotation;
             }
-            else if (takeAction == true)
-            {
-                //agent.isStopped = false;
-            }
         }
 
 
@@ -140,9 +132,7 @@ public class ShootingEnemyAI : MonoBehaviour
     {
         ShootingAIChasePlayerNode chaseNode = new ShootingAIChasePlayerNode(playerTransform, agent, this);
         BasicRangeNode chasingRangeNode = new BasicRangeNode(chasingRange, playerTransform, transform);
-        //BasicRangeNode shootingRangeNode = new BasicRangeNode(shootingRange, playerTransform, transform);
         AttackRangeNode shootingRangeNode = new AttackRangeNode(shootingRange, playerTransform, transform, this, obstructionMask);
-
 
         ShootingAIAttackNode attackNode = new ShootingAIAttackNode(agent, this, playerTransform);
 

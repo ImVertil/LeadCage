@@ -18,8 +18,6 @@ public class BasicRangeNode : Node
     public override NodeState Evaluate()
     {
         float distance = Vector3.Distance(target.position, origin.position);
-        //Debug.Log("BasicRangeNode");
-        //Debug.Log(distance <= range ? "SUCCESS" : "FAILURE");
         return distance <= range ? NodeState.SUCCESS : NodeState.FAILURE;
     }
 }
