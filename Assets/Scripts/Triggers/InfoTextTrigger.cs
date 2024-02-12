@@ -9,7 +9,7 @@ public class InfoTextTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!_shownAlready)
+        if(!_shownAlready && other.tag == Tags.PLAYER)
         {
             InteractionManager.Instance.SetInfoText(_textToShow);
             _shownAlready = true;

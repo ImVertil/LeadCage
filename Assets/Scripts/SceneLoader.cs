@@ -47,7 +47,7 @@ public class SceneLoader : MonoBehaviour
             asyncLoad = SceneManager.LoadSceneAsync(nextSceneIndex);
             asyncLoad.allowSceneActivation = false;
 
-            yield return new WaitUntil(() => asyncLoad.progress >= 0.95f);
+            yield return new WaitUntil(() => asyncLoad.progress >= 0.90f);
 
             LeanTween.alpha(_bgDimImage.rectTransform, 255, 3f)
                     .setEase(LeanTweenType.easeInCubic)
