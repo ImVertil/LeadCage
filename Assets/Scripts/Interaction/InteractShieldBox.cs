@@ -20,18 +20,18 @@ public class InteractShieldBox : MonoBehaviour, IInteractable
     public void OnStartLook()
     {
         _outline.enabled = true;
-        InteractionManager.Instance.InteractionText.SetText("Press [E] to interact");
+        InteractionManager.Instance.SetInteractionText("Press [E] to interact");
     }
 
     public void OnEndLook()
     {
         _outline.enabled = false;
-        InteractionManager.Instance.InteractionText.SetText("");
+        InteractionManager.Instance.SetInteractionText("");
     }
 
     public void OnInteract(InputAction.CallbackContext ctx)
     {
-        InteractionManager.Instance.InteractionText.SetText("");
+        InteractionManager.Instance.SetInteractionText("");
         if (_isInteracting)
         {
             _electricalBoxCamera.enabled = false;

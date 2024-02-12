@@ -100,6 +100,7 @@ public class InteractionManager : MonoBehaviour
         Instance = this;
         _mainCamera = Camera.main;
         InputManager.current.InteractAction.performed += OnInteract;
+        InfoText.color = new Color(255, 255, 255, 0);
     }
 
     private void Update()
@@ -171,5 +172,27 @@ public class InteractionManager : MonoBehaviour
         {
             _interactionInterface.OnInteract(ctx);
         }
+    }
+
+    public void SetInteractionText(string text)
+    {
+        InteractionText.SetText(text);
+    }
+
+    public void SetInfoText(string text)
+    {
+        StopAllCoroutines();
+        InfoText.SetText(text);
+        LeanTween.LeanTMPAlpha(InfoText, 255f, 1f)
+            .setEase(LeanTweenType.easeInCirc);
+
+        StartCoroutine(WaitAndClearInfoText());
+    }
+
+    private IEnumerator WaitAndClearInfoText()
+    {
+        yield return new WaitForSeconds(2);
+        LeanTween.LeanTMPAlpha(InfoText, 0, 2f)
+            .setEase(LeanTweenType.easeOutCirc);
     }
 }

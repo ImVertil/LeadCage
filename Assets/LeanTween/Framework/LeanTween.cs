@@ -144,6 +144,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using TMPro;
 
 public enum TweenAction{
     MOVE_X,
@@ -1108,6 +1109,20 @@ public class LeanTween : MonoBehaviour {
         return lt;
     }
 
+    public static LTDescr LeanTMPAlpha(TextMeshProUGUI txt, float to, float time)
+    {
+        var color = txt.color;
+        var fadeoutcolor = new Color(color.r, color.g, color.b, to);
+        return LeanTween.value(txt.gameObject, color, fadeoutcolor, time).setOnUpdate(co => txt.color = co);
+    }
+
+    public static LTDescr LeanTMPColor(TextMeshProUGUI txt, Color to, float time)
+    {
+        var color = txt.color;
+        var fadeoutcolor = to;
+        return LeanTween.value(txt.gameObject, color, fadeoutcolor, time).setOnUpdate(co => txt.color = co);
+    }
+
     /**
     * <summary>Fade a GUI Object</summary>
     * 
@@ -1118,7 +1133,7 @@ public class LeanTween : MonoBehaviour {
     * @return {LTDescr} LTDescr an object that distinguishes the tween
     * @example
     * LeanTween.alpha(ltRect, 1f, 1f) .setEase(LeanTweenType.easeInCirc);
-    */  
+    */
     public static LTDescr alpha(LTRect ltRect, float to, float time){
         ltRect.alphaEnabled = true;
         return pushNewTween( tweenEmpty, new Vector3(to,0f,0f), time, options().setGUIAlpha().setRect( ltRect ) );

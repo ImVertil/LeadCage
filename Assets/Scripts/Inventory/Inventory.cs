@@ -30,6 +30,7 @@ public class Inventory : MonoBehaviour
     public Dictionary<InventorySlot, Item> _equippedWeapons { get; private set; } = new();
     public Dictionary<InventorySlot, Item> _equippedMovementItems { get; private set; } = new();
 
+    private bool _firstTimeEquip = true;
     public void AddItem(InteractPickup pickup)
     {
         /*
@@ -64,6 +65,11 @@ public class Inventory : MonoBehaviour
             _inventoryItems[slot] = null;
             InventoryEvents.InventoryUpdate();
             InventoryEvents.ShowItemDetails(equipSlot);
+            if(_firstTimeEquip)
+            {
+                _firstTimeEquip = false;
+                InteractionManager.Instance.SetInfoText("Press [1] to select equipped weapon and [X] to take it out.");
+            }
         }
     }
 

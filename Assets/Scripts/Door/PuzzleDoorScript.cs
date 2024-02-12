@@ -15,27 +15,27 @@ public class PuzzleDoorScript : MonoBehaviour, IInteractable
     }
     public void OnStartLook()
     {
-        InteractionManager.Instance.InteractionText.SetText("Press [E] to emergency open the doors");
+        InteractionManager.Instance.SetInteractionText("Press [E] to emergency open the doors");
     }
 
     public void OnEndLook()
     {
-        InteractionManager.Instance.InteractionText.SetText("");
+        InteractionManager.Instance.SetInteractionText("");
     }
 
     public void OnInteract(InputAction.CallbackContext ctx)
     {
         if(_lockCable != null || _doorCable != null)
         {
-            if (_lockCable.GetSlotVoltage() == Puzzle.DOOR_LOCK_VOLTAGE && _doorCable.GetSlotVoltage() == Puzzle.DOOR_VOLTAGE)
+            if (_lockCable.GetSlotVoltage() == Puzzle.GREEN_CABLE_VOLTAGE && _doorCable.GetSlotVoltage() == Puzzle.ORANGE_CABLE_VOLTAGE)
             {
                 _doorAudioSource.Play();
                 _doorAnimator.SetTrigger("DoorOpen");
             }
             else
             {
-                InteractionManager.Instance.InfoText.SetText("The door doesn't seem to react.");
-                StartCoroutine(TextManager.WaitAndClearInfoText());
+                InteractionManager.Instance.SetInfoText("The door doesn't seem to react.");
+                
             }
         }
     }
