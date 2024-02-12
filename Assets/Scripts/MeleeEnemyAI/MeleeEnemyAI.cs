@@ -14,6 +14,7 @@ public class MeleeEnemyAI : MonoBehaviour
     private Node topNode;
     Animator animator;
     public bool isShooting;
+    
 
     //FOV
     public bool takeAction;
@@ -26,6 +27,9 @@ public class MeleeEnemyAI : MonoBehaviour
 
 
     //Patrol
+    [SerializeField] public Transform lookAtPoint;
+    private Vector3 currentVelocity;
+
     public bool patrolDestSet;
     public Vector3 patrolDest;
     public Transform[] waypoints;
@@ -84,7 +88,7 @@ public class MeleeEnemyAI : MonoBehaviour
         }
 
 
-        //Przejscie do kolejnego punktu patrolu
+        //Przejscie do punktu patrolu
         if (takeAction == false)
         {
             UpdateDest();
@@ -94,9 +98,13 @@ public class MeleeEnemyAI : MonoBehaviour
         if (takeAction == false && Vector3.Distance(transform.position, patrolDest) < 2)
         {
             agent.isStopped = true;
-        } else if (takeAction == true)
-        {
-            agent.isStopped = false;
+
+            //patrzenie w miejsce obserwacji
+            Vector3 direction = lookAtPoint.position - transform.position;
+            Vector3 currentDirection = Vector3.SmoothDamp(transform.forward, direction, ref currentVelocity, 1f);
+            Quaternion rotation = Quaternion.LookRotation(currentDirection, Vector3.up);
+            transform.rotation = rotation;
+
         }
     }
     //Drzewo behawioralne
