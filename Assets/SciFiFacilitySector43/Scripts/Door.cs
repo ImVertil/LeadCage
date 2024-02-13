@@ -13,7 +13,7 @@ public class Door : MonoBehaviour
 	void Start() 
     {
         _animator = GetComponent<Animator>();
-        _audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponentInChildren<AudioSource>();
 	}
 
 

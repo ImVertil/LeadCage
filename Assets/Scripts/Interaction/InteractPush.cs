@@ -24,13 +24,13 @@ public class InteractPush : MonoBehaviour, IInteractable
 
     public void OnStartLook()
     {
-        InteractionManager.Instance.InteractionText.SetText($"Press [E] to push object");
+        InteractionManager.Instance.SetInteractionText($"Press [E] to push object");
         _outline.enabled = true;
     }
 
     public void OnEndLook()
     {
-        InteractionManager.Instance.InteractionText.SetText("");
+        InteractionManager.Instance.SetInteractionText("");
         _outline.enabled = false;
     }
     public void OnInteract(InputAction.CallbackContext ctx)

@@ -119,12 +119,12 @@ GameObject:
   - component: {fileID: 7531205429368635383}
   - component: {fileID: 7531205429372059607}
   - component: {fileID: 7531205429371059479}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall_169_Window_4x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7531205429368635383
 Transform:

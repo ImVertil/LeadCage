@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.5, y: 2, z: -4}
   m_LocalScale: {x: 1, y: 4, z: 0.2}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8069066438595433567}
   m_RootOrder: 1
@@ -81,6 +82,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.5, y: 2, z: -0}
   m_LocalScale: {x: 1, y: 4, z: 0.2}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8069066438595433567}
   m_RootOrder: 0
@@ -117,12 +119,12 @@ GameObject:
   - component: {fileID: 8069066438595433567}
   - component: {fileID: 8069066438598825087}
   - component: {fileID: 8069066438597727935}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall_364_6x4x4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8069066438595433567
 Transform:
@@ -134,6 +136,7 @@ Transform:
   m_LocalRotation: {x: 5.6621367e-14, y: -1, z: 0.000000021855698, w: 0.0000025033949}
   m_LocalPosition: {x: 0, y: 0, z: -18.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7152369884386142199}
   - {fileID: 5129913178008759372}
@@ -160,9 +163,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -175,6 +181,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -187,6 +194,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &9043967084010345291
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,6 +223,7 @@ Transform:
   m_LocalRotation: {x: 1.6717354e-14, y: -0.38268274, z: 0.000000016727592, w: 0.9238798}
   m_LocalPosition: {x: -3, y: 2, z: -2}
   m_LocalScale: {x: 5.7, y: 4, z: 0.2}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8069066438595433567}
   m_RootOrder: 2
