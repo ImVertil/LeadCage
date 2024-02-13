@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,8 +5,6 @@ using UnityEngine.InputSystem;
 public class InteractPickup : MonoBehaviour, IInteractable
 {
     public Item item;
-    public GameObject interactionTextObject;
-    private TMP_Text interactionUIText;
     private Outline _outline;
 
     private void Awake()
@@ -19,14 +16,14 @@ public class InteractPickup : MonoBehaviour, IInteractable
     public void OnStartLook()
     {
         //interactionUIText.SetText($"Pick up {item.itemName}");
-        InteractionManager.Instance.InteractionText.SetText($"Press [E] to pick up {item.itemName}");
+        InteractionManager.Instance.SetInteractionText($"Press [E] to pick up {item.itemName}");
         _outline.enabled = true;
     }
 
     public void OnEndLook()
     {
         //interactionUIText.SetText("");
-        InteractionManager.Instance.InteractionText.SetText("");
+        InteractionManager.Instance.SetInteractionText("");
         _outline.enabled = false;
     }
 

@@ -16,12 +16,12 @@ public class Puzzle3ValveInteract : MonoBehaviour, IInteractable
 
     public void OnStartLook()
     {
-        InteractionManager.Instance.InteractionText.SetText("Press [E] to turn the valve to the " + _turnType.ToString().ToLower());
+        InteractionManager.Instance.SetInteractionText("Press [E] to turn the valve to the " + _turnType.ToString().ToLower());
     }
 
     public void OnEndLook()
     {
-        InteractionManager.Instance.InteractionText.SetText("");
+        InteractionManager.Instance.SetInteractionText("");
     }
 
     public void OnInteract(InputAction.CallbackContext ctx)

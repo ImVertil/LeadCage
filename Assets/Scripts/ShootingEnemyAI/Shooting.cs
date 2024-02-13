@@ -28,6 +28,9 @@ public class Shooting : MonoBehaviour
             {
                 projectileSpawner._pool.Get();
                 _timer = 0f;
+
+                var randPitch = UnityEngine.Random.Range(0.98f, 1.02f);
+                SoundManager.Instance.PlaySound(Sound.Shoot, spawnPoint, false, null, randPitch);
             }
             
         }

@@ -17,23 +17,28 @@ public class InteractVent : MonoBehaviour, IInteractable
     public void OnStartLook()
     {
         _outline.enabled = true;
-        InteractionManager.Instance.InteractionText.SetText("Press [E] to remove the vent");
+        InteractionManager.Instance.SetInteractionText("Press [E] to remove the vent");
     }
 
     public void OnEndLook()
     {
         _outline.enabled = false;
-        InteractionManager.Instance.InteractionText.SetText("");
+        InteractionManager.Instance.SetInteractionText("");
     }
 
     public void OnInteract(InputAction.CallbackContext ctx)
     {
         if (IsConditionSatisfied())
-            gameObject.SetActive(false);
+        {
+            LeanTween.rotateZ(gameObject, 0, 0.75f)
+                .setEase(LeanTweenType.easeInQuad);
+
+            gameObject.tag = Tags.UNTAGGED;
+            gameObject.GetComponent<Collider>().enabled = false;
+        }
         else
         {
-            InteractionManager.Instance.InfoText.SetText($"You are missing a Wrench");
-            StartCoroutine(TextManager.WaitAndClearInfoText());
+            InteractionManager.Instance.SetInfoText($"You are missing a Wrench");
         }
     }
 
