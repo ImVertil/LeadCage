@@ -53,8 +53,10 @@ public class Rifle : MonoBehaviour, Gun {
     private float ArmLayerWeightDelay= 0.5f;
 
     private Camera _mainCamera;
-    [SerializeField] [Range(0,160)] private float fov;
+    private float _fov;
     [SerializeField] [Range(0,160)] private float aimFov;
+    private float _fovVelocity;
+    private float _desiredFov;
 
     private void Start()
     {
@@ -67,7 +69,7 @@ public class Rifle : MonoBehaviour, Gun {
         _kickbackRig = RigBuilder.layers[3].rig;
 
         _mainCamera = Camera.main;
-        _mainCamera.fieldOfView = fov;
+        _fov = _mainCamera.fieldOfView;
     }
 
     private void OnEnable()
@@ -82,6 +84,7 @@ public class Rifle : MonoBehaviour, Gun {
         _weaponPullRig.weight = Mathf.SmoothDamp(_weaponPullRig.weight, _desiredPullRigWeight, ref _pullRigweightVelocity, _glueSpeed);
         _kickbackRig.weight = Mathf.SmoothDamp(_kickbackRig.weight, _desiredKickbackRigWeight, ref _kickbackRigWeightVelocity, 1/_kickbackSpeed);
         _aimRig.weight = Mathf.SmoothDamp(_aimRig.weight, _desiredAimRigWeight, ref _aimRigWeightVelocity, 0.2f);
+        _mainCamera.fieldOfView = Mathf.SmoothDamp(_mainCamera.fieldOfView, _desiredFov, ref _fovVelocity, 0.4f);
     }
 
     public void Shoot()
@@ -132,13 +135,14 @@ public class Rifle : MonoBehaviour, Gun {
             if (_riflePulledOut)
             {
                 WeaponPivot.SetActive(true);
-                _putSpeed = 0.5f;
+                _putSpeed = 0.6f;
                 _glueSpeed = 0.5f;
                 Animator.SetLayerWeight(1, 1);
                 _desiredHipsRigWeight = 1;
                 _desiredHandsRigWeight = 1;
                 _weaponPullRig.weight = 1;
                 _desiredPullRigWeight = 0;
+                TakeAim();
             }
             else
             {
@@ -157,14 +161,14 @@ public class Rifle : MonoBehaviour, Gun {
     {
         _desiredAimRigWeight = 1f;
         _pc.MouseSensitivity = _startSensitivity * 0.5f;
-        _mainCamera.fieldOfView = aimFov;
+        _desiredFov = aimFov;
     }
 
     public void StopAim()
     {
         _desiredAimRigWeight = 0f;
         _pc.MouseSensitivity = _startSensitivity;
-        _mainCamera.fieldOfView = fov;
+        _desiredFov = _fov;
     }
 
     IEnumerator WaitToChangeWeight()
