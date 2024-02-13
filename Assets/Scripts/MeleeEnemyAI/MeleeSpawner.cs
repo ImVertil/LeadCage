@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class MeleeSpawner : MonoBehaviour
 {
-    void Start()
+    void Awake()
     {
         PuzzleEvents.GeneratorActivated += SpawnMeleeEnemies; 
     }
 
     public void SpawnMeleeEnemies()
     {
-        foreach(var obj in gameObject.GetComponentsInChildren<GameObject>())
+        foreach(var enemy in gameObject.GetComponentsInChildren<MeleeEnemyAI>(true))
         {
-            if(!obj.activeSelf)
+            if(!enemy.gameObject.activeSelf)
             {
-                obj.SetActive(true);
+                enemy.gameObject.SetActive(true);
             }
         }
     }
