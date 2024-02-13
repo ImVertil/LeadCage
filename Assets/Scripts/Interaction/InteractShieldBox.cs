@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -39,9 +37,8 @@ public class InteractShieldBox : MonoBehaviour, IInteractable
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             _isInteracting = false;
-            PlayerController.CanMove = true;
-            PlayerController.CanMoveCamera = true;
-            //PlayerController.EnablePlayerVisibility();
+            InputManager.OnUnfreezeMovement();
+            InputManager.OnEnableShooting();
         }
         else
         {
@@ -50,9 +47,9 @@ public class InteractShieldBox : MonoBehaviour, IInteractable
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
             _isInteracting = true;
-            PlayerController.CanMove = false;
-            PlayerController.CanMoveCamera = false;
-            //PlayerController.DisablePlayerVisibility();
+            InputManager.OnFreezeMovement();
+            InputManager.OnDisableShooting();
+            InputManager.OnForceGunAway();
         }
     }
 }
