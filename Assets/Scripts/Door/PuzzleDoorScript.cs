@@ -3,15 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PuzzleDoorScript : MonoBehaviour, IInteractable
 {
-    [SerializeField] private Cable _lockCable;
-    [SerializeField] private Cable _doorCable;
     [SerializeField] private Animator _doorAnimator;
     [SerializeField] private AudioSource _doorAudioSource;
+    private bool _isPuzzleFinished = false;
+    private bool _isOpen = false;
 
     void Start()
     {
-        PuzzleEvents.DoorLockCableChanged += ChangeDoorLockCableState;
-        PuzzleEvents.DoorCableChanged += ChangeDoorCableState;
+        PuzzleEvents.Puzzle1Done += ChangePuzzleStatus;
     }
     public void OnStartLook()
     {
@@ -25,21 +24,16 @@ public class PuzzleDoorScript : MonoBehaviour, IInteractable
 
     public void OnInteract(InputAction.CallbackContext ctx)
     {
-        if(_lockCable != null || _doorCable != null)
+        if(_isPuzzleFinished && !_isOpen)
         {
-            if (_lockCable.GetSlotVoltage() == Puzzle.GREEN_CABLE_VOLTAGE && _doorCable.GetSlotVoltage() == Puzzle.ORANGE_CABLE_VOLTAGE)
-            {
-                _doorAudioSource.Play();
-                _doorAnimator.SetTrigger("DoorOpen");
-            }
-            else
-            {
-                InteractionManager.Instance.SetInfoText("The door doesn't seem to react.");
-                
-            }
+            _doorAudioSource.Play();
+            _doorAnimator.SetTrigger("DoorOpen");
+            _isOpen = true;
+        }
+        else
+        {
+            InteractionManager.Instance.SetInfoText("The door doesn't seem to react.");
         }
     }
-
-    public void ChangeDoorLockCableState(Cable c) => _lockCable = c;
-    public void ChangeDoorCableState(Cable c) => _doorCable = c;
+    public void ChangePuzzleStatus(bool status) => _isPuzzleFinished = status;
 }

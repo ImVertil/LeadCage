@@ -51,7 +51,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0.15
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
@@ -304,7 +304,7 @@ GameObject:
   - component: {fileID: 738688126794844464}
   - component: {fileID: 5138423093792547134}
   - component: {fileID: 5138423093770587455}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Door_03_Interact
   m_TagString: Untagged
   m_Icon: {fileID: 0}

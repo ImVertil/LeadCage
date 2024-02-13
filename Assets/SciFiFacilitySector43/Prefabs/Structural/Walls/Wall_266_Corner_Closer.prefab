@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 759206082058535306}
   - component: {fileID: 759206082057732522}
   - component: {fileID: 759206082056766314}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall_266_Corner_Closer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &759206082058535306
 Transform:
@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: -0.00000013240823, z: -0.7071068, w: -0.00000013240823}
   m_LocalPosition: {x: 0, y: 0, z: -45.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1646072858507545426}
   - {fileID: 6445984275264550346}
@@ -53,9 +54,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -67,6 +71,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -79,6 +84,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &4087000415704511501
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,6 +113,7 @@ Transform:
   m_LocalRotation: {x: -0.30004355, y: -0.000000035335574, z: 0.9539255, w: -0.00000017206831}
   m_LocalPosition: {x: -0.62, y: 0, z: -2.1}
   m_LocalScale: {x: 1, y: 0.044253606, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 759206082058535306}
   m_RootOrder: 0
@@ -160,6 +167,7 @@ Transform:
   m_LocalRotation: {x: -0.49462262, y: -0.00000007362483, z: 0.86910796, w: -0.00000015193343}
   m_LocalPosition: {x: 0.15, y: 0, z: -1.3}
   m_LocalScale: {x: 1, y: 0.044253603, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 759206082058535306}
   m_RootOrder: 1

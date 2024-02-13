@@ -8,7 +8,7 @@ public class VolumeHandler : MonoBehaviour
     {
         SoundEvents.OnVolumeChanged += UpdateVolume;
         SoundEvents.OnGamePaused += ToggleSoundPause;
-        _audioSources = GetComponents<AudioSource>();
+        _audioSources = GetComponentsInChildren<AudioSource>();
         //Debug.Log(gameObject.name + " " + _audioSources.Length);
         UpdateVolume();
     }
