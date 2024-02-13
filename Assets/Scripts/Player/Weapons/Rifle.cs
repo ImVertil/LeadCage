@@ -52,6 +52,10 @@ public class Rifle : MonoBehaviour, Gun {
     private float _glueSpeed= 0.2f;
     private float ArmLayerWeightDelay= 0.5f;
 
+    private Camera _mainCamera;
+    [SerializeField] [Range(0,160)] private float fov;
+    [SerializeField] [Range(0,160)] private float aimFov;
+
     private void Start()
     {
         _startSensitivity = 50; // i have no idea but it has to be like this rn
@@ -61,6 +65,9 @@ public class Rifle : MonoBehaviour, Gun {
         _aimRig = RigBuilder.layers[1].rig;
         _weaponPullRig = RigBuilder.layers[2].rig;
         _kickbackRig = RigBuilder.layers[3].rig;
+
+        _mainCamera = Camera.main;
+        _mainCamera.fieldOfView = fov;
     }
 
     private void OnEnable()
@@ -150,12 +157,14 @@ public class Rifle : MonoBehaviour, Gun {
     {
         _desiredAimRigWeight = 1f;
         _pc.MouseSensitivity = _startSensitivity * 0.5f;
+        _mainCamera.fieldOfView = aimFov;
     }
 
     public void StopAim()
     {
         _desiredAimRigWeight = 0f;
         _pc.MouseSensitivity = _startSensitivity;
+        _mainCamera.fieldOfView = fov;
     }
 
     IEnumerator WaitToChangeWeight()
