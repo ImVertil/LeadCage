@@ -80,18 +80,31 @@ public class Rifle : MonoBehaviour, Gun {
     public void Shoot()
     {
         //Debug.Log("SHOOOOTOTOTOTOTOTOTTOTO");
-        SoundManager.Instance.PlaySound(Sound.Shoot, transform, false);
+        var randPitch = Random.Range(0.98f, 1.02f);
+        SoundManager.Instance.PlaySound(Sound.Shoot, transform, false, null, randPitch);
         StartCoroutine(Kickback());
 
         RaycastHit hit;
         if (Physics.Raycast(bulletOrigin.position, bulletOrigin.forward, out hit, range, AimMask))
         {
             var enemyHealth = hit.collider.gameObject.GetComponent<EnemyHealth>();
+            var shootingEnemyAI = hit.collider.gameObject.GetComponent<ShootingEnemyAI>();
+            var meleeEnemyAI = hit.collider.gameObject.GetComponent<MeleeEnemyAI>();
 
             if (enemyHealth != null)
             {
-                //Debug.Log("HITTTTTT");
                 enemyHealth.TakeDamage(damage);
+
+            }
+            if (shootingEnemyAI != null)
+            {
+                shootingEnemyAI.takeAction = true;
+
+            }
+            if (meleeEnemyAI != null)
+            {
+                meleeEnemyAI.takeAction = true;
+
             }
 
             // to be replaced
