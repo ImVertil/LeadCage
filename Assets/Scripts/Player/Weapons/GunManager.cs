@@ -41,7 +41,7 @@ public class GunManager : MonoBehaviour {
         InputManager.DisableShooting += DisableGun;
         InputManager.EnableShooting += EnableGun;
 
-        InputManager.ForceGunAway += GunUnequip;
+        InputManager.ForceGunAway += ForceGunPutAway;
     }
 
     private void Update()
@@ -134,6 +134,14 @@ public class GunManager : MonoBehaviour {
     private void EnableGun()
     {
         _canShoot = true;
+    }
+
+    private void ForceGunPutAway()
+    {
+        if(_haveGun && _currentGun.GunPulledOut)
+        { 
+            _currentGun.SheatheUnsheathe();
+        }
     }
 
 }
