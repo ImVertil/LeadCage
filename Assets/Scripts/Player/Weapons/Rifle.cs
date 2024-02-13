@@ -82,7 +82,7 @@ public class Rifle : MonoBehaviour, Gun {
         _handsRig.weight = Mathf.SmoothDamp(_handsRig.weight, _desiredHandsRigWeight, ref _handRigWeightVelocity, _putSpeed);
         _hipsRig.weight = Mathf.SmoothDamp(_hipsRig.weight, _desiredHipsRigWeight, ref _hipRigWeightVelocity, _putSpeed);
         _weaponPullRig.weight = Mathf.SmoothDamp(_weaponPullRig.weight, _desiredPullRigWeight, ref _pullRigweightVelocity, _glueSpeed);
-        _kickbackRig.weight = Mathf.SmoothDamp(_kickbackRig.weight, _desiredKickbackRigWeight, ref _kickbackRigWeightVelocity, 1/(_kickbackSpeed + 50));
+        _kickbackRig.weight = Mathf.SmoothDamp(_kickbackRig.weight, _desiredKickbackRigWeight, ref _kickbackRigWeightVelocity, 1/_kickbackSpeed);
         _aimRig.weight = Mathf.SmoothDamp(_aimRig.weight, _desiredAimRigWeight, ref _aimRigWeightVelocity, 0.2f);
         _mainCamera.fieldOfView = Mathf.SmoothDamp(_mainCamera.fieldOfView, _desiredFov, ref _fovVelocity, 0.4f);
     }
@@ -190,7 +190,7 @@ public class Rifle : MonoBehaviour, Gun {
     IEnumerator Kickback()
     {
         _desiredKickbackRigWeight = _kickbackStrength;
-        yield return new WaitForSeconds(1 / (_kickbackSpeed+100));
+        yield return new WaitForSeconds(1 / _kickbackSpeed);
         _desiredKickbackRigWeight = 0f;
     }
 
