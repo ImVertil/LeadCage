@@ -1009,12 +1009,12 @@ GameObject:
   - component: {fileID: 7145266617290852856}
   - component: {fileID: 7145266617293148606}
   - component: {fileID: 7145266617293148605}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall_114_ControlPanel_1x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7145266617292753688
 Transform:

@@ -6,22 +6,28 @@ using UnityEngine;
 public class PuzzleEvents
 {
     // PUZZLE 1
-    public static Action<Cable> DoorCableChanged;
-    public static Action<Cable> DoorLockCableChanged;
+    public static Action<Cable> CableConnected;
+    public static Action<Cable> CableDisconnected;
+    public static Action<bool> Puzzle1Done;
 
     // PUZZLE 3
     public static Action<Puzzle3Lever> GeneratorShieldStatusChanged;
     public static Action<Puzzle3Valve> GeneratorPipeStatusChanged;
     public static Action GeneratorActivated;
 
-    public static void OnDoorCableChanged(Cable c)
+    public static void OnCableConnected(Cable c)
     {
-        DoorCableChanged?.Invoke(c);
+        CableConnected?.Invoke(c);
     }
 
-    public static void OnDoorLockCableChanged(Cable c)
+    public static void OnCableDisconnected(Cable c)
     {
-        DoorLockCableChanged?.Invoke(c);
+        CableDisconnected?.Invoke(c);
+    }
+
+    public static void OnPuzzle1Done(bool status)
+    {
+        Puzzle1Done?.Invoke(status);
     }
 
     public static void OnGeneratorShieldStatusChanged(Puzzle3Lever completed)
