@@ -2251,7 +2251,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daca628948641ca478ec8c2758b6eecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 100
+  _regenerationRate: 2
+  _maxHealth: 100
 --- !u!114 &3314429242388034693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2279,12 +2280,15 @@ MonoBehaviour:
     m_Bits: 256
   radius: 44
   angle: 88
+  lookAtPoint: {fileID: 0}
   patrolDestSet: 0
   patrolDest: {x: 0, y: 0, z: 0}
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _doesDropItemOnDeath: 0
+  _dropPrefab: {fileID: 0}
 --- !u!195 &8977260085717875808
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2295,7 +2299,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 4.5
+  m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 360
