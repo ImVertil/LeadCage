@@ -27,6 +27,8 @@ public class GunManager : MonoBehaviour {
     private bool _haveGun;
     private float _cooldownCounter;
 
+    private bool _canShoot = true;
+
     private void Start()
     {
         _mainCamera = Camera.main;
@@ -35,12 +37,17 @@ public class GunManager : MonoBehaviour {
         InputManager.current.PrimaryWeaponAction.performed += SwitchToPrimary;
         InputManager.current.SecondaryWeaponAction.performed += SwitchToSecondary;
         CurrentWeaponSlot = WeaponSlot.Primary;
+
+        InputManager.DisableShooting += DisableGun;
+        InputManager.EnableShooting += EnableGun;
+
+        InputManager.ForceGunAway += GunUnequip;
     }
 
     private void Update()
     {
         Target.position = _mainCamera.transform.position + _mainCamera.transform.forward*10;
-        if(!_haveGun)
+        if(!_haveGun || !_canShoot)
             return;
         if(InputManager.current.Fire && Time.time >= _cooldownCounter && _currentGun.GunPulledOut)
         {
@@ -74,7 +81,7 @@ public class GunManager : MonoBehaviour {
 
     private void SheatheUnsheatheGun(InputAction.CallbackContext ctx)
     {
-        if(!_haveGun)
+        if(!_haveGun || !_canShoot)
             return;
         _currentGun.SheatheUnsheathe();
     }
@@ -83,7 +90,7 @@ public class GunManager : MonoBehaviour {
     {
         Item weapon = Inventory.Instance.GetPrimaryWeapon();
 
-        if(weapon == null )
+        if(weapon == null || !_canShoot)
             return;
 
         if(weapon.id == 3)
@@ -117,6 +124,16 @@ public class GunManager : MonoBehaviour {
             Carbine.SetActive(true);
         }
         CurrentWeaponSlot = WeaponSlot.Secondary;
+    }
+
+    private void DisableGun()
+    {
+        _canShoot = false;
+    }
+
+    private void EnableGun()
+    {
+        _canShoot = true;
     }
 
 }

@@ -21,6 +21,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (_isPaused)
         {
+            InputManager.OnEnableShooting();
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             _settingsPanel.SetActive(false);
@@ -31,6 +32,7 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
+            InputManager.OnDisableShooting();
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
             _pausePanel.SetActive(true);
