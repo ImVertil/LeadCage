@@ -51,16 +51,16 @@ public class InventoryUI : MonoBehaviour
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-            PlayerController.CanMove = true;
-            PlayerController.CanMoveCamera = true;
+            InputManager.OnUnfreezeMovement();
+            InputManager.OnEnableShooting();
             _mainPanel.SetActive(false);
         }
         else
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
-            PlayerController.CanMove = false;
-            PlayerController.CanMoveCamera = false;
+            InputManager.OnFreezeMovement();
+            InputManager.OnDisableShooting();
             _mainPanel.SetActive(true);
             _inventoryDetailsPanel.SetActive(false);
         }
