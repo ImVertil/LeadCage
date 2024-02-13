@@ -4,8 +4,6 @@ using UnityEngine;
 public class Cable : MonoBehaviour
 {
     private GameObject _currentSlot;
-    public static event Action<Cable> OnCableConnect;
-    public static event Action<Cable> OnCableDisconnect;
 
     void Start()
     {
@@ -15,13 +13,13 @@ public class Cable : MonoBehaviour
     public void ConnectToSlot(GameObject slot)
     {
         _currentSlot = slot;
-        OnCableConnect?.Invoke(this);
+        PuzzleEvents.OnCableConnected(this);
     }
 
     public void DisconnectFromSlot()
     {
         _currentSlot = null;
-        OnCableDisconnect?.Invoke(this);
+        PuzzleEvents.OnCableDisconnected(this);
     }
 
     public float GetSlotVoltage()

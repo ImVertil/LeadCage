@@ -52,7 +52,14 @@ public class EnemyHealth : MonoBehaviour
         //Debug.Log(_health);
         if(_health <= 0)
         {
-            shootingEnemy.DisableEnemy();
+            if(shootingEnemy != null)
+            {
+                shootingEnemy.DisableEnemy();
+            }
+            else if(meleeEnemy != null)
+            {
+                meleeEnemy.gameObject.SetActive(false);
+            }
         }
     }
 

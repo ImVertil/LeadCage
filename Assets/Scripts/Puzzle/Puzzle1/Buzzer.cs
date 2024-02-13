@@ -51,11 +51,10 @@ public class Buzzer : MonoBehaviour
             { _redCable, false }
         };
 
-        Cable.OnCableConnect += CheckForBuzzerActivation;
-        Cable.OnCableConnect += CheckForGreenLampActivation;
-        Cable.OnCableDisconnect += DeactivateBuzzer;
-        Cable.OnCableDisconnect += CheckForGreenLampActivation;
-
+        PuzzleEvents.CableConnected += CheckForBuzzerActivation;
+        PuzzleEvents.CableConnected += CheckForGreenLampActivation;
+        PuzzleEvents.CableDisconnected += DeactivateBuzzer;
+        PuzzleEvents.CableDisconnected += CheckForGreenLampActivation;
     }
 
     private void CheckForBuzzerActivation(Cable cable)
@@ -88,10 +87,12 @@ public class Buzzer : MonoBehaviour
             if (!_properlyConnected.ContainsValue(false))
             {
                 ActivateGreenLamp();
+                PuzzleEvents.OnPuzzle1Done(true);
             }
             else
             {
                 DeactivateGreenLamp();
+                PuzzleEvents.OnPuzzle1Done(false);
             }
         }
     }

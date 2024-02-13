@@ -39,18 +39,19 @@ public class DragObject : MonoBehaviour
         // snap the cable to the slot if there's no other cable connected, otherwise snap back to initial position
         if (_snapTo != null && !_snapTo.GetComponent<CableSlot>().isCableConnected)
         {
+            // i really don't know how to make it better
             switch (Math.Abs(transform.root.eulerAngles.y)) // the Y rotation of the root component
             {
                 case 0:
                 case 180:
                 case 360:
-                    transform.position = new Vector3(transform.position.x, _snapTo.transform.position.y, _snapTo.transform.position.z);
+                    transform.position = new Vector3(_snapTo.transform.position.x, _snapTo.transform.position.y, transform.position.z);
                     break;
 
                 case 90:
                 case 270:
                 default:
-                    transform.position = new Vector3(_snapTo.transform.position.x, _snapTo.transform.position.y, transform.position.z);
+                    transform.position = new Vector3(transform.position.x, _snapTo.transform.position.y, _snapTo.transform.position.z);
                     break;
             }
             _snapTo.GetComponent<CableSlot>().isCableConnected = true;
