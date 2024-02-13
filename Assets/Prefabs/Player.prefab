@@ -61,7 +61,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2934082095617545867}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6013341888277884440
 MonoBehaviour:
@@ -1002,7 +1002,7 @@ Transform:
   m_Children:
   - {fileID: 2934082095350060982}
   m_Father: {fileID: 2934082095841383967}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2934082094186390143
 MonoBehaviour:
@@ -1267,7 +1267,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2934082095617545867}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2934082094787213114
 MonoBehaviour:
@@ -1635,7 +1635,7 @@ Transform:
   m_Children:
   - {fileID: 2934082095642841797}
   m_Father: {fileID: 7660301666322086125}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2934082095347011635
 MonoBehaviour:
@@ -1901,10 +1901,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2934082095888518549}
-  - {fileID: 2934082094787213112}
   - {fileID: 935586263}
+  - {fileID: 2934082094787213112}
   m_Father: {fileID: 7660301666322086125}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2934082095617545864
 MonoBehaviour:
@@ -2035,8 +2035,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2934082094186390140}
   - {fileID: 920306075367313970}
+  - {fileID: 2934082094186390140}
   m_Father: {fileID: 2934082094800779696}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2426,7 +2426,7 @@ Transform:
   - {fileID: 2934082094132241053}
   - {fileID: 7807315202982411627}
   m_Father: {fileID: 7660301666322086125}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2934082096186112107
 MonoBehaviour:
@@ -3323,13 +3323,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6144304579246603647}
-  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2934082095841383967}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!1 &6204513425193364284
 GameObject:
@@ -3588,7 +3588,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2, y: 1, z: -2.4966433}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2934082094641080438}
   - {fileID: 2934082094676728612}
@@ -3596,9 +3596,9 @@ Transform:
   - {fileID: 3694316058195885119}
   - {fileID: 6881716208810903156}
   - {fileID: 2934082095195670560}
+  - {fileID: 2934082095347011634}
   - {fileID: 2934082095617545867}
   - {fileID: 2934082096186112106}
-  - {fileID: 2934082095347011634}
   - {fileID: 2934082094475849531}
   - {fileID: 225156363}
   m_Father: {fileID: 0}
@@ -4823,6 +4823,7 @@ MonoBehaviour:
   _kickbackSpeed: 10
   _pc: {fileID: 6991006551150797392}
   damage: 0
+  aimFov: 0
 --- !u!4 &2934082095319069835 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3663959421917859763, guid: 1122187b85b63e10d944946f69414c2d, type: 3}
@@ -4853,6 +4854,14 @@ PrefabInstance:
       propertyPath: _pc
       value: 
       objectReference: {fileID: 6991006551150797392}
+    - target: {fileID: 3205218574247231231, guid: 6e92b93a747592acb8ab8a378c03823b, type: 3}
+      propertyPath: fov
+      value: 85.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3205218574247231231, guid: 6e92b93a747592acb8ab8a378c03823b, type: 3}
+      propertyPath: aimFov
+      value: 55.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3205218574247231231, guid: 6e92b93a747592acb8ab8a378c03823b, type: 3}
       propertyPath: fireRate
       value: 15
