@@ -88,11 +88,23 @@ public class Rifle : MonoBehaviour, Gun {
         if (Physics.Raycast(bulletOrigin.position, bulletOrigin.forward, out hit, range, AimMask))
         {
             var enemyHealth = hit.collider.gameObject.GetComponent<EnemyHealth>();
+            var shootingEnemyAI = hit.collider.gameObject.GetComponent<ShootingEnemyAI>();
+            var meleeEnemyAI = hit.collider.gameObject.GetComponent<MeleeEnemyAI>();
 
             if (enemyHealth != null)
             {
-                //Debug.Log("HITTTTTT");
                 enemyHealth.TakeDamage(damage);
+
+            }
+            if (shootingEnemyAI != null)
+            {
+                shootingEnemyAI.takeAction = true;
+
+            }
+            if (meleeEnemyAI != null)
+            {
+                meleeEnemyAI.takeAction = true;
+
             }
 
             // to be replaced

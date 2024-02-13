@@ -38,6 +38,7 @@ public class MeleeEnemyAI : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        PuzzleEvents.GeneratorActivated += EnableEnemy;
     }
 
     private void Start()
@@ -178,4 +179,8 @@ public class MeleeEnemyAI : MonoBehaviour
             canSeePlayer = false;
     }
 
+    public void EnableEnemy()
+    {
+        gameObject.SetActive(true);
+    }
 }
