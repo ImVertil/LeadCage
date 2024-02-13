@@ -11,16 +11,14 @@ public class Health : MonoBehaviour
     void Start()
     {
         health = healthSet;
-        //healthText.text = "HP: " + health.ToString();
-
+        healthText.text = "HP: " + health.ToString();
     }
 
     public void TakeDamage(float damage) {
         if (health > 0)
         {
             health -= damage;
-            //healthText.text = "HP: " + health.ToString();
-
+            healthText.text = "HP: " + health.ToString();
         }
         
     }
