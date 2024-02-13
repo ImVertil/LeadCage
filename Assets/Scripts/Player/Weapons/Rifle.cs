@@ -52,6 +52,12 @@ public class Rifle : MonoBehaviour, Gun {
     private float _glueSpeed= 0.2f;
     private float ArmLayerWeightDelay= 0.5f;
 
+    private Camera _mainCamera;
+    private float _fov;
+    [SerializeField] [Range(0,160)] private float aimFov;
+    private float _fovVelocity;
+    private float _desiredFov;
+
     private void Start()
     {
         _startSensitivity = 50; // i have no idea but it has to be like this rn
@@ -61,6 +67,9 @@ public class Rifle : MonoBehaviour, Gun {
         _aimRig = RigBuilder.layers[1].rig;
         _weaponPullRig = RigBuilder.layers[2].rig;
         _kickbackRig = RigBuilder.layers[3].rig;
+
+        _mainCamera = Camera.main;
+        _fov = _mainCamera.fieldOfView;
     }
 
     private void OnEnable()
@@ -75,6 +84,7 @@ public class Rifle : MonoBehaviour, Gun {
         _weaponPullRig.weight = Mathf.SmoothDamp(_weaponPullRig.weight, _desiredPullRigWeight, ref _pullRigweightVelocity, _glueSpeed);
         _kickbackRig.weight = Mathf.SmoothDamp(_kickbackRig.weight, _desiredKickbackRigWeight, ref _kickbackRigWeightVelocity, 1/_kickbackSpeed);
         _aimRig.weight = Mathf.SmoothDamp(_aimRig.weight, _desiredAimRigWeight, ref _aimRigWeightVelocity, 0.2f);
+        _mainCamera.fieldOfView = Mathf.SmoothDamp(_mainCamera.fieldOfView, _desiredFov, ref _fovVelocity, 0.4f);
     }
 
     public void Shoot()
@@ -83,6 +93,13 @@ public class Rifle : MonoBehaviour, Gun {
         var randPitch = Random.Range(0.98f, 1.02f);
         SoundManager.Instance.PlaySound(Sound.Shoot, transform, false, null, randPitch);
         StartCoroutine(Kickback());
+
+        GameObject bullet = LaserSpawner.SharedInstance.GetPooledObject(); 
+        if (bullet != null) {
+            bullet.transform.position = bulletOrigin.position;
+            bullet.transform.rotation = bulletOrigin.rotation;
+            bullet.SetActive(true);
+        }
 
         RaycastHit hit;
         if (Physics.Raycast(bulletOrigin.position, bulletOrigin.forward, out hit, range, AimMask))
@@ -125,13 +142,14 @@ public class Rifle : MonoBehaviour, Gun {
             if (_riflePulledOut)
             {
                 WeaponPivot.SetActive(true);
-                _putSpeed = 0.5f;
+                _putSpeed = 0.6f;
                 _glueSpeed = 0.5f;
                 Animator.SetLayerWeight(1, 1);
                 _desiredHipsRigWeight = 1;
                 _desiredHandsRigWeight = 1;
                 _weaponPullRig.weight = 1;
                 _desiredPullRigWeight = 0;
+                TakeAim();
             }
             else
             {
@@ -150,12 +168,14 @@ public class Rifle : MonoBehaviour, Gun {
     {
         _desiredAimRigWeight = 1f;
         _pc.MouseSensitivity = _startSensitivity * 0.5f;
+        _desiredFov = aimFov;
     }
 
     public void StopAim()
     {
         _desiredAimRigWeight = 0f;
         _pc.MouseSensitivity = _startSensitivity;
+        _desiredFov = _fov;
     }
 
     IEnumerator WaitToChangeWeight()

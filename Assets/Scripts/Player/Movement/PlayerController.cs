@@ -99,6 +99,9 @@ public class PlayerController : MonoBehaviour
 
         InputManager.current.JumpAction.started += JumpHandling;
         InputManager.current.FlashlightToggleAction.started += FlashlightHandling;
+
+        InputManager.FreezeMovement += OnFreezeMovement;
+        InputManager.UnfreezeMovement += OnUnfreezeMovement;
     }
 
     private void Update()
@@ -326,5 +329,17 @@ public class PlayerController : MonoBehaviour
             SoundManager.Instance.PlaySound(Sound.Footsteps, transform, false, null, randPitch);
             _lastFootstep = currTime;
         }
+    }
+
+    private void OnFreezeMovement()
+    {
+        CanMove = false;
+        CanMoveCamera = false;
+    }
+
+    private void OnUnfreezeMovement()
+    {
+        CanMove = true;
+        CanMoveCamera = true;
     }
 }

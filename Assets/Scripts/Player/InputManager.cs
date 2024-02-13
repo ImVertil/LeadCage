@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 public class InputManager : MonoBehaviour
 {
@@ -45,6 +48,14 @@ public class InputManager : MonoBehaviour
 
     // Pause
     public InputAction PauseToggleAction;
+
+    public static Action FreezeMovement;
+    public static Action UnfreezeMovement;
+
+    public static Action DisableShooting;
+    public static Action EnableShooting;
+
+    public static Action ForceGunAway;
 
 
     private void Awake()
@@ -155,5 +166,30 @@ public class InputManager : MonoBehaviour
     private void OnDisable()
     {
        _currentMap.Disable(); 
+    }
+
+    public static void OnFreezeMovement()
+    {
+        FreezeMovement?.Invoke();
+    }
+
+    public static void OnUnfreezeMovement()
+    {
+        UnfreezeMovement?.Invoke();
+    }
+
+    public static void OnDisableShooting()
+    {
+        DisableShooting?.Invoke();
+    }
+
+    public static void OnEnableShooting()
+    {
+        EnableShooting?.Invoke();
+    }
+
+    public static void OnForceGunAway()
+    {
+        ForceGunAway?.Invoke();
     }
 }
