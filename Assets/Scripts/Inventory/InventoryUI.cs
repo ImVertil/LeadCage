@@ -47,6 +47,9 @@ public class InventoryUI : MonoBehaviour
     public void ToggleInventory(InputAction.CallbackContext ctx)
     {
         // REPLACE WITH PLAYER EVENTS WHEN THEY'RE ADDED
+        if (PlayerController.IsInteracting)
+            return;
+
         if (_isVisible)
         {
             Cursor.visible = false;

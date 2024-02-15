@@ -198,9 +198,12 @@ public class ShootingEnemyAI : MonoBehaviour
 
     public void DisableEnemy()
     {
-        if(_doesDropItemOnDeath && _dropPrefab != null)
+        if(_doesDropItemOnDeath && _dropPrefab != null && gameObject.activeSelf)
         {
-            Instantiate(_dropPrefab, gameObject.transform.position, gameObject.transform.rotation);
+            GameObject obj = Instantiate(_dropPrefab, gameObject.transform.position, gameObject.transform.rotation);
+            Outline outline = obj.GetComponent<Outline>();
+            if (outline != null)
+                outline.enabled = true;
         }
         gameObject.SetActive(false);
     }
