@@ -37,6 +37,7 @@ public class InteractShieldBox : MonoBehaviour, IInteractable
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             _isInteracting = false;
+            PlayerController.IsInteracting = false;
             InputManager.OnUnfreezeMovement();
             InputManager.OnEnableShooting();
         }
@@ -47,6 +48,7 @@ public class InteractShieldBox : MonoBehaviour, IInteractable
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
             _isInteracting = true;
+            PlayerController.IsInteracting = true;
             InputManager.OnFreezeMovement();
             InputManager.OnDisableShooting();
             InputManager.OnForceGunAway();

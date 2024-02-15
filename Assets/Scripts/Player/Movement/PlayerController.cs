@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     public static bool CanMove = true; 
     public static bool CanMoveCamera = true;
+    public static bool IsInteracting = false;
     
     private Rigidbody _rb;
     private Animator _animator;

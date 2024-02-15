@@ -24,9 +24,12 @@ public class PauseMenu : MonoBehaviour
 
         if (_isPaused)
         {
-            InputManager.OnEnableShooting();
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            if(!PlayerController.IsInteracting)
+            {
+                InputManager.OnEnableShooting();
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
             _settingsPanel.SetActive(false);
             _pausePanel.SetActive(false);
             _backgroundDarken.SetActive(false);
