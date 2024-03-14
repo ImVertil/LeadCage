@@ -11,18 +11,21 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float _velocity = 20f;
     private Collider _collider;
     private MeshRenderer _mr;
+    private Light _light;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _mr = GetComponent<MeshRenderer>();
         _collider = GetComponent<CapsuleCollider>();
+        _light = GetComponentInChildren<Light>();
     }
 
     private void OnEnable()
     {
         _mr.enabled = true;
         _collider.enabled = true;
+        _light.enabled = true;
         StartCoroutine(DeactivateProjectileAfterTime());
         _rb.velocity = transform.right * _velocity;
     }
@@ -39,12 +42,13 @@ public class Projectile : MonoBehaviour
             Health playerH = collision.transform.GetComponent<Health>();
             if (playerH != null)
             {
-                playerH.TakeDamage(10f);
+                playerH.TakeDamage(5f);
             }
 
         }
         _mr.enabled = false;
         _collider.enabled = false;
+        _light.enabled = false;
     }
 
     

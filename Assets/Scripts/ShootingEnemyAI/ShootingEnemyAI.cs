@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class ShootingEnemyAI : MonoBehaviour
 {
-    [SerializeField] private float chasingRange;
+    [SerializeField] public float chasingRange;
     [SerializeField] private float shootingRange;
 
     [SerializeField] private Transform playerTransform;
@@ -14,7 +14,7 @@ public class ShootingEnemyAI : MonoBehaviour
     private Node topNode;
     Animator animator;
     public bool isShooting;
-    Shooting shootingTest;
+    Shooting shooting;
 
     //FOV
     public bool takeAction;
@@ -27,6 +27,9 @@ public class ShootingEnemyAI : MonoBehaviour
 
 
     //Patrol
+    [SerializeField] public Transform lookAtPoint;
+    private Vector3 currentVelocity;
+
     public bool patrolDestSet;
     public Vector3 patrolDest;
     public Transform[] waypoints;
@@ -44,7 +47,7 @@ public class ShootingEnemyAI : MonoBehaviour
 
     private void Start()
     {
-        shootingTest = GetComponent<Shooting>();
+        shooting = GetComponent<Shooting>();
         playerRef = playerTransform.gameObject;
         UpdateDest();
         StartCoroutine(ShootingFOVRoutine());
@@ -59,12 +62,12 @@ public class ShootingEnemyAI : MonoBehaviour
         if (isShooting)
         {
             animator.SetBool("isShooting", true);
-            shootingTest.shoot = true;
+            shooting.shoot = true;
         }
         else
         {
             animator.SetBool("isShooting", false);
-            shootingTest.shoot = false;
+            shooting.shoot = false;
         }
 
         animator.SetFloat("EnemySpeed", agent.velocity.magnitude);
@@ -111,10 +114,12 @@ public class ShootingEnemyAI : MonoBehaviour
             if (takeAction == false && Vector3.Distance(transform.position, patrolDest) < 2)
             {
                 agent.isStopped = true;
-            }
-            else if (takeAction == true)
-            {
-                agent.isStopped = false;
+
+                //patrzenie w miejsce obserwacji
+                Vector3 direction = lookAtPoint.position - transform.position;
+                Vector3 currentDirection = Vector3.SmoothDamp(transform.forward, direction, ref currentVelocity, 1f);
+                Quaternion rotation = Quaternion.LookRotation(currentDirection, Vector3.up);
+                transform.rotation = rotation;
             }
         }
 
@@ -127,9 +132,7 @@ public class ShootingEnemyAI : MonoBehaviour
     {
         ShootingAIChasePlayerNode chaseNode = new ShootingAIChasePlayerNode(playerTransform, agent, this);
         BasicRangeNode chasingRangeNode = new BasicRangeNode(chasingRange, playerTransform, transform);
-        //BasicRangeNode shootingRangeNode = new BasicRangeNode(shootingRange, playerTransform, transform);
         AttackRangeNode shootingRangeNode = new AttackRangeNode(shootingRange, playerTransform, transform, this, obstructionMask);
-
 
         ShootingAIAttackNode attackNode = new ShootingAIAttackNode(agent, this, playerTransform);
 
@@ -191,15 +194,16 @@ public class ShootingEnemyAI : MonoBehaviour
         }
         else if (canSeePlayer)
             canSeePlayer = false;
-
-        //Debug.Log(canSeePlayer);
     }
 
     public void DisableEnemy()
     {
-        if(_doesDropItemOnDeath && _dropPrefab != null)
+        if(_doesDropItemOnDeath && _dropPrefab != null && gameObject.activeSelf)
         {
-            Instantiate(_dropPrefab, gameObject.transform.position, gameObject.transform.rotation);
+            GameObject obj = Instantiate(_dropPrefab, gameObject.transform.position, gameObject.transform.rotation);
+            Outline outline = obj.GetComponent<Outline>();
+            if (outline != null)
+                outline.enabled = true;
         }
         gameObject.SetActive(false);
     }

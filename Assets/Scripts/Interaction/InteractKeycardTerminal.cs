@@ -24,13 +24,13 @@ public class InteractKeycardTerminal : MonoBehaviour, IInteractable
 
     public void OnStartLook()
     {
-        InteractionManager.Instance.InteractionText.SetText($"Press [E] to open the doors");
+        InteractionManager.Instance.SetInteractionText($"Press [E] to open the doors");
         _outline.enabled = true;
     }
 
     public void OnEndLook()
     {
-        InteractionManager.Instance.InteractionText.SetText("");
+        InteractionManager.Instance.SetInteractionText("");
         _outline.enabled = false;
     }
 
@@ -55,8 +55,8 @@ public class InteractKeycardTerminal : MonoBehaviour, IInteractable
         }
         else
         {
-            InteractionManager.Instance.InfoText.SetText("You don't have a valid keycard");
-            StartCoroutine(TextManager.WaitAndClearInfoText());
+            InteractionManager.Instance.SetInfoText("You don't have a valid keycard");
+            
         }
     }
 
@@ -70,8 +70,8 @@ public class InteractKeycardTerminal : MonoBehaviour, IInteractable
         yield return null; // this is so the animator state info actually updates properly next frame
         yield return new WaitForSeconds(_keycardTerminalAnimator.GetCurrentAnimatorStateInfo(0).length);
 
-        SoundManager.Instance.PlaySound(Sound.KeypadPress, transform, false);
-        yield return new WaitForSeconds(SoundManager.Instance.GetAudioClip(Sound.KeypadPress).length);
+        SoundManager.Instance.PlaySound(Sound.Keycard, transform, false);
+        yield return new WaitForSeconds(SoundManager.Instance.GetAudioClip(Sound.Keycard).length);
 
         _keycardTerminalAnimator.Play(Animator.StringToHash("KeycardAnimR"));
         _doorScript.OpenDoor();

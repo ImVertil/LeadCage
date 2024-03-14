@@ -2121,7 +2121,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8858fb83b705e914fab35f874ddacc76, type: 2}
+  - {fileID: 5629084884208175553, guid: 9e43407b285568b4aacb13a8f8c106a3, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2222,7 +2222,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d4fb611bbf8035044ade9e3bdd412693, type: 2}
+  - {fileID: 2100000, guid: 37190fc9b7d2cb14680bf8b87359f562, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2491,7 +2491,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daca628948641ca478ec8c2758b6eecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 400
+  _regenerationRate: 2
+  _maxHealth: 100
 --- !u!114 &7205626320560595913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2519,6 +2520,7 @@ MonoBehaviour:
     m_Bits: 256
   radius: 40
   angle: 88
+  lookAtPoint: {fileID: 0}
   patrolDestSet: 0
   patrolDest: {x: 0, y: 0, z: 0}
   waypoints: []

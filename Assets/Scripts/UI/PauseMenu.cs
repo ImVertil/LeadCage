@@ -8,21 +8,28 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject _pausePanel;
     [SerializeField] private GameObject _backgroundDarken;
     [SerializeField] private GameObject _settingsPanel;
-    private bool _isPaused = false;
+    private bool _isPaused;
 
     private void Start()
     {
         InputManager.current.PauseToggleAction.performed += TogglePauseMenu;
+        _isPaused = false;
     }
 
     public void TogglePauseMenu(InputAction.CallbackContext context) => TogglePauseMenu();
 
     public void TogglePauseMenu()
     {
+        SoundEvents.GamePaused(!_isPaused);
+
         if (_isPaused)
         {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            if(!PlayerController.IsInteracting)
+            {
+                InputManager.OnEnableShooting();
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
             _settingsPanel.SetActive(false);
             _pausePanel.SetActive(false);
             _backgroundDarken.SetActive(false);
@@ -31,6 +38,7 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
+            InputManager.OnDisableShooting();
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
             _pausePanel.SetActive(true);

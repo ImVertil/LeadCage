@@ -7,21 +7,11 @@ public class Health : MonoBehaviour
 {
     public TextMeshProUGUI healthText;
     [SerializeField] float healthSet;
-    public float health;
+    private float health;
     void Start()
     {
         health = healthSet;
         healthText.text = "HP: " + health.ToString();
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // @mati nie wiem po co to tu jest ale zakomentuje bo tworzy pierdyliard b³êdów
-        //healthText.text = "HP: " + health.ToString();
-
-
     }
 
     public void TakeDamage(float damage) {
@@ -29,7 +19,6 @@ public class Health : MonoBehaviour
         {
             health -= damage;
             healthText.text = "HP: " + health.ToString();
-
         }
         
     }

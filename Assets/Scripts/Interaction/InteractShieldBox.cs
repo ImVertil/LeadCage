@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,18 +18,18 @@ public class InteractShieldBox : MonoBehaviour, IInteractable
     public void OnStartLook()
     {
         _outline.enabled = true;
-        InteractionManager.Instance.InteractionText.SetText("Press [E] to interact");
+        InteractionManager.Instance.SetInteractionText("Press [E] to interact");
     }
 
     public void OnEndLook()
     {
         _outline.enabled = false;
-        InteractionManager.Instance.InteractionText.SetText("");
+        InteractionManager.Instance.SetInteractionText("");
     }
 
     public void OnInteract(InputAction.CallbackContext ctx)
     {
-        InteractionManager.Instance.InteractionText.SetText("");
+        InteractionManager.Instance.SetInteractionText("");
         if (_isInteracting)
         {
             _electricalBoxCamera.enabled = false;
@@ -39,9 +37,9 @@ public class InteractShieldBox : MonoBehaviour, IInteractable
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             _isInteracting = false;
-            PlayerController.CanMove = true;
-            PlayerController.CanMoveCamera = true;
-            //PlayerController.EnablePlayerVisibility();
+            PlayerController.IsInteracting = false;
+            InputManager.OnUnfreezeMovement();
+            InputManager.OnEnableShooting();
         }
         else
         {
@@ -50,9 +48,10 @@ public class InteractShieldBox : MonoBehaviour, IInteractable
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
             _isInteracting = true;
-            PlayerController.CanMove = false;
-            PlayerController.CanMoveCamera = false;
-            //PlayerController.DisablePlayerVisibility();
+            PlayerController.IsInteracting = true;
+            InputManager.OnFreezeMovement();
+            InputManager.OnDisableShooting();
+            InputManager.OnForceGunAway();
         }
     }
 }
