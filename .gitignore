@@ -79,3 +79,6 @@ crashlytics-build.properties
 
 # Jetbrains stuff
 .idea/
+
+# Assets
+/[Aa]ssets/SciFiFacilitySector43/
